@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerBusinessLayer", "Cu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orchestration", "OrchestrationLayer\Orchestration.csproj", "{1A3BCA91-B51C-4C3B-9D42-C107ED244688}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "practiche ui", "practiche ui\practiche ui.csproj", "{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training UI", "Training UI\Training UI.csproj", "{F071E082-4923-4456-89F1-A977C2EFEA97}"
 EndProject
 Global
@@ -73,10 +71,6 @@ Global
 		{1A3BCA91-B51C-4C3B-9D42-C107ED244688}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A3BCA91-B51C-4C3B-9D42-C107ED244688}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A3BCA91-B51C-4C3B-9D42-C107ED244688}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F071E082-4923-4456-89F1-A977C2EFEA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F071E082-4923-4456-89F1-A977C2EFEA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F071E082-4923-4456-89F1-A977C2EFEA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -98,51 +92,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00455E54-AED2-407B-92CB-38DCD08E95E6}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://dev.azure.com/queasoservices
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = CustomerBusinessLayer\\CustomerBusinessLayer.csproj
-		SccProjectTopLevelParentUniqueName1 = QueasoMethodologyTraining.sln
-		SccProjectName1 = CustomerBusinessLayer
-		SccLocalPath1 = CustomerBusinessLayer
-		SccProjectUniqueName2 = CustomerCommunicationLayer\\CustomerCommunicationLayer.csproj
-		SccProjectTopLevelParentUniqueName2 = QueasoMethodologyTraining.sln
-		SccProjectName2 = CustomerCommunicationLayer
-		SccLocalPath2 = CustomerCommunicationLayer
-		SccProjectUniqueName3 = CustomerDataLayer\\CustomerDataLayer.csproj
-		SccProjectTopLevelParentUniqueName3 = QueasoMethodologyTraining.sln
-		SccProjectName3 = CustomerDataLayer
-		SccLocalPath3 = CustomerDataLayer
-		SccProjectUniqueName4 = InvoiceBusinessLayer\\InvoiceBusinessLayer.csproj
-		SccProjectTopLevelParentUniqueName4 = QueasoMethodologyTraining.sln
-		SccProjectName4 = InvoiceBusinessLayer
-		SccLocalPath4 = InvoiceBusinessLayer
-		SccProjectUniqueName5 = InvoiceCommunicationLayer\\InvoiceCommunicationLayer.csproj
-		SccProjectTopLevelParentUniqueName5 = QueasoMethodologyTraining.sln
-		SccProjectName5 = InvoiceCommunicationLayer
-		SccLocalPath5 = InvoiceCommunicationLayer
-		SccProjectUniqueName6 = InvoiceDataLayer\\InvoiceDataLayer.csproj
-		SccProjectTopLevelParentUniqueName6 = QueasoMethodologyTraining.sln
-		SccProjectName6 = InvoiceDataLayer
-		SccLocalPath6 = InvoiceDataLayer
-		SccProjectUniqueName7 = InvoiceTestsLayer\\InvoiceTestLayer.csproj
-		SccProjectTopLevelParentUniqueName7 = QueasoMethodologyTraining.sln
-		SccProjectName7 = InvoiceTestsLayer
-		SccLocalPath7 = InvoiceTestsLayer
-		SccProjectUniqueName8 = OrchestrationLayer\\Orchestration.csproj
-		SccProjectName8 = OrchestrationLayer
-		SccLocalPath8 = OrchestrationLayer
-		SccProjectUniqueName9 = practiche\u0020ui\\practiche\u0020ui.csproj
-		SccProjectName9 = practiche\u0020ui
-		SccLocalPath9 = practiche\u0020ui
-		SccProjectUniqueName10 = QueasoFramework\\QueasoFramework\\QueasoFramework.csproj
-		SccProjectName10 = QueasoFramework/QueasoFramework
-		SccLocalPath10 = QueasoFramework\\QueasoFramework
-		SccProjectUniqueName11 = Training\u0020UI\\Training\u0020UI.csproj
-		SccProjectName11 = Training\u0020UI
-		SccLocalPath11 = Training\u0020UI
 	EndGlobalSection
 EndGlobal
