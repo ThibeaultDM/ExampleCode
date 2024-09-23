@@ -6,10 +6,10 @@ namespace Training_UI.ViewModels
 {
     public class CustomerViewModel : ICustomerViewModel
     {
-        private ICustomerModel customerModel;
+        private IDataModel customerModel;
         private List<CustomerResponse> listCustomers;
 
-        public CustomerViewModel(ICustomerModel customerModel)
+        public CustomerViewModel(IDataModel customerModel)
         {
             Console.WriteLine("CustomerViewModel constructor working");
             this.customerModel = customerModel;

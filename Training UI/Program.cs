@@ -12,7 +12,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new FlurlClient { BaseUrl = "https://localhost:7089/Orchestration/" });
-builder.Services.AddTransient<ICustomerModel, CustomerModel>();
+builder.Services.AddTransient<IDataModel, DataModel>();
 builder.Services.AddTransient<ICustomerViewModel, CustomerViewModel>();
 
 await builder.Build().RunAsync();
