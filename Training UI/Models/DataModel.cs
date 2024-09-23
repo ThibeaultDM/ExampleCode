@@ -1,6 +1,5 @@
 ﻿using Flurl;
 using Flurl.Http;
-using System.Net.Http.Json;
 using Training_UI.Interfaces;
 using Training_UI.Models.Input;
 using Training_UI.Models.Response;
@@ -25,13 +24,11 @@ namespace Training_UI.Models
             private set { customers = value; }
         }
 
-
         public async Task FetchAllCustomersAsync()
         {
             Console.WriteLine("FetchAllCustomersAsync");
 
             customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
-
         }
 
         public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice)

@@ -1,7 +1,6 @@
 using Flurl.Http;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Training_UI;
 using Training_UI.Interfaces;
 using Training_UI.Models;
@@ -14,5 +13,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new FlurlClient { BaseUrl = "https://localhost:7089/Orchestration/" });
 builder.Services.AddTransient<IDataModel, DataModel>();
 builder.Services.AddTransient<ICustomerViewModel, CustomerViewModel>();
+builder.Services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
 
 await builder.Build().RunAsync();

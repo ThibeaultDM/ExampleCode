@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Training_UI.Interfaces;
+﻿using Training_UI.Interfaces;
 using Training_UI.Models.Response;
 
 namespace Training_UI.ViewModels
@@ -24,7 +23,6 @@ namespace Training_UI.ViewModels
             ListCustomers = customerModel.Customers;
 
             Console.WriteLine("FetchDataViewModel forecast retrieving");
-
         }
     }
 }

@@ -4,7 +4,7 @@ using Training_UI.Models.Response;
 
 namespace Training_UI.ViewModels
 {
-    public class AddInvoiceViewModel
+    public class AddInvoiceViewModel : IAddInvoiceViewModel
     {
         private IDataModel invoiceModel;
         private CustomerResponse _customer;
@@ -16,20 +16,15 @@ namespace Training_UI.ViewModels
 
         public CustomerResponse Customer { get => _customer; set => _customer = value; }
 
-
-
         public async Task GetCustomerAsync(string guid)
         {
-            if (invoiceModel.Customers.Count == 0)
-            {
-                await invoiceModel.FetchAllCustomersAsync();
+            await invoiceModel.FetchAllCustomersAsync();
 
-            }
+            Guid searchId = new Guid(guid);
 
-            Customer = invoiceModel.Customers.SingleOrDefault(c => c.Id == new Guid(guid)) ?? throw new Exception("No customer was found");
+            Customer = invoiceModel.Customers.SingleOrDefault(c => c.Id == searchId) ?? throw new Exception("No customer was found");
 
             Console.WriteLine("GetCustomerAsync");
-
         }
 
         public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput invoiceInput)
@@ -40,7 +35,5 @@ namespace Training_UI.ViewModels
 
             return response;
         }
-
-
     }
 }

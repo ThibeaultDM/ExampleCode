@@ -1,20 +1,30 @@
-﻿@page "/AddInvoice/cCustomer:string}"
-
+﻿@page "/AddInvoice/{id}"
+@inject IAddInvoiceViewModel _serviceInvoice
 @inject NavigationManager navMng
 
-<PageTitle>AddInvoiceView</PageTitle>
+<h3>AddInvoiceView</h3>
 
-<h1>AddInvoiceView!</h1>
-
-Welcome to your new app.
-
-@code{
+@code {
 
     [Parameter]
-    public string Customer { get; set; }
+    public string Id { get; set; }
 
-    protected override Task OnParametersSetAsync()
+    public CustomerResponse Customer { get; set; }
+
+    protected override async Task OnParametersSetAsync()
     {
-        return base.OnParametersSetAsync();
+        base.OnParametersSetAsync();
+
+        try
+        {
+            await _serviceInvoice.GetCustomerAsync(Id);
+        }
+        catch (Exception)
+        {
+            // TODO pop up Customer not found
+            navMng.NavigateTo("/");
+        }
+
+        Customer = _serviceInvoice.Customer;
     }
 }
