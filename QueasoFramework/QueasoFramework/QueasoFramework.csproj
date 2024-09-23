@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <PackageId>QueasoFrameworkCore</PackageId>
+    <Company>Queaso Services</Company>
+    <Authors>Queaso Services</Authors>
+    <Version>0.1.5</Version>
+    <ApplicationIcon>company_ico.ico</ApplicationIcon>
+    <Description>Framework for Queaso projects in .NET Core</Description>
+    <PackageIconUrl>www.queaso.be/queaso_logo.png</PackageIconUrl>
+  </PropertyGroup>
+
+</Project>

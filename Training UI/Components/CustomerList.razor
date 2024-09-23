@@ -1,0 +1,32 @@
+﻿<div class="row row-cols-3">
+
+    @if (Customers != null)
+    {
+        @foreach (CustomerResponse customer in Customers)
+        {
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@customer.FirstName</h5>
+                        <p class="card-text">@customer.FamilyName</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Fetching customers...</p>
+        <div class="spinner-border" role="status">
+        </div>
+    }
+
+</div>
+
+
+
+
+@code {
+
+    [Parameter] public List<CustomerResponse>? Customers { get; set; }
+}

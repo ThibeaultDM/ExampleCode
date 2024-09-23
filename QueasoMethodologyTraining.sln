@@ -1,0 +1,148 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{B96D9C2A-89BF-4BDD-AFA9-BF76E2BB4AE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Invoice", "Invoice", "{FF3B8ADD-1CDA-4E68-A026-F972695ED750}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueasoFramework", "QueasoFramework\QueasoFramework\QueasoFramework.csproj", "{B2F0F4DA-4EB6-442E-9567-ABC49432F9D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceDataLayer", "InvoiceDataLayer\InvoiceDataLayer.csproj", "{263363D5-DAE1-4618-A8B9-05950D3F7BB9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceBusinessLayer", "InvoiceBusinessLayer\InvoiceBusinessLayer.csproj", "{AC8820C5-7DD5-4216-A8F7-FD17474ECE92}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceCommunicationLayer", "InvoiceCommunicationLayer\InvoiceCommunicationLayer.csproj", "{8DC970A6-4E6A-4F3D-88E9-BC478EFF71A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customer", "Customer", "{4A159286-A32F-43D3-A463-2A777C1A2324}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerDataLayer", "CustomerDataLayer\CustomerDataLayer.csproj", "{5E14FD0C-07EF-49B1-95F7-A7808796E13E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerCommunicationLayer", "CustomerCommunicationLayer\CustomerCommunicationLayer.csproj", "{174FD4BF-F258-4AA8-B92C-1AF403BCE032}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceTestLayer", "InvoiceTestsLayer\InvoiceTestLayer.csproj", "{59A72164-3B88-4D96-ACDE-F5E5D59FFAFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerBusinessLayer", "CustomerBusinessLayer\CustomerBusinessLayer.csproj", "{82FFC0E2-345A-4165-990D-4BED03FACE97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orchestration", "OrchestrationLayer\Orchestration.csproj", "{1A3BCA91-B51C-4C3B-9D42-C107ED244688}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "practiche ui", "practiche ui\practiche ui.csproj", "{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training UI", "Training UI\Training UI.csproj", "{F071E082-4923-4456-89F1-A977C2EFEA97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2F0F4DA-4EB6-442E-9567-ABC49432F9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F0F4DA-4EB6-442E-9567-ABC49432F9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F0F4DA-4EB6-442E-9567-ABC49432F9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F0F4DA-4EB6-442E-9567-ABC49432F9D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{263363D5-DAE1-4618-A8B9-05950D3F7BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{263363D5-DAE1-4618-A8B9-05950D3F7BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{263363D5-DAE1-4618-A8B9-05950D3F7BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{263363D5-DAE1-4618-A8B9-05950D3F7BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC8820C5-7DD5-4216-A8F7-FD17474ECE92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC8820C5-7DD5-4216-A8F7-FD17474ECE92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC8820C5-7DD5-4216-A8F7-FD17474ECE92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC8820C5-7DD5-4216-A8F7-FD17474ECE92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DC970A6-4E6A-4F3D-88E9-BC478EFF71A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC970A6-4E6A-4F3D-88E9-BC478EFF71A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC970A6-4E6A-4F3D-88E9-BC478EFF71A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC970A6-4E6A-4F3D-88E9-BC478EFF71A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E14FD0C-07EF-49B1-95F7-A7808796E13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E14FD0C-07EF-49B1-95F7-A7808796E13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E14FD0C-07EF-49B1-95F7-A7808796E13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E14FD0C-07EF-49B1-95F7-A7808796E13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174FD4BF-F258-4AA8-B92C-1AF403BCE032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174FD4BF-F258-4AA8-B92C-1AF403BCE032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174FD4BF-F258-4AA8-B92C-1AF403BCE032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174FD4BF-F258-4AA8-B92C-1AF403BCE032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59A72164-3B88-4D96-ACDE-F5E5D59FFAFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A72164-3B88-4D96-ACDE-F5E5D59FFAFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A72164-3B88-4D96-ACDE-F5E5D59FFAFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59A72164-3B88-4D96-ACDE-F5E5D59FFAFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82FFC0E2-345A-4165-990D-4BED03FACE97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82FFC0E2-345A-4165-990D-4BED03FACE97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82FFC0E2-345A-4165-990D-4BED03FACE97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82FFC0E2-345A-4165-990D-4BED03FACE97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A3BCA91-B51C-4C3B-9D42-C107ED244688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A3BCA91-B51C-4C3B-9D42-C107ED244688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A3BCA91-B51C-4C3B-9D42-C107ED244688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A3BCA91-B51C-4C3B-9D42-C107ED244688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C7DA6F8-4D2C-43BF-B0CF-E8806D6DA026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F071E082-4923-4456-89F1-A977C2EFEA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F071E082-4923-4456-89F1-A977C2EFEA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F071E082-4923-4456-89F1-A977C2EFEA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F071E082-4923-4456-89F1-A977C2EFEA97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF3B8ADD-1CDA-4E68-A026-F972695ED750} = {B96D9C2A-89BF-4BDD-AFA9-BF76E2BB4AE0}
+		{263363D5-DAE1-4618-A8B9-05950D3F7BB9} = {FF3B8ADD-1CDA-4E68-A026-F972695ED750}
+		{AC8820C5-7DD5-4216-A8F7-FD17474ECE92} = {FF3B8ADD-1CDA-4E68-A026-F972695ED750}
+		{8DC970A6-4E6A-4F3D-88E9-BC478EFF71A3} = {FF3B8ADD-1CDA-4E68-A026-F972695ED750}
+		{4A159286-A32F-43D3-A463-2A777C1A2324} = {B96D9C2A-89BF-4BDD-AFA9-BF76E2BB4AE0}
+		{5E14FD0C-07EF-49B1-95F7-A7808796E13E} = {4A159286-A32F-43D3-A463-2A777C1A2324}
+		{174FD4BF-F258-4AA8-B92C-1AF403BCE032} = {4A159286-A32F-43D3-A463-2A777C1A2324}
+		{59A72164-3B88-4D96-ACDE-F5E5D59FFAFA} = {FF3B8ADD-1CDA-4E68-A026-F972695ED750}
+		{82FFC0E2-345A-4165-990D-4BED03FACE97} = {4A159286-A32F-43D3-A463-2A777C1A2324}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00455E54-AED2-407B-92CB-38DCD08E95E6}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 12
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dev.azure.com/queasoservices
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CustomerBusinessLayer\\CustomerBusinessLayer.csproj
+		SccProjectTopLevelParentUniqueName1 = QueasoMethodologyTraining.sln
+		SccProjectName1 = CustomerBusinessLayer
+		SccLocalPath1 = CustomerBusinessLayer
+		SccProjectUniqueName2 = CustomerCommunicationLayer\\CustomerCommunicationLayer.csproj
+		SccProjectTopLevelParentUniqueName2 = QueasoMethodologyTraining.sln
+		SccProjectName2 = CustomerCommunicationLayer
+		SccLocalPath2 = CustomerCommunicationLayer
+		SccProjectUniqueName3 = CustomerDataLayer\\CustomerDataLayer.csproj
+		SccProjectTopLevelParentUniqueName3 = QueasoMethodologyTraining.sln
+		SccProjectName3 = CustomerDataLayer
+		SccLocalPath3 = CustomerDataLayer
+		SccProjectUniqueName4 = InvoiceBusinessLayer\\InvoiceBusinessLayer.csproj
+		SccProjectTopLevelParentUniqueName4 = QueasoMethodologyTraining.sln
+		SccProjectName4 = InvoiceBusinessLayer
+		SccLocalPath4 = InvoiceBusinessLayer
+		SccProjectUniqueName5 = InvoiceCommunicationLayer\\InvoiceCommunicationLayer.csproj
+		SccProjectTopLevelParentUniqueName5 = QueasoMethodologyTraining.sln
+		SccProjectName5 = InvoiceCommunicationLayer
+		SccLocalPath5 = InvoiceCommunicationLayer
+		SccProjectUniqueName6 = InvoiceDataLayer\\InvoiceDataLayer.csproj
+		SccProjectTopLevelParentUniqueName6 = QueasoMethodologyTraining.sln
+		SccProjectName6 = InvoiceDataLayer
+		SccLocalPath6 = InvoiceDataLayer
+		SccProjectUniqueName7 = InvoiceTestsLayer\\InvoiceTestLayer.csproj
+		SccProjectTopLevelParentUniqueName7 = QueasoMethodologyTraining.sln
+		SccProjectName7 = InvoiceTestsLayer
+		SccLocalPath7 = InvoiceTestsLayer
+		SccProjectUniqueName8 = OrchestrationLayer\\Orchestration.csproj
+		SccProjectName8 = OrchestrationLayer
+		SccLocalPath8 = OrchestrationLayer
+		SccProjectUniqueName9 = practiche\u0020ui\\practiche\u0020ui.csproj
+		SccProjectName9 = practiche\u0020ui
+		SccLocalPath9 = practiche\u0020ui
+		SccProjectUniqueName10 = QueasoFramework\\QueasoFramework\\QueasoFramework.csproj
+		SccProjectName10 = QueasoFramework/QueasoFramework
+		SccLocalPath10 = QueasoFramework\\QueasoFramework
+		SccProjectUniqueName11 = Training\u0020UI\\Training\u0020UI.csproj
+		SccProjectName11 = Training\u0020UI
+		SccLocalPath11 = Training\u0020UI
+	EndGlobalSection
+EndGlobal
