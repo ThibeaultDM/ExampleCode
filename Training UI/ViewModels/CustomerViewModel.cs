@@ -18,7 +18,7 @@ namespace Training_UI.ViewModels
 
         public async Task GetCustomersAsync()
         {
-            await customerModel.FetchAllCustomersAsync();
+            await customerModel.GetAllCustomersAsync();
 
             ListCustomers = customerModel.Customers;
 

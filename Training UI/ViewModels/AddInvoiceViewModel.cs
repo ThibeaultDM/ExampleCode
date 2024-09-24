@@ -7,24 +7,17 @@ namespace Training_UI.ViewModels
     public class AddInvoiceViewModel : IAddInvoiceViewModel
     {
         private IDataModel invoiceModel;
-        private CustomerResponse _customer;
 
         public AddInvoiceViewModel(IDataModel customerModel)
         {
             this.invoiceModel = customerModel;
         }
 
-        public CustomerResponse Customer { get => _customer; set => _customer = value; }
-
-        public async Task GetCustomerAsync(string guid)
+        public async Task<CustomerDetailResponse> GetCustomerAsync(string searchId)
         {
-            await invoiceModel.FetchAllCustomersAsync();
-
-            Guid searchId = new Guid(guid);
-
-            Customer = invoiceModel.Customers.SingleOrDefault(c => c.Id == searchId) ?? throw new Exception("No customer was found");
-
-            Console.WriteLine("GetCustomerAsync");
+            CustomerDetailResponse customer = await invoiceModel.GetCustomerAsync(searchId) ?? throw new Exception("Customer not found");
+            
+            return customer;
         }
 
         public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput invoiceInput)

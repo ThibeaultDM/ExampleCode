@@ -9,7 +9,7 @@ namespace Orchestration.ObjectLayer
     public class CustomerService : ICustomerService
     {
         private readonly FlurlClient _client;
-
+        private readonly string customerPathSeg = "Customer";
         public CustomerService(IQueasoBaseUrl url)
         {
             _client = new(url.BaseUrlBuilder(BaseUrlComponent.customer));
@@ -21,7 +21,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Customer", "UC_300_001_CreateCustomer")
+                                          .AppendPathSegments(customerPathSeg, "UC_300_001_CreateCustomer")
                                           .PostJsonAsync(customerToCreate)
                                           .ReceiveJson<CustomerDetailResponse>();
                 return result;
@@ -34,7 +34,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Customer", "UC_300_002_GetAllCustomers")
+                                          .AppendPathSegments(customerPathSeg, "UC_300_002_GetAllCustomers")
                                           .GetJsonAsync<List<CustomerResponse>>();
                 return result;
             }
@@ -46,7 +46,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Customer", "UC_300_003_GetCustomerById")
+                                          .AppendPathSegments(customerPathSeg, "UC_300_003_GetCustomerById")
                                           .PostJsonAsync(new { Id = id })
                                           .ReceiveJson<CustomerDetailResponse>();
                 return result;
@@ -59,7 +59,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Customer", "UC_300_004_ArchiveCustomerInvoice")
+                                          .AppendPathSegments(customerPathSeg, "UC_300_004_ArchiveCustomerInvoice")
                                           .PostJsonAsync(customerInput)
                                           .ReceiveJson<List<CustomerResponse>>();
                 return result;

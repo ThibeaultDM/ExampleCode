@@ -24,16 +24,26 @@ namespace Training_UI.Models
             private set { customers = value; }
         }
 
-        public async Task FetchAllCustomersAsync()
+        public async Task GetAllCustomersAsync()
         {
-            Console.WriteLine("FetchAllCustomersAsync");
+            Console.WriteLine("GetAllCustomersAsync");
 
             customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
+        }
+        public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
+        {
+            Console.WriteLine("GetCustomerAsync");
+            string path = $"UC_300_003_GetCustomerByName?customerId={customerId}";
+
+            CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments()
+                                                                   .GetJsonAsync<CustomerDetailResponse>();
+
+            return customer;
         }
 
         public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice)
         {
-            Console.WriteLine("FetchAllCustomersAsync");
+            Console.WriteLine("GetAllCustomersAsync");
 
             CustomerDetailResponse customerDetailResponse = new();
             customerDetailResponse = await _client.BaseUrl.AppendPathSegments("UC_300_004_ArchiveCustomerInvoice")
