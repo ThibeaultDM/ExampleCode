@@ -1,5 +1,4 @@
-﻿
-namespace Training_UI.Models.Response
+﻿namespace Training_UI.Models.Response
 {
     public class CreateInvoiceResponse : InvoiceLineResponse
     {

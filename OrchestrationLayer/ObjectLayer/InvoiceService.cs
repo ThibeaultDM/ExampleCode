@@ -10,6 +10,7 @@ namespace Orchestration.ObjectLayer
     public class InvoiceService : IInvoiceService
     {
         private readonly FlurlClient _client;
+        private readonly string invoicePathSeg = "Invoice";
 
         public InvoiceService(IQueasoBaseUrl url)
         {
@@ -21,7 +22,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Invoice", "CreateInvoiceHeader")
+                                          .AppendPathSegments(invoicePathSeg, "CreateInvoiceHeader")
                                           .PostJsonAsync(new { VatNumber = vatNumber })
                                           .ReceiveJson<InvoiceDetailResponse>();
                 return result;
@@ -34,7 +35,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Invoice", "AddInvoiceLineToInvoiceHeader")
+                                          .AppendPathSegments(invoicePathSeg, "AddInvoiceLineToInvoiceHeader")
                                           .PostJsonAsync(invoiceLineInput)
                                           .ReceiveJson<InvoiceResponse>();
                 return result;
@@ -48,7 +49,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Invoice", "GetInvoiceById")
+                                          .AppendPathSegments(invoicePathSeg, "GetInvoiceById")
                                           .PostJsonAsync(new { InvoiceHeaderId = getInvoiceByIdInput })
                                           .ReceiveJson<InvoiceDetailResponse>();
                 return result;
@@ -61,7 +62,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Invoice", "ArchiveInvoiceJournalEntry")
+                                          .AppendPathSegments(invoicePathSeg, "ArchiveInvoiceJournalEntry")
                                           .PostJsonAsync(archiveInvoiceJournal)
                                           .ReceiveJson<List<InvoiceResponse>>();
                 return result;
@@ -74,7 +75,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments("Invoice", "GetAllInvoices")
+                                          .AppendPathSegments(invoicePathSeg, "GetAllInvoices")
                                           .GetJsonAsync<List<InvoiceResponse>>();
                 return result;
             }

@@ -1,20 +1,108 @@
-﻿@page "/AddInvoice"
-
+﻿@page "/AddInvoice/{id}"
+@inject IAddInvoiceViewModel _serviceInvoice
 @inject NavigationManager navMng
 
-<PageTitle>AddInvoiceView</PageTitle>
+<h3>AddInvoiceView</h3>
 
-<h1>AddInvoiceView!</h1>
+<EditForm Model="InvoiceInput" OnValidSubmit="CreateInvoice">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <div class="col">
+            <label>Company Name</label>
+            <input type="text" @bind="Customer.Company.FirstName" class="form-control" disabled>
+        </div>
+        <div class="col">
+            <label>VAT number</label>
+            <input type="text" @bind="InvoiceInput.VatNumber" class="form-control" placeholder="BEOxxxxxx">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label>Street Name</label>
+            <input type="text" @bind="Customer.Company.Addresses.First().StreetName" class="form-control" disabled>
+        </div>
+        <div class="col">
+            <label>Number</label>
+            <input type="text" @bind="Customer.Company.Addresses.First().HouseNumber" class="form-control" disabled>
+        </div>
+    </div>
 
-Welcome to your new app.
+    <div class="row">
+        <div class="col">
+            <label>Description</label>
+        </div>
+        <div class="col">
+            <label>Quantity</label>
+        </div>
+        <div class="col">
+            <label>Price per unit</label>
+        </div>
+        <div class="col">
+            <label>VAT</label>
+        </div>
+    </div>
 
-@code{
+    @foreach (CreateInvoiceLine invoiceLine in InvoiceInput.InvoiceLines)
+    {
+        <div class="row">
+            <div class="col">
+                <input type="text" @bind="invoiceLine.Description" class="form-control">
+            </div>
+            <div class="col">
+                <input type="number" @bind="invoiceLine.Quantity" class="form-control">
+            </div>
+            <div class="col">
+                <input type="number" @bind="invoiceLine.PricePerUnit" class="form-control">
+            </div>
+            <div class="col">
+                <input type="number" @bind="invoiceLine.VATRate" class="form-control">
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" value="AddInvoiceLine" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    Add invoice line
+                </button>
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save invoice</button>
+    </div>
+
+</EditForm>
+
+@code {
 
     [Parameter]
-    public string Customer { get; set; }
+    public string Id { get; set; }
 
-    protected override Task OnParametersSetAsync()
+    public CreateInvoiceInput InvoiceInput { get; set; }
+
+    public CustomerDetailResponse Customer { get; set; }
+
+    protected override async Task OnParametersSetAsync()
     {
-        return base.OnParametersSetAsync();
+        base.OnParametersSetAsync();
+
+        try
+        {
+            Customer = await _serviceInvoice.GetCustomerAsync(Id);
+        }
+        catch (Exception)
+        {
+            // TODO pop up Customer not found
+            navMng.NavigateTo("/");
+        }
+    }
+
+    public async Task CreateInvoice()
+    {
+        CustomerDetailResponse customerDetail = await _serviceInvoice.CreateInvoiceAsync(InvoiceInput);
+    }
+
+    private void AddInvoiceLine()
+    {
+        InvoiceInput.InvoiceLines.Add(new());
+        StateHasChanged();
     }
 }

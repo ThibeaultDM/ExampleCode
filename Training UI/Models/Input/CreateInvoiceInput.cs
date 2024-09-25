@@ -6,6 +6,6 @@
         public string VatNumber { get; set; }
 
         public List<CreateInvoiceLine> InvoiceLines { get; set; }
-        public bool IsPaid { get; set; }
-    }
+        public bool IsPaid { get; set; } = false;
+}
 }

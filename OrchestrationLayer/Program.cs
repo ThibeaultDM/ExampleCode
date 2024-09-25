@@ -9,7 +9,7 @@ string _OrchestrationCorsPolicy = "_OrchestrationCorsPolicy";
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy( _OrchestrationCorsPolicy, policy =>
+    options.AddPolicy(_OrchestrationCorsPolicy, policy =>
     {
         policy.WithOrigins("https://localhost:5001") // Specify the Blazor app URL
               .AllowAnyMethod()
