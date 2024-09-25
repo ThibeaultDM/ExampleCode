@@ -48,7 +48,7 @@ namespace Training_UI.Models
 
             CustomerDetailResponse customerDetailResponse = new();
             customerDetailResponse = await _client.BaseUrl.AppendPathSegments("UC_300_004_ArchiveCustomerInvoice")
-                                           .PostJsonAsync(new { CreateInvoiceInput = createInvoice })
+                                           .PostJsonAsync( createInvoice )
                                            .ReceiveJson<CustomerDetailResponse>();
 
             return customerDetailResponse;

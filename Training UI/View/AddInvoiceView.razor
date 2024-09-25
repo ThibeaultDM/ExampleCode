@@ -113,7 +113,7 @@
     [Parameter]
     public string Id { get; set; }
 
-    public CreateInvoiceInput InvoiceInput { get; set; } = new();
+    public CreateInvoiceInput InvoiceInput { get; set; }
 
     [Parameter]
     public CustomerDetailResponse Customer
@@ -125,7 +125,7 @@
             StateHasChanged();
         }
     }
-    public CreateInvoiceLine InvoiceLine { get; set; } = new();
+    public CreateInvoiceLine InvoiceLine { get; set; }
 
     public CustomerAddressResponse CustomerAddress
     {
@@ -140,12 +140,15 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        InvoiceInput = new();
+        InvoiceLine = new();
     }
     protected override async Task OnParametersSetAsync()
     {
         base.OnParametersSetAsync();
 
         Customer = await _serviceInvoice.GetCustomerAsync(Id);
+        InvoiceInput.ProxyId = Customer.Company.Id;
     }
 
     public async Task CreateInvoice()
