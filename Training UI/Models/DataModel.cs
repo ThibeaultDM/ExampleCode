@@ -33,10 +33,11 @@ namespace Training_UI.Models
         public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
         {
             Console.WriteLine("GetCustomerAsync");
-            string path = $"UC_300_003_GetCustomerByName?customerId={customerId}";
 
-            CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments()
-                                                                   .GetJsonAsync<CustomerDetailResponse>();
+            CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments("UC_300_003_GetCustomerByName")
+                                                                   .SetQueryParam("customerId", customerId)                                                                   
+                                                                   .PostJsonAsync(customerId)
+                                                                   .ReceiveJson<CustomerDetailResponse>();
 
             return customer;
         }
