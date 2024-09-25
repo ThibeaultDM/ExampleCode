@@ -19,7 +19,7 @@ else
  *@
     <h1>CustomerView</h1>
     <div>
-        <select @bind="Id" class="form-select" aria-label="Default select example">
+        <select @bind="Id" class="form-select">
             <option selected>Open this select menu</option>
             @foreach (CustomerResponse customer in _serviceCustomer.ListCustomers)
             {

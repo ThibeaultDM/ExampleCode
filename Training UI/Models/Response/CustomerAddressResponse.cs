@@ -1,4 +1,6 @@
-﻿namespace Training_UI.Models.Response
+﻿using System.ComponentModel;
+
+namespace Training_UI.Models.Response
 {
     public class CustomerAddressResponse
     {
@@ -8,5 +10,10 @@
         public string StreetName { get; set; }
         public int HouseNumber { get; set; }
         public bool IsDefault { get; set; }
+        
+        public override string ToString()
+        {
+            return $"{City}, {Postcode}, {StreetName}, {HouseNumber}";
+        }
     }
 }

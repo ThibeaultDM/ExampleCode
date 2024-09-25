@@ -17,15 +17,31 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <label>Street Name:</label>
-                <input type="text" @bind="Customer.Company.Addresses[0].StreetName" class="form-control">
-            </div>
-            <div class="col">
-                <label>Number:</label>
-                <input type="text" @bind="Customer.Company.Addresses[0].HouseNumber" class="form-control">
-            </div>
+            @if (CustomerAddress.StreetName == "Open this select menu")
+            {
+                <div class="col">
+                    <label>Street Name:</label>
+                    <select @bind="CustomerAddress.StreetName" class="form-select">
+                        @foreach (CustomerAddressResponse adress in Customer.Addresses)
+                        {
+                            <option value="@adress.StreetName">@adress</option>
+                        }
+                    </select>
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    <label>Street Name:</label>
+                    <input type="text" @bind="CustomerAddress.StreetName" class="form-control">
+                </div>
+                <div class="col">
+                    <label>Number:</label>
+                    <input type="text" @bind="CustomerAddress.HouseNumber" class="form-control">
+                </div>
+            }
         </div>
+
         <div class="row">
             <div class="col">
                 <label>Description</label>
@@ -92,12 +108,12 @@
 }
 @code {
     private CustomerDetailResponse _customer;
+    private CustomerAddressResponse _address = new CustomerAddressResponse { StreetName = "Open this select menu" };
 
     [Parameter]
     public string Id { get; set; }
 
-    [Parameter]
-    public CreateInvoiceInput InvoiceInput { get; set; }
+    public CreateInvoiceInput InvoiceInput { get; set; } = new();
 
     [Parameter]
     public CustomerDetailResponse Customer
@@ -109,13 +125,21 @@
             StateHasChanged();
         }
     }
-    public CreateInvoiceLine InvoiceLine { get; set; }
+    public CreateInvoiceLine InvoiceLine { get; set; } = new();
+
+    public CustomerAddressResponse CustomerAddress
+    {
+        get { return _address; }
+        set
+        {
+            _address = value;
+            StateHasChanged();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        InvoiceInput = new();
-        InvoiceLine = new();
     }
     protected override async Task OnParametersSetAsync()
     {
