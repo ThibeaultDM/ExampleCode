@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvoiceCommunicationLayer.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    [Migration("20240930085626_Initial")]
-    partial class Initial
+    [Migration("20240930111910_Initialize")]
+    partial class Initialize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

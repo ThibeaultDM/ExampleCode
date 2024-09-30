@@ -40,12 +40,7 @@ namespace InvoiceDataLayer
         /// <exception cref="Exception"></exception>
         public async Task<DO_InvoiceHeader> GetInvoiceHeaderAsync(Guid id)
         {
-            DO_InvoiceHeader invoiceHeader = await _context.InvoiceHeader.AsNoTracking().Include(x => x.InvoiceLines).SingleOrDefaultAsync(h => h.Id == id && h.IsDeleted == false);
-
-            if (invoiceHeader == null)
-            {
-                throw new Exception("header was not found");
-            }
+            DO_InvoiceHeader invoiceHeader = await _context.InvoiceHeader.AsNoTracking().Include(x => x.InvoiceLines).SingleOrDefaultAsync(h => h.Id == id && h.IsDeleted == false) ?? throw new Exception("header was not found"); ;
 
             return invoiceHeader;
         }
@@ -56,14 +51,23 @@ namespace InvoiceDataLayer
             {
                 record.InvoiceLines.Last().CreatedBy = Environment.UserName;
                 record.InvoiceLines.Last().CreatedOn = DateTime.Now;
-                record.InvoiceLines.Last().UpdatedBy = Environment.UserName;
-                record.InvoiceLines.Last().UpdatedOn = DateTime.Now;
+                record.InvoiceLines.Last().UpdatedBy = null;
+                record.InvoiceLines.Last().UpdatedOn = null;
             }
 
             record.UpdatedOn = DateTime.Now;
+            record.UpdatedBy = Environment.UserName;
             record.DeletedOn = null;
             record.DeletedBy = null;
-            _context.Entry<DO_InvoiceHeader>(record).State = EntityState.Modified;
+
+            //var entry = _context.InvoiceHeader.Attach(record);
+            //entry.State = EntityState.Modified;
+
+            //var ori = await GetInvoiceHeaderAsync(record.Id);
+            //_context.Entry(ori).CurrentValues.SetValues(record);
+
+
+
             await SaveAsync();
         }
 

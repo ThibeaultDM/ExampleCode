@@ -53,7 +53,7 @@ namespace InvoiceBusinessLayer
             }
             catch (Exception)
             {
-                throw new Exception("an error occured creating an invoiceHeaderBO");
+                throw new Exception("an error occurred creating an invoiceHeaderBO");
             }
 
             return invoiceHeaderBo;
@@ -70,9 +70,9 @@ namespace InvoiceBusinessLayer
 
             try
             {
-                //here whyyyyyyyy
+                //here why
 
-                var invoiceHeaderDO = _mapper.Map<BO_InvoiceHeader, DO_InvoiceHeader>(invoiceHeaderBO);
+                var invoiceHeaderDO = _mapper.Map<DO_InvoiceHeader>(invoiceHeaderBO);
 
                 //foreach (PropertyInfo prop in invoiceHeaderDO.GetType().GetProperties())
                 //{

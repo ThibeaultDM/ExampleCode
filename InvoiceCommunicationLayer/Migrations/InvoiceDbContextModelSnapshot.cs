@@ -67,7 +67,7 @@ namespace InvoiceCommunicationLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InvoiceException");
+                    b.ToTable("InvoiceException", (string)null);
                 });
 
             modelBuilder.Entity("InvoiceDataLayer.DataModels.DO_InvoiceHeader", b =>
@@ -204,7 +204,7 @@ namespace InvoiceCommunicationLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InvoiceNumber");
+                    b.ToTable("InvoiceNumber", (string)null);
                 });
 
             modelBuilder.Entity("InvoiceDataLayer.DataModels.DO_InvoiceLine", b =>
