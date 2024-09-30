@@ -4,16 +4,19 @@ using InvoiceDataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InvoiceDataLayer.Migrations
+namespace InvoiceCommunicationLayer.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    partial class InvoiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240930085626_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,6 +104,9 @@ namespace InvoiceDataLayer.Migrations
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("ProxyIdCompany")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
@@ -123,7 +129,7 @@ namespace InvoiceDataLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("InvoiceHeader");
+                    b.ToTable("InvoiceHeader", (string)null);
                 });
 
             modelBuilder.Entity("InvoiceDataLayer.DataModels.DO_InvoiceLine", b =>
@@ -187,7 +193,7 @@ namespace InvoiceDataLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("InvoiceLine");
+                    b.ToTable("InvoiceLine", (string)null);
                 });
 
             modelBuilder.Entity("InvoiceDataLayer.DataModels.DO_InvoiceNumber", b =>

@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        @foreach (CreateInvoiceLine invoiceLine in InvoiceInput.InvoiceLines)
+        @foreach (CreateInvoiceLineInput invoiceLine in InvoiceInput.InvoiceLines)
         {
             <div class="row">
                 <div class="col">
@@ -125,7 +125,7 @@
             StateHasChanged();
         }
     }
-    public CreateInvoiceLine InvoiceLine { get; set; }
+    public CreateInvoiceLineInput InvoiceLine { get; set; }
 
     public CustomerAddressResponse CustomerAddress
     {

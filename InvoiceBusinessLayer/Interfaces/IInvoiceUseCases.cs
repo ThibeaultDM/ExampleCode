@@ -14,7 +14,7 @@ namespace InvoiceBusinessLayer.Interfaces
 
         Task<BO_InvoiceHeader> UC_301_003_GetInvoiceByNameAsync(Guid id);
 
-        Task<List<BrokenRule>> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid journalEntryId, Guid invoiceHeaderId);
+        Task<BO_InvoiceHeader> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid journalEntryId, Guid invoiceHeaderId);
 
         Task<List<BO_InvoiceHeader>> UC_301_005_GetAllInvoicesAsync();
     }

@@ -31,7 +31,7 @@ namespace Orchestration.Interfaces
 
         Task<CustomerDetailResponse> UC_300_004_ArchiveCustomerInvoiceAsync(CreateInvoiceInput invoice);
 
-        Task<List<CustomerResponse>> UC_200_002_SaveInvoiceForCustomerAsync(CreateCustomerInput customerToCreate, CreateInvoiceInput invoiceHeaderInput);
+        Task<InvoiceDetailResponse> UC_200_002_SaveInvoiceForCustomerAsync(CreateCustomerInput customerToCreate, CreateInvoiceInput invoiceHeaderInput);
 
         #endregion Combined
     }

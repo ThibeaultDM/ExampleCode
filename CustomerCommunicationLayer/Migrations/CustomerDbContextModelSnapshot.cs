@@ -188,44 +188,6 @@ namespace CustomerCommunicationLayer.Migrations
                     b.ToTable("CustomerException");
                 });
 
-            modelBuilder.Entity("CustomerDataLayer.DataModels.DO_InvoiceHeaderProxy", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("InvoiceHeaderProxy");
-                });
-
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_Person", b =>
                 {
                     b.Property<Guid>("Id")
@@ -339,17 +301,6 @@ namespace CustomerCommunicationLayer.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("CustomerDataLayer.DataModels.DO_InvoiceHeaderProxy", b =>
-                {
-                    b.HasOne("CustomerDataLayer.DataModels.DO_Company", "Company")
-                        .WithMany("InvoiceHeadersProxy")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("DO_AddressDO_Company", b =>
                 {
                     b.HasOne("CustomerDataLayer.DataModels.DO_Address", null)
@@ -387,11 +338,6 @@ namespace CustomerCommunicationLayer.Migrations
                         .HasForeignKey("CustomerDataLayer.DataModels.DO_Customer", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CustomerDataLayer.DataModels.DO_Company", b =>
-                {
-                    b.Navigation("InvoiceHeadersProxy");
                 });
 
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_Customer", b =>

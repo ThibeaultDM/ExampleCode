@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CustomerDataLayer.Migrations
+namespace CustomerCommunicationLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class step6 : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -187,31 +188,6 @@ namespace CustomerDataLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "InvoiceHeader",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InvoiceHeader", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_InvoiceHeader_Company_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Company",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Address_Id",
                 table: "Address",
@@ -248,11 +224,6 @@ namespace CustomerDataLayer.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoiceHeader_CompanyId",
-                table: "InvoiceHeader",
-                column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PersonAddress_PeopleId",
                 table: "PersonAddress",
                 column: "PeopleId");
@@ -269,9 +240,6 @@ namespace CustomerDataLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "CustomerException");
-
-            migrationBuilder.DropTable(
-                name: "InvoiceHeader");
 
             migrationBuilder.DropTable(
                 name: "PersonAddress");

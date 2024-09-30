@@ -25,6 +25,7 @@ namespace InvoiceBusinessLayer.BusinessObjects
         }
 
         public Guid Id { get; set; }
+        public Guid? ProxyIdCompany { get; set; }
 
         /// <summary>
         /// Amount to be paid before taxes
@@ -46,7 +47,6 @@ namespace InvoiceBusinessLayer.BusinessObjects
         public bool IsPaid { get; set; }
         public int LastUsedNumber { get; set; }
         public List<BO_InvoiceLine> InvoiceLines { get; set; }
-
         public void AddInvoiceLineToHeader(BO_InvoiceLine invoiceLine)
         {
             if (InvoiceLines == null)

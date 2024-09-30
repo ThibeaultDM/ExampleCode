@@ -4,8 +4,6 @@ using CustomerBusinessLayer.Interfaces;
 using CustomerCommunicationLayer.Interfaces;
 using CustomerCommunicationLayer.Models.Input;
 using CustomerCommunicationLayer.Models.Response;
-using InvoiceCommunicationLayer;
-using InvoiceCommunicationLayer.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 using QueasoFramework.BusinessModels.Rules;
 

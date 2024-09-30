@@ -106,19 +106,16 @@ namespace InvoiceBusinessLayer
         }
 
         // where do I find this ulm schematic
-        public async Task<List<BrokenRule>> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid journalEntryId, Guid invoiceHeaderId)
+        public async Task<BO_InvoiceHeader> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid journalEntryId, Guid invoiceHeaderId)
         {
             BO_InvoiceHeader toCheck = await UC_301_003_GetInvoiceByNameAsync(invoiceHeaderId);
 
-            List<BrokenRule> brokenRules = null;
+            toCheck.ProxyIdCompany = journalEntryId;
+            DO_InvoiceHeader toSave = _mapper.Map<DO_InvoiceHeader>(toCheck);
 
-            if (toCheck.Valid != true)
-            {
-                brokenRules = toCheck.BrokenRules;
-                BO_JournalEntry _journalEntry = new BO_JournalEntry(journalEntryId, invoiceHeaderId, brokenRules);
-            }
+            await _headerRepository.UpdateInvoiceHeaderAsync(toSave);
 
-            return brokenRules;
+            return toCheck;
         }
 
         // where do I find this ulm schematic

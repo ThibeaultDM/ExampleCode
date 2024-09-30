@@ -1,4 +1,4 @@
-﻿namespace InvoiceCommunicationLayer
+﻿namespace CustomerCommunicationLayer.Models.Response
 {
     public class ErrorResponse
     {

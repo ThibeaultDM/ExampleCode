@@ -1,4 +1,4 @@
-﻿namespace InvoiceCommunicationLayer.Models.Response
+﻿namespace CustomerCommunicationLayer.Models.Response
 {
     public class BaseResponse
     {

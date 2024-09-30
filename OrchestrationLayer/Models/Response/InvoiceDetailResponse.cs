@@ -3,6 +3,7 @@
     public class InvoiceDetailResponse : BaseResponse
     {
         public Guid Id { get; set; }
+        public Guid? ProxyIdCompany { get; set; }
 
         /// <summary>
         /// Amount to be paid before taxes
@@ -23,6 +24,6 @@
         public string VatNumber { get; set; }
         public bool IsPaid { get; set; }
 
-        public List<InvoiceDetailResponse> InvoiceLines { get; set; }
+        public List<InvoiceLineDetailResponse> InvoiceLines { get; set; }
     }
 }

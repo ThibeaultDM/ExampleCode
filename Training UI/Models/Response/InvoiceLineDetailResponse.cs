@@ -3,34 +3,16 @@
 {
     public class InvoiceLineDetailResponse : BaseResponse
     {
-        private decimal _Amount;
-        private decimal _VatAmount;
-        private decimal _LineAmount;
+        public Guid Id { get; set; }
 
-        public decimal Amount
-        {
-            get { return _Amount; }
-            set { _Amount = value; }
-        }
+        public decimal Amount { get; set; }
 
-        public decimal VATAmount
-        {
-            get { return _VatAmount; }
-            set { _VatAmount = value; }
-        }
+        public string InvoiceNumber { get; set; }
 
-        public decimal VATRate { get; set; }
+        public bool IsActive { get; set; }
 
-        public decimal LineAmount
-        {
-            get { return _LineAmount; }
-            set { _LineAmount = value; }
-        }
+        public decimal VATAmount { get; set; }
 
-        public decimal PricePerUnit { get; set; }
-
-        public int Quantity { get; set; } = 0;
-
-        public string Description { get; set; }
+        public string VatNumber { get; set; }
     }
 }

@@ -21,6 +21,5 @@ namespace CustomerDataLayer.DataModels
         public bool IsActive { get; set; }
         public virtual List<DO_Address> Addresses { get; set; }
         public DO_Customer Customer { get; set; }
-        public virtual List<DO_InvoiceHeaderProxy> InvoiceHeadersProxy { get; set; }
     }
 }

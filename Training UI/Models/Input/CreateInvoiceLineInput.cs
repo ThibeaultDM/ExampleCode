@@ -2,6 +2,8 @@
 {
     public class CreateInvoiceLineInput
     {
+        public Guid InvoiceHeaderId { get; set; }
+
         public decimal VATRate { get; set; }
 
         public decimal PricePerUnit { get; set; }

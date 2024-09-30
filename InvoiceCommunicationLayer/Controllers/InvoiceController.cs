@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using InvoiceBusinessLayer.BusinessObjects;
 using InvoiceBusinessLayer.Interfaces;
 using InvoiceCommunicationLayer.Models.Input;
@@ -120,11 +121,14 @@ namespace InvoiceCommunicationLayer.Controllers
         [HttpPost("ArchiveInvoiceJournalEntry")]
         public async Task<IActionResult> ArchiveInvoiceJournalEntryAsync(ArchiveInvoiceJournalEntryInput archiveInvoiceJournalEntryInput)
         {
+            CreateInvoiceHeaderResponse response = new();
             try
             {
-                var result = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(archiveInvoiceJournalEntryInput.JournalHeaderId, archiveInvoiceJournalEntryInput.JournalEntryId);
+                var result = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(archiveInvoiceJournalEntryInput.JournalEntryId, archiveInvoiceJournalEntryInput.JournalHeaderId);
 
-                return Ok(result);
+                response = _mapper.Map<CreateInvoiceHeaderResponse>(result);
+
+                return Ok(response);
             }
             catch (Exception)
             {

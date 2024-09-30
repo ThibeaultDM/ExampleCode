@@ -6,20 +6,6 @@ namespace InvoiceCommunicationLayer.Models.Input
     {
         public Guid InvoiceHeaderId { get; set; }
 
-        //public Guid InvoiceLineId { get; set; }
-
-        ///// <summary>
-        ///// Price of all the items without taxes
-        ///// </summary>
-        //[Range(0, 79228162514264337593543950335d)]// Max value of a decimal
-        //public decimal Amount { get; set; }
-
-        ///// <summary>
-        ///// Amount of taxes on total amount of products
-        ///// </summary>
-        //[Range(0, 79228162514264337593543950335d)]
-        //public decimal VATAmount { get; set; }
-
         [Range(0, 79228162514264337593543950335d)]
         public decimal VATRate { get; set; }
 
@@ -37,5 +23,6 @@ namespace InvoiceCommunicationLayer.Models.Input
 
         [MaxLength(100)]
         public string Description { get; set; }
+
     }
 }

@@ -3,9 +3,10 @@
     public class CreateInvoiceInput
     {
         public Guid ProxyId { get; set; }
+        public Guid ProxyIdCompany { get; set; }
         public string VatNumber { get; set; }
 
-        public List<CreateInvoiceLine> InvoiceLines { get; set; } = new();
+        public List<CreateInvoiceLineInput> InvoiceLines { get; set; } = new();
         public bool IsPaid { get; set; } = false;
 }
 }

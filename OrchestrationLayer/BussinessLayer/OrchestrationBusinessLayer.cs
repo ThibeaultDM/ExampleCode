@@ -70,7 +70,7 @@ namespace Orchestration.BusinessLayer
 
         #region Combined
 
-        public Task<List<CustomerResponse>> UC_200_002_SaveInvoiceForCustomerAsync(CreateCustomerInput customerToCreate, CreateInvoiceInput invoiceHeaderInput)
+        public Task<InvoiceDetailResponse> UC_200_002_SaveInvoiceForCustomerAsync(CreateCustomerInput customerToCreate, CreateInvoiceInput invoiceHeaderInput)
         {
             throw new NotImplementedException();
         }
@@ -103,8 +103,8 @@ namespace Orchestration.BusinessLayer
                             }
                         }
 
-                        // link header id to invoice id
-                        ArchiveInvoiceJournalEntryInput archiveInvoice = new(toCreate.Id, invoice.ProxyId);
+                        // link company to invoice id
+                        ArchiveInvoiceJournalEntryInput archiveInvoice = new(customer.Company.Id, toCreate.Id);
                         await _invoiceService.UC_301_004_ArchiveJournalEntryForInvoiceAsync(archiveInvoice);
                     }
                     else

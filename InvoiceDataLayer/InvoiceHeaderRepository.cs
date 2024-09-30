@@ -52,10 +52,14 @@ namespace InvoiceDataLayer
 
         public async Task UpdateInvoiceHeaderAsync(DO_InvoiceHeader record)
         {
-            record.InvoiceLines.Last().CreatedBy = Environment.UserName;
-            record.InvoiceLines.Last().CreatedOn = DateTime.Now;
-            record.InvoiceLines.Last().UpdatedBy = Environment.UserName;
-            record.InvoiceLines.Last().UpdatedOn = DateTime.Now;
+            if (record.InvoiceLines.Count != 0)
+            {
+                record.InvoiceLines.Last().CreatedBy = Environment.UserName;
+                record.InvoiceLines.Last().CreatedOn = DateTime.Now;
+                record.InvoiceLines.Last().UpdatedBy = Environment.UserName;
+                record.InvoiceLines.Last().UpdatedOn = DateTime.Now;
+            }
+
             record.UpdatedOn = DateTime.Now;
             record.DeletedOn = null;
             record.DeletedBy = null;
