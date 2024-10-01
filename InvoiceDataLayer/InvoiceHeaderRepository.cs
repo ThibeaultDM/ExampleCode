@@ -63,12 +63,21 @@ namespace InvoiceDataLayer
             // to deal with Optimistic concurrency
             var original = await GetInvoiceHeaderAsync(record.Id);
 
-            original.InvoiceLines.ForEach(l => _context.InvoiceLine.Remove(l));
-            _context.InvoiceHeader.Remove(original);
-            await SaveAsync();
+            if (original != record)
+            {
+                if (original.InvoiceLines.Count != 0)
+                {
+                    original.InvoiceLines.ForEach(l => _context.InvoiceLine.Remove(l));
 
-            await _context.InvoiceHeader.AddAsync(record);
-            await SaveAsync();
+                }
+                
+                _context.InvoiceHeader.Remove(original);
+                await SaveAsync();
+
+                await _context.InvoiceHeader.AddAsync(record);
+                await SaveAsync();
+
+            }
         }
 
         public void Dispose()
