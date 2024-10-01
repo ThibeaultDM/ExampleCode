@@ -67,6 +67,7 @@ namespace InvoiceCommunicationLayer.Controllers
                 invoiceLineBo.PricePerUnit = addInvoiceLineToInvoiceHeaderInput.PricePerUnit;
                 invoiceLineBo.VATRate = addInvoiceLineToInvoiceHeaderInput.VATRate;
                 invoiceLineBo.Quantity = addInvoiceLineToInvoiceHeaderInput.Quantity;
+                invoiceLineBo.Description = addInvoiceLineToInvoiceHeaderInput.Description;
 
                 if (invoiceLineBo.Valid != true)
                 {
