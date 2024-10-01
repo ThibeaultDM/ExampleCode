@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 string connectionstring = builder.Configuration.GetConnectionString("Development");
 
 builder.Services.AddDbContext<InvoiceDbContext>(options => options.UseSqlServer(connectionstring, b => b.MigrationsAssembly("InvoiceCommunicationLayer")).EnableSensitiveDataLogging());
-                                                           
 
 // Add services to the container.
 

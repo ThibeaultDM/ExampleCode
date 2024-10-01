@@ -8,7 +8,9 @@ namespace Training_UI.Interfaces
         List<CustomerResponse> Customers { get; }
 
         Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
+
         Task GetAllCustomersAsync();
+
         Task<CustomerDetailResponse> GetCustomerAsync(string customerId);
     }
 }

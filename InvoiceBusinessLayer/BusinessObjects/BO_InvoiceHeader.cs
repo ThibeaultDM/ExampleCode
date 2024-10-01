@@ -46,6 +46,7 @@ namespace InvoiceBusinessLayer.BusinessObjects
         public string VatNumber { get; set; }
         public bool IsPaid { get; set; }
         public List<BO_InvoiceLine> InvoiceLines { get; set; }
+
         public void AddInvoiceLineToHeader(BO_InvoiceLine invoiceLine)
         {
             if (InvoiceLines == null)

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure;
 using InvoiceBusinessLayer.BusinessObjects;
 using InvoiceBusinessLayer.Interfaces;
 using InvoiceCommunicationLayer.Models.Input;

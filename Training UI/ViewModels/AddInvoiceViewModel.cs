@@ -15,9 +15,8 @@ namespace Training_UI.ViewModels
 
         public async Task<CustomerDetailResponse> GetCustomerAsync(string searchId)
         {
-
             CustomerDetailResponse customer = await invoiceModel.GetCustomerAsync(searchId);
-            
+
             return customer;
         }
 

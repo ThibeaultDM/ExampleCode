@@ -6,6 +6,7 @@ namespace Training_UI.Interfaces
     public interface IAddInvoiceViewModel
     {
         Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput invoiceInput);
+
         Task<CustomerDetailResponse> GetCustomerAsync(string guid);
     }
 }

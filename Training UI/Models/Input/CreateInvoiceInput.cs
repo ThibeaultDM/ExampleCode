@@ -8,5 +8,5 @@
 
         public List<CreateInvoiceLineInput> InvoiceLines { get; set; } = new();
         public bool IsPaid { get; set; } = false;
-}
+    }
 }

@@ -10,6 +10,7 @@ namespace Orchestration.ObjectLayer
     {
         private readonly FlurlClient _client;
         private readonly string customerPathSeg = "Customer";
+
         public CustomerService(IQueasoBaseUrl url)
         {
             _client = new(url.BaseUrlBuilder(BaseUrlComponent.customer));

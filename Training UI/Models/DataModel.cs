@@ -30,12 +30,13 @@ namespace Training_UI.Models
 
             customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
         }
+
         public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
         {
             Console.WriteLine("GetCustomerAsync");
 
             CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments("UC_300_003_GetCustomerByName")
-                                                                   .SetQueryParam("customerId", customerId)                                                                   
+                                                                   .SetQueryParam("customerId", customerId)
                                                                    .PostJsonAsync(customerId)
                                                                    .ReceiveJson<CustomerDetailResponse>();
 
@@ -48,7 +49,7 @@ namespace Training_UI.Models
 
             CustomerDetailResponse customerDetailResponse = new();
             customerDetailResponse = await _client.BaseUrl.AppendPathSegments("UC_300_004_ArchiveCustomerInvoice")
-                                           .PostJsonAsync( createInvoice )
+                                           .PostJsonAsync(createInvoice)
                                            .ReceiveJson<CustomerDetailResponse>();
 
             return customerDetailResponse;

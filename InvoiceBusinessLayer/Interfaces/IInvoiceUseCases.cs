@@ -1,5 +1,4 @@
 ﻿using InvoiceBusinessLayer.BusinessObjects;
-using QueasoFramework.BusinessModels.Rules;
 using QueasoFramework.Exceptions;
 
 namespace InvoiceBusinessLayer.Interfaces

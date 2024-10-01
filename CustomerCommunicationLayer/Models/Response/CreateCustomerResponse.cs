@@ -1,5 +1,4 @@
-﻿
-namespace CustomerCommunicationLayer.Models.Response
+﻿namespace CustomerCommunicationLayer.Models.Response
 {
     public class CreateCustomerResponse : BaseResponse
     {

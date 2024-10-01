@@ -46,6 +46,7 @@ namespace InvoiceDataLayer.DataModels
         #endregion Properties
 
         #region Relations
+
         public virtual Guid? ProxyIdCompany { get; set; }
         public virtual List<DO_InvoiceLine> InvoiceLines { get; set; }
 

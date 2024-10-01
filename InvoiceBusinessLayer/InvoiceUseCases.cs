@@ -3,7 +3,6 @@ using InvoiceBusinessLayer.BusinessObjects;
 using InvoiceBusinessLayer.Interfaces;
 using InvoiceDataLayer.DataModels;
 using InvoiceDataLayer.Interfaces;
-using QueasoFramework.BusinessModels.Rules;
 using QueasoFramework.Exceptions;
 
 namespace InvoiceBusinessLayer
