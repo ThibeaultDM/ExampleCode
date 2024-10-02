@@ -3,7 +3,6 @@
     public class CreateInvoiceInput
     {
         public Guid ProxyId { get; set; }
-        public Guid ProxyIdCompany { get; set; }
         public string VatNumber { get; set; }
 
         public List<CreateInvoiceLineInput> InvoiceLines { get; set; } = new();

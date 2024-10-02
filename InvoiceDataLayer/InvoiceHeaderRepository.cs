@@ -65,6 +65,7 @@ namespace InvoiceDataLayer
 
             if (original != record)
             {
+                // todo perhaps its more effecient to merge the 2 invoicelines and .Add(unique)
                 if (original.InvoiceLines.Count != 0)
                 {
                     original.InvoiceLines.ForEach(l => _context.InvoiceLine.Remove(l));

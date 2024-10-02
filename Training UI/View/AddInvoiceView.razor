@@ -13,7 +13,7 @@
             </div>
             <div class="col">
                 <label>VAT number:</label>
-                <input type="text" @bind="InvoiceInput.VatNumber" class="form-control" placeholder="BEOxxxxxx">
+                <input type="text" @bind="InvoiceInput.VatNumber" class="form-control" required placeholder="BEOxxxxxx">
             </div>
         </div>
         <div class="row">
@@ -21,7 +21,7 @@
             {
                 <div class="col">
                     <label>Street Name:</label>
-                    <select @bind="CustomerAddress.StreetName" class="form-select">
+                    <select required @bind="CustomerAddress.StreetName" class="form-select">
                         @foreach (CustomerAddressResponse adress in Customer.Addresses)
                         {
                             <option value="@adress.StreetName">@adress</option>
@@ -106,8 +106,21 @@
         </div>
     </EditForm>
 }
+@if (Errors.Count() != 0)
+{
+    @foreach (ErrorResponse error in Errors)
+    {
+        <div class="row">
+            <div class="col">
+                <label>Exception:</label>
+                <input type="text" value="error">
+            </div>
+        </div>
+    }
+}
 @code {
     private CustomerDetailResponse _customer;
+    // todo could prob be done better
     private CustomerAddressResponse _address = new CustomerAddressResponse { StreetName = "Open this select menu" };
 
     [Parameter]
@@ -137,11 +150,14 @@
         }
     }
 
+    public List<ErrorResponse> Errors { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         InvoiceInput = new();
         InvoiceLine = new();
+        Errors = new();
     }
     protected override async Task OnParametersSetAsync()
     {
@@ -154,6 +170,12 @@
     public async Task CreateInvoice()
     {
         CustomerDetailResponse customerDetail = await _serviceInvoice.CreateInvoiceAsync(InvoiceInput);
+
+        if (customerDetail.Errors.Count != 0)
+        {
+            Errors = customerDetail.Errors;
+            StateHasChanged();
+        }
     }
 
     private void AddInvoiceLine()

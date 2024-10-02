@@ -7,7 +7,7 @@
             Errors = new List<ErrorResponse>();
         }
 
-        public bool Succes { get; set; } = true;
+        public bool Succes { get; set; }
         public List<ErrorResponse> Errors { get; set; } = new();
     }
 }

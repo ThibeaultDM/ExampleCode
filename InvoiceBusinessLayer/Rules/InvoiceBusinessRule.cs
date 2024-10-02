@@ -89,15 +89,23 @@ namespace InvoiceBusinessLayer.Rules
 
         private bool CheckValidityVatNumberModulo97(string vatNumber) // https://www.fiducial.be/nl/news/Hoe-kunt-u-weten-of-uw-klant-u-een-correct-BTW-nummer-gaf
         {
-            int lastTwoNumbers = Convert.ToInt32(vatNumber.Substring((vatNumber.Length - 2)));
-            int otherNumbers = Convert.ToInt32(vatNumber.Substring(2));
             bool isValid;
 
-            if (97 - (otherNumbers - (otherNumbers / 97 * 97)) == lastTwoNumbers)
+            try
             {
-                isValid = true;
+                int lastTwoNumbers = Convert.ToInt32(vatNumber.Substring((vatNumber.Length - 2)));
+                int otherNumbers = Convert.ToInt32(vatNumber.Substring(2));
+
+                if (97 - (otherNumbers - (otherNumbers / 97 * 97)) == lastTwoNumbers)
+                {
+                    isValid = true;
+                }
+                else
+                {
+                    isValid = false;
+                }
             }
-            else
+            catch
             {
                 isValid = false;
             }
