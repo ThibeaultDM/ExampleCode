@@ -7,7 +7,7 @@
 
         public override string ToString()
         {
-            return $"{PropertyName}: {ErrorMessage}";
+            return $"{ErrorMessage}";
         }
     }
 }

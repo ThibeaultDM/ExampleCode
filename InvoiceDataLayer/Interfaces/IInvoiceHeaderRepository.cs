@@ -23,7 +23,15 @@ namespace InvoiceDataLayer.Interfaces
         /// Update an invoice header
         /// </summary>
         /// <param name="record"></param>
-        Task UpdateInvoiceHeaderAsync(DO_InvoiceHeader record);
+        Task<DO_InvoiceHeader> UpdateInvoiceHeaderAsync(DO_InvoiceHeader record);
+
+        /// <summary>
+        /// Update an invoice header for adding a invoiceLine
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="recordInvoiceLine"></param>
+        /// <returns></returns>
+        Task<DO_InvoiceHeader> UpdateInvoiceHeaderAsync(DO_InvoiceHeader record, DO_InvoiceLine recordInvoiceLine);
 
         /// <summary>
         /// Save to the database

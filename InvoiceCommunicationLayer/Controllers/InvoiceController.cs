@@ -38,6 +38,8 @@ namespace InvoiceCommunicationLayer.Controllers
                 }
                 else
                 {
+                    response.Succes = false;
+
                     foreach (var brokenRule in result.BrokenRules)
                     {
                         response.Errors.Add(new ErrorResponse()

@@ -1,6 +1,7 @@
 ﻿using InvoiceDataLayer.DataModels;
 using InvoiceDataLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace InvoiceDataLayer
 {
@@ -45,41 +46,60 @@ namespace InvoiceDataLayer
             return invoiceHeader;
         }
 
-        public async Task UpdateInvoiceHeaderAsync(DO_InvoiceHeader record)
+        public async Task<DO_InvoiceHeader> UpdateInvoiceHeaderAsync(DO_InvoiceHeader record)
         {
-            if (record.InvoiceLines.Count != 0)
+            DO_InvoiceHeader toUpdate = record;
+
+            try
             {
-                record.InvoiceLines.Last().CreatedBy = Environment.UserName;
-                record.InvoiceLines.Last().CreatedOn = DateTime.Now;
-                record.InvoiceLines.Last().UpdatedBy = null;
-                record.InvoiceLines.Last().UpdatedOn = null;
+                record.UpdatedOn = DateTime.Now;
+                record.UpdatedBy = Environment.UserName;
+                record.DeletedOn = null;
+                record.DeletedBy = null;
+
+                _context.Entry<DO_InvoiceHeader>(record).State = EntityState.Modified;
+                await SaveAsync();
+
+                toUpdate = record;
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return toUpdate;
+        }
+        public async Task<DO_InvoiceHeader> UpdateInvoiceHeaderAsync(DO_InvoiceHeader record, DO_InvoiceLine recordInvoiceLine)
+        {
+            DO_InvoiceHeader toUpdate = record;
 
             record.UpdatedOn = DateTime.Now;
             record.UpdatedBy = Environment.UserName;
             record.DeletedOn = null;
             record.DeletedBy = null;
 
-            // to deal with Optimistic concurrency
-            var original = await GetInvoiceHeaderAsync(record.Id);
+            recordInvoiceLine.UpdatedOn = DateTime.Now;
+            recordInvoiceLine.UpdatedBy = Environment.UserName;
+            recordInvoiceLine.DeletedOn = null;
+            recordInvoiceLine.DeletedBy = null;
 
-            if (original != record)
+            try
             {
-                // todo perhaps its more effecient to merge the 2 invoicelines and .Add(unique)
-                if (original.InvoiceLines.Count != 0)
-                {
-                    original.InvoiceLines.ForEach(l => _context.InvoiceLine.Remove(l));
+                await _context.InvoiceLine.AddAsync(recordInvoiceLine);
 
-                }
-                
-                _context.InvoiceHeader.Remove(original);
+                _context.Entry<DO_InvoiceHeader>(record).State = EntityState.Modified;
                 await SaveAsync();
 
-                await _context.InvoiceHeader.AddAsync(record);
-                await SaveAsync();
-
+                toUpdate = record;
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return toUpdate;
         }
+
 
         public void Dispose()
         {

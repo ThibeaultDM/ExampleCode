@@ -13,7 +13,7 @@
             </div>
             <div class="col">
                 <label>VAT number:</label>
-                <input type="text" @bind="InvoiceInput.VatNumber" class="form-control" required placeholder="BEOxxxxxx">
+                <input type="text" @bind="InvoiceInput.VatNumber" class="form-control" required placeholder="BE0xxxxxx">
             </div>
         </div>
         <div class="row">
@@ -113,7 +113,7 @@
         <div class="row">
             <div class="col">
                 <label>Exception:</label>
-                <input type="text" value="error">
+                <input type="text" value="@error.ToString()" class="form-control">
             </div>
         </div>
     }

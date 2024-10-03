@@ -10,6 +10,6 @@
 
         public int Quantity { get; set; } = 0;
 
-        public string Description { get; set; }
+        public string Description { get; set; } = "Description";
     }
 }

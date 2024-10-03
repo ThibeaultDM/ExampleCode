@@ -67,24 +67,19 @@ namespace InvoiceBusinessLayer
 
             invoiceHeaderBO.AddInvoiceLineToHeader(boInvoiceLine);
 
+            var invoiceHeaderDO = _mapper.Map<DO_InvoiceHeader>(invoiceHeaderBO);
+
             try
             {
-                //here why
 
-                var invoiceHeaderDO = _mapper.Map<DO_InvoiceHeader>(invoiceHeaderBO);
-
-                //foreach (PropertyInfo prop in invoiceHeaderDO.GetType().GetProperties())
-                //{
-                //	invoiceHeaderBO.GetType().GetProperty(prop.Name).);
-                //}
-
-                await _headerRepository.UpdateInvoiceHeaderAsync(invoiceHeaderDO);
+                invoiceHeaderDO = await _headerRepository.UpdateInvoiceHeaderAsync(invoiceHeaderDO, invoiceHeaderDO.InvoiceLines.Last());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("something went wrong updating the header in the database");
+                throw new Exception(ex.Message);
             }
 
+            invoiceHeaderBO = _mapper.Map<BO_InvoiceHeader>(invoiceHeaderDO);
             return invoiceHeaderBO;
         }
 
@@ -107,14 +102,15 @@ namespace InvoiceBusinessLayer
         // where do I find this ulm schematic
         public async Task<BO_InvoiceHeader> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid journalEntryId, Guid invoiceHeaderId)
         {
-            BO_InvoiceHeader toCheck = await UC_301_003_GetInvoiceByNameAsync(invoiceHeaderId);
+            BO_InvoiceHeader invoiceHeaderBO = await UC_301_003_GetInvoiceByNameAsync(invoiceHeaderId);
 
-            toCheck.ProxyIdCompany = journalEntryId;
-            DO_InvoiceHeader toSave = _mapper.Map<DO_InvoiceHeader>(toCheck);
+            invoiceHeaderBO.ProxyIdCompany = journalEntryId;
+            DO_InvoiceHeader invoiceHeaderDO = _mapper.Map<DO_InvoiceHeader>(invoiceHeaderBO);
 
-            await _headerRepository.UpdateInvoiceHeaderAsync(toSave);
+            invoiceHeaderDO = await _headerRepository.UpdateInvoiceHeaderAsync(invoiceHeaderDO);
+            invoiceHeaderBO = _mapper.Map<BO_InvoiceHeader>(invoiceHeaderDO);
 
-            return toCheck;
+            return invoiceHeaderBO;
         }
 
         // where do I find this ulm schematic
