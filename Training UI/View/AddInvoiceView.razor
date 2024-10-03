@@ -169,13 +169,16 @@
 
     public async Task CreateInvoice()
     {
+        Errors = new();
+
         CustomerDetailResponse customerDetail = await _serviceInvoice.CreateInvoiceAsync(InvoiceInput);
 
         if (customerDetail.Errors.Count != 0)
         {
             Errors = customerDetail.Errors;
-            StateHasChanged();
         }
+
+        StateHasChanged();
     }
 
     private void AddInvoiceLine()
