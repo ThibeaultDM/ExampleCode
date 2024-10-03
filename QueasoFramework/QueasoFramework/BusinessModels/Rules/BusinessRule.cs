@@ -123,8 +123,6 @@ namespace QueasoFramework.BusinessModels.Rules
         {
             this.PropertyName = propertyName;
 
-            //todo: check if minLength isn't bigger than maxLength
-
             if (valueToCheck != null && (valueToCheck.Length < minLength || valueToCheck.Length > maxLength)) //note: extra check for null string + < ipv <=
             {
                 this.Passed = false;

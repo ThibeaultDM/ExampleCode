@@ -89,8 +89,6 @@ namespace Orchestration.BusinessLayer
                     {
                         foreach (CreateInvoiceLine invoiceLine in invoice.InvoiceLines)
                         {
-                            // todo ask why are you mapping this?
-                            //var line = _mapper.Map<CreateInvoiceLine>(invoiceLine);
                             invoiceLine.InvoiceHeaderId = toCreate.Id;
 
                             var res = await _invoiceService.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLine);

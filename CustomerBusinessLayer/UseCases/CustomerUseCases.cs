@@ -89,12 +89,10 @@ namespace CustomerBusinessLayer.UseCases
             }
         }
 
-        // TODO ask why not a task
         private async Task SaveCustomerException(FrameworkException frameworkException)
         {
             DO_CustomerException doCustomerException = _mapper.Map<DO_CustomerException>(frameworkException);
 
-            // TODO ask why delete props need to be filled in
             doCustomerException.IsDeleted = false;
             doCustomerException.DeletedBy = Environment.UserName;
             doCustomerException.DeletedOn = DateTime.Now;

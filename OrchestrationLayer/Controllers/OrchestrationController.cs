@@ -132,7 +132,7 @@ namespace Orchestration.Controllers
         #endregion Customer
 
         #region Combined
-
+        // TODO
         //[HttpPost("UC_301_009_GetJournalForEntry")]
         //public Task<List<InvoiceResponse>> GetJournalForEntry(Guid customerId)
         //{
@@ -142,7 +142,6 @@ namespace Orchestration.Controllers
         [HttpPost("UC_300_004_ArchiveCustomerInvoice")]
         public async Task<IActionResult> ArchiveCustomerInvoice(CreateInvoiceInput _invoice)
         {
-            // todo ask if this is how it should work 1. creates a new customer for every invoice
             ObjectResult response;
 
             try

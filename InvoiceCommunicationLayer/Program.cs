@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen(config =>
 
 builder.Services.AddTransient<IInvoiceExceptionRepository, InvoiceExceptionRepository>();
 builder.Services.AddTransient<IInvoiceHeaderRepository, InvoiceHeaderRepository>();
-builder.Services.AddScoped<IInvoiceNumberRepository, InvoiceNumberRepository>();//todo why singelton error
+builder.Services.AddScoped<IInvoiceNumberRepository, InvoiceNumberRepository>();
 builder.Services.AddTransient<IInvoiceUseCases, InvoiceUseCases>();
 
 builder.Services.AddAutoMapper(typeof(AutomapperConfig));

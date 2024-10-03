@@ -7,7 +7,6 @@ namespace QueasoFramework.Exceptions
     {
         #region Properties
 
-        // todo look up this syntax again
         public Guid Id { get; set; } = Guid.NewGuid();
 
         public FrameworkExceptionType Type { get; set; }

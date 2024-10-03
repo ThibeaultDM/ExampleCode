@@ -25,7 +25,6 @@ namespace InvoiceDataLayer
 
         public void Dispose()
         {
-            // TODO look this up
             Dispose(true);
             GC.SuppressFinalize(this);
         }

@@ -63,21 +63,6 @@ namespace CustomerDataLayer
 
         public async Task<DO_Customer> UpdateCustomerAsync(DO_Customer customerToUpdate)
         {
-            //todo ask if i dont need to do this, bool adressChanged,bool companyChanged
-            //if (adressChanged)
-            //{
-            //    customerToUpdate.Addresses.Last().CreatedBy = Environment.UserName;
-            //    customerToUpdate.Addresses.Last().CreatedOn = DateTime.Now;
-            //    customerToUpdate.Addresses.Last().UpdatedBy = Environment.UserName;
-            //    customerToUpdate.Addresses.Last().UpdatedOn = DateTime.Now;
-            //}
-            //if (companyChanged)
-            //{
-            //    customerToUpdate.Companies.CreatedBy = Environment.UserName;
-            //    customerToUpdate.Companies.CreatedOn = DateTime.Now;
-            //    customerToUpdate.Companies.UpdatedBy = Environment.UserName;
-            //    customerToUpdate.Companies.UpdatedOn = DateTime.Now;
-            //}
 
             customerToUpdate.UpdatedBy = Environment.UserName;
             customerToUpdate.UpdatedOn = DateTime.Now;

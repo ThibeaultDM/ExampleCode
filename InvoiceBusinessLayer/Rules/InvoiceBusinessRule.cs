@@ -47,7 +47,6 @@ namespace InvoiceBusinessLayer.Rules
             return this;
         }
 
-        // TODO have this checked
         /// <summary>
         /// Calculates total value of invoice before tax
         /// </summary>
@@ -86,7 +85,9 @@ namespace InvoiceBusinessLayer.Rules
 
             return this;
         }
-
+        /// <summary>
+        /// cref <see cref="invoice"/>
+        /// </summary>
         private bool CheckValidityVatNumberModulo97(string vatNumber) // https://www.fiducial.be/nl/news/Hoe-kunt-u-weten-of-uw-klant-u-een-correct-BTW-nummer-gaf
         {
             bool isValid;
@@ -113,7 +114,6 @@ namespace InvoiceBusinessLayer.Rules
             return isValid;
         }
 
-        //TODO break point this and look at it
         /// <summary>
         /// Calculates total amount of taxes to be paid
         /// </summary>

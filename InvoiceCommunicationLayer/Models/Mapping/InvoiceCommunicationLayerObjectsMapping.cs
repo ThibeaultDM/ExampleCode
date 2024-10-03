@@ -10,7 +10,7 @@ namespace InvoiceCommunicationLayer.Models.Mapping
         {
             CreateMap<BO_InvoiceHeader, CreateInvoiceHeaderInput>().ReverseMap();
 
-            CreateMap<BO_InvoiceLine, AddInvoiceLineToInvoiceHeaderInput>().ReverseMap(); // TODO doen't work don't understand why
+            CreateMap<BO_InvoiceLine, AddInvoiceLineToInvoiceHeaderInput>().ReverseMap();
         }
     }
 }

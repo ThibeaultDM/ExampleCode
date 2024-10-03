@@ -88,7 +88,6 @@ namespace CustomerCommunicationLayer.Controllers
             return Ok(response);
         }
 
-        // TODO look at this
         private T HandleException<T>(T response, Exception ex) where T : BaseResponse
         {
             if (ex.InnerException != null)
