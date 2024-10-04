@@ -34,22 +34,22 @@ else
     <EditForm Model="Customer" OnValidSubmit="AddInvoice">
         <DataAnnotationsValidator />
 
-        <div class="form-group">
+        <div class="form-group pt-1">
             <label>Family name</label>
             <input type="text" @bind="Customer.FamilyName" class="form-control" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group pt-1">
             <label>First name</label>
             <input type="text" @bind="Customer.FirstName" class="form-control" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group pt-1">
             <label>Gender</label>
             <input type="text" @bind="Customer.Gender" class="form-control" />
         </div>
 
-        <div class="form-group">
+        <div class="form-group pt-2">
             <button type="submit" class="btn btn-primary">Add invoice</button>
         </div>
 
