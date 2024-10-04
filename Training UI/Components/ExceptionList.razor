@@ -1,0 +1,22 @@
+﻿<div class="row pt-2">
+        @foreach (ErrorResponse error in Errors)
+        {
+            <div class="row pt-2">
+                <div class="col">
+                    <label>Exception:</label>
+                    <input type="text" value="@error.ToString()" class="form-control">
+                </div>
+            </div>
+        }
+</div>
+
+@code {
+    [Parameter]
+    public List<ErrorResponse>? Errors { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Console.WriteLine("renderingcomponent errors");
+    }
+}

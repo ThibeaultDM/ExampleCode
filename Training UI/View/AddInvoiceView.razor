@@ -118,19 +118,20 @@
         </div>
     </EditForm>
 }
-@if (Errors.Count() != 0)
+@if (Errors == null)
 {
-    @foreach (ErrorResponse error in Errors)
-    {
-        <div class="row pt-4">
-            <div class="col">
-                <label>Exception:</label>
-                <input type="text" value="@error.ToString()" class="form-control">
-            </div>
+    <div class="row pt-2">
+        <div class="col">
+            <p>Saving...</p>
+            <div class="spinner-border" role="status"></div>
         </div>
-    }
+    </div>
+}
+else
+{
 }
 @code {
+
     private CustomerDetailResponse _customer;
     // todo could prob be done better
     private CustomerAddressResponse _address = new CustomerAddressResponse { StreetName = "Open this select menu" };
@@ -171,6 +172,7 @@
         InvoiceLine = new();
         Errors = new();
     }
+
     protected override async Task OnParametersSetAsync()
     {
         base.OnParametersSetAsync();
@@ -181,7 +183,8 @@
 
     public async Task CreateInvoice()
     {
-        Errors = new();
+        Errors = null;
+        StateHasChanged();
 
         CustomerDetailResponse customerDetail = await _serviceInvoice.CreateInvoiceAsync(InvoiceInput);
 
