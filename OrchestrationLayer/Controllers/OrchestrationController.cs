@@ -132,6 +132,7 @@ namespace Orchestration.Controllers
         #endregion Customer
 
         #region Combined
+
         // TODO
         //[HttpPost("UC_301_009_GetJournalForEntry")]
         //public Task<List<InvoiceResponse>> GetJournalForEntry(Guid customerId)

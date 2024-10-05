@@ -1,10 +1,5 @@
 ﻿using NewInvoiceDataLayer.Interfaces;
 using QueasoFramework.DataModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewInvoiceDataLayer.Repositories
 {
@@ -43,7 +38,7 @@ namespace NewInvoiceDataLayer.Repositories
             toCreate.CreatedOn = DateTime.Now;
             toCreate.CreatedBy = Environment.UserName;
 
-           return toCreate;
+            return toCreate;
         }
 
         /// <summary>
@@ -81,6 +76,5 @@ namespace NewInvoiceDataLayer.Repositories
         {
             await _dataContext.SaveChangesAsync();
         }
-
     }
 }

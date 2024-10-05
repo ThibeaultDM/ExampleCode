@@ -17,7 +17,7 @@ namespace InvoiceBusinessLayer.BusinessObjects
         public decimal Amount { get => amount; set => amount = value; }
 
         /// <summary>
-        /// Amount of taxes on total amount of products
+        /// Amount of taxes on total _amount of products
         /// </summary>
         [Range(0, 79228162514264337593543950335d)]
         public decimal VATAmount { get => vatAmount; set => vatAmount = value; }

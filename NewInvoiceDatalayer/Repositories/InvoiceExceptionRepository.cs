@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewInvoiceDataLayer.Repositories
 {
@@ -35,10 +30,13 @@ namespace NewInvoiceDataLayer.Repositories
         }
 
         #region Helper methodes
+
         private DbSet<DO_InvoiceException> TableInvoiceExceptions()
         {
             return _dataContext.InvoiceExceptions;
         }
-        #endregion   
+
+        #endregion Helper methodes
+
     }
 }

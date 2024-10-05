@@ -1,10 +1,5 @@
 ﻿using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewInvoiceDataLayer.Repositories
 {
@@ -43,6 +38,5 @@ namespace NewInvoiceDataLayer.Repositories
                 throw ex;
             }
         }
-
     }
 }

@@ -1,6 +1,0 @@
-@CommunicationLayer_HostAddress = http://localhost:5166
-
-GET {{CommunicationLayer_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

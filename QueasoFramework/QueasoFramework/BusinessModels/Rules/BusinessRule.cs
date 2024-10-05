@@ -216,7 +216,7 @@ namespace QueasoFramework.BusinessModels.Rules
             catch (Exception ex)
             {
                 this.Passed = false;
-                SetFailedMessage($"An error occured while setting property '{propertyName}': {ex.Message}");
+                SetFailedMessage($"An error occurred while setting property '{propertyName}': {ex.Message}");
             }
 
             return this;

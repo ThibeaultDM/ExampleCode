@@ -12,7 +12,9 @@ namespace NewInvoiceDataLayer.Interfaces
         DbSet<DO_InvoiceNumber> InvoiceNumber { get; set; }
 
         Task<int> SaveChangesAsync();
+
         void Dispose();
+
         EntityEntry Entry(object entity);
     }
 }

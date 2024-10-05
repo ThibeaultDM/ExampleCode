@@ -1,19 +1,19 @@
-﻿using InvoiceBusinessLayer.BusinessObjects;
+﻿using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.BusinessModels.Rules;
 
-namespace InvoiceBusinessLayer.Rules
+namespace NewInvoiceServiceLayer.Rules
 {
-    public class InvoiceBusinessRule : BusinessRule
+    internal class InvoiceBusinessRules : BusinessRule
     {
         /// <summary>
-        /// Calculates total value of an invoiceLine
+        /// Calculates total _amount to be paid for an invoiceLine
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="quantity"></param>
         /// <param name="amount"></param>
         /// <param name="calcultedtotal"></param>
         /// <returns></returns>
-        public InvoiceBusinessRule CalculatedAmount_Line(string propertyName, decimal quantity, decimal amount, out decimal calcultedtotal)
+        public InvoiceBusinessRules CalculatedAmount_Line(string propertyName, decimal quantity, decimal amount, out decimal calcultedtotal)
         {
             this.PropertyName = propertyName;
             calcultedtotal = 0;
@@ -24,72 +24,92 @@ namespace InvoiceBusinessLayer.Rules
             catch (Exception ex)
             {
                 this.Passed = false;
-                SetFailedMessage($"An Error occured while setting property {propertyName}: {ex.Message}");
+                SetFailedMessage($"An Error occurred while calculating total _amount to be paid for an invoiceLine.: {ex.Message}");
             }
 
             return this;
         }
 
-        public InvoiceBusinessRule CalculateVATAmount_Line(string propertyName, decimal vatRate, decimal amountWhitoutVat, out decimal calculatedVatAmount)
+        /// <summary>
+        /// Calculates total _amount of tax to be paid for an invoiceLine
+        /// </summary>
+        /// <param name="propertyName"></param>
+        /// <param name="vatRate"></param>
+        /// <param name="amountWhitOutVat"></param>
+        /// <param name="calculatedVatAmount"></param>
+        /// <returns></returns>
+        public InvoiceBusinessRules CalculateVATAmount_Line(string propertyName, decimal vatRate, decimal amountWhitOutVat, out decimal calculatedVatAmount)
         {
             this.PropertyName = propertyName;
             calculatedVatAmount = 0;
             try
             {
-                calculatedVatAmount = amountWhitoutVat / 100 * vatRate;
+                calculatedVatAmount = amountWhitOutVat / 100 * vatRate;
             }
             catch (Exception ex)
             {
                 this.Passed = false;
-                SetFailedMessage($"An Error occured while setting property {propertyName}: {ex.Message}");
+                SetFailedMessage($"An Error occurred while calculating total _amount of tax to be paid for an invoiceLine.: {ex.Message}");
             }
 
             return this;
         }
 
         /// <summary>
-        /// Calculates total value of invoice before tax
+        /// Calculates total value of the goods for an invoice
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="invoiceLines"></param>
         /// <param name="calculatedTotal"></param>
         /// <returns></returns>
-        public InvoiceBusinessRule CalculateTotal_Invoice(string propertyName, List<BO_InvoiceLine> invoiceLines, out decimal calculatedTotal)
+        public InvoiceBusinessRules CalculateTotal_Invoice(string propertyName, List<BO_InvoiceLine> invoiceLines, out decimal calculatedTotal)
         {
             calculatedTotal = 0;
             this.PropertyName = propertyName;
+
             try
             {
-                foreach (BO_InvoiceLine invoice in invoiceLines)
-                {
-                    calculatedTotal += invoice.Amount;
-                }
+                calculatedTotal = invoiceLines.Select(l => l.LineAmount).Sum();
             }
             catch (Exception ex)
             {
                 this.Passed = false;
-                SetFailedMessage($"An Error occured while setting property {propertyName}: {ex.Message}");
-            }
-
-            return this;
-        }
-
-        public InvoiceBusinessRule CheckValidityVatNumber(string propertyName, string vatNumber)
-        {
-            this.PropertyName = propertyName;
-            if (!string.IsNullOrWhiteSpace(vatNumber) && !vatNumber.ToUpper().StartsWith("BE0") && !CheckValidityVatNumberModulo97(vatNumber))
-            {
-                this.Passed = false;
-                SetFailedMessage($"Property {propertyName}: does not contain a valid VATnumber");
+                SetFailedMessage($"An Error occurred while calculating total value of the goods for an invoiceLine.: {ex.Message}");
             }
 
             return this;
         }
 
         /// <summary>
-        /// cref <see cref="invoice"/>
+        /// Checks if a valid VATNumber was given
         /// </summary>
-        private bool CheckValidityVatNumberModulo97(string vatNumber) // https://www.fiducial.be/nl/news/Hoe-kunt-u-weten-of-uw-klant-u-een-correct-BTW-nummer-gaf
+        /// <param name="propertyName"></param>
+        /// <param name="vatNumber"></param>
+        /// <returns></returns>
+        public InvoiceBusinessRules CheckValidityVatNumber(string propertyName, string vatNumber)
+        {
+            this.PropertyName = propertyName;
+            if (!vatNumber.ToUpper().StartsWith("BE0"))
+            {
+                this.Passed = false;
+                SetFailedMessage($"A valid VATNumber needs to start with BE0.");
+            }
+
+            if (!CheckValidityVatNumberModulo97(vatNumber))
+            {
+                this.Passed = false;
+                SetFailedMessage($"Not a valid VATNumber.");
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Does the modulo 97 for a VATNumber check
+        /// </summary>
+        /// <param name="vatNumber"></param>
+        /// <returns></returns>
+        private bool CheckValidityVatNumberModulo97(string vatNumber) //https://www.fiducial.be/nl/news/Hoe-kunt-u-weten-of-uw-klant-u-een-correct-BTW-nummer-gaf
         {
             bool isValid;
 
@@ -116,7 +136,7 @@ namespace InvoiceBusinessLayer.Rules
         }
 
         /// <summary>
-        /// Calculates total _amount of taxes to be paid
+        /// Calculates total _amount of taxes to be paid for an invoice
         /// </summary>
         /// <param name="propertyName"></param>
         /// <param name="invoiceLines"></param>
@@ -129,39 +149,12 @@ namespace InvoiceBusinessLayer.Rules
 
             try
             {
-                foreach (BO_InvoiceLine invoice in invoiceLines)
-                {
-                    calculatedTotalVAT += invoice.VATAmount;
-                }
+                invoiceLines.Select(l => l.VATAmount).Sum();
             }
             catch (Exception ex)
             {
                 this.Passed = false;
-                SetFailedMessage($"An Error occured while setting property {propertyName}: {ex.Message}");
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// Calculates total _amount to be paid
-        /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="taxesAndValue"></param>
-        /// <param name="totalAmount"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public BusinessRule GetSum(string propertyName, List<decimal> taxesAndValue, out decimal totalAmount)
-        {
-            totalAmount = 0;
-
-            try
-            {
-                totalAmount = taxesAndValue[0] + taxesAndValue[1];
-            }
-            catch (Exception)
-            {
-                throw new Exception("Something went wrong calculating total _amount");
+                SetFailedMessage($"An Error occurred while calculating the VATAmount.: {ex.Message}");
             }
 
             return this;

@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using QueasoFramework.DataModels;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using QueasoFramework.DataModels;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NewInvoiceDataLayer.Objects
 {
     [Table("InvoiceException")]
     public class DO_InvoiceException : DataObjectBase
     {
+        [Required]
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 

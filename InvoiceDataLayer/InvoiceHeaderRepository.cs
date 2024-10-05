@@ -1,7 +1,6 @@
 ﻿using InvoiceDataLayer.DataModels;
 using InvoiceDataLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace InvoiceDataLayer
 {
@@ -69,6 +68,7 @@ namespace InvoiceDataLayer
 
             return toUpdate;
         }
+
         public async Task<DO_InvoiceHeader> UpdateInvoiceHeaderAsync(DO_InvoiceHeader record, DO_InvoiceLine recordInvoiceLine)
         {
             DO_InvoiceHeader toUpdate = record;
@@ -99,7 +99,6 @@ namespace InvoiceDataLayer
 
             return toUpdate;
         }
-
 
         public void Dispose()
         {

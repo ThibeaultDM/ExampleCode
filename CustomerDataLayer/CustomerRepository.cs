@@ -63,7 +63,6 @@ namespace CustomerDataLayer
 
         public async Task<DO_Customer> UpdateCustomerAsync(DO_Customer customerToUpdate)
         {
-
             customerToUpdate.UpdatedBy = Environment.UserName;
             customerToUpdate.UpdatedOn = DateTime.Now;
             customerToUpdate.DeletedOn = null;

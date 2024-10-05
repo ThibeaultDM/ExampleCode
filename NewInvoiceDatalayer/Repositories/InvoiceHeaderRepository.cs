@@ -1,17 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NewInvoiceDataLayer.Repositories
 {
     public class InvoiceHeaderRepository : BaseRepository, IInvoiceHeaderRepository
     {
-
         public InvoiceHeaderRepository(IInvoiceDbContext invoiceDbContext) : base(invoiceDbContext)
         {
         }
@@ -75,11 +69,11 @@ namespace NewInvoiceDataLayer.Repositories
 
             try
             {
-                toUpdate =  Update(toUpdate);
+                toUpdate = Update(toUpdate);
 
                 if (toUpdate.InvoiceLines.Count > 0)
                 {
-                  await  _dataContext.InvoiceLines.AddAsync(Update(toUpdate.InvoiceLines.Last()));
+                    await _dataContext.InvoiceLines.AddAsync(Update(toUpdate.InvoiceLines.Last()));
                 }
 
                 _dataContext.Entry(toUpdate).State = EntityState.Modified;
@@ -115,10 +109,12 @@ namespace NewInvoiceDataLayer.Repositories
         }
 
         #region Helper Methodes
+
         private DbSet<DO_InvoiceHeader> TableInvoiceHeader()
         {
             return _dataContext.InvoiceHeaders;
         }
-        #endregion
+
+        #endregion Helper Methodes
     }
 }

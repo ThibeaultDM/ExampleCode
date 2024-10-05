@@ -71,7 +71,6 @@ namespace InvoiceBusinessLayer
 
             try
             {
-
                 invoiceHeaderDO = await _headerRepository.UpdateInvoiceHeaderAsync(invoiceHeaderDO, invoiceHeaderDO.InvoiceLines.Last());
             }
             catch (Exception ex)
