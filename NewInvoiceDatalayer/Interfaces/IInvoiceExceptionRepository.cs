@@ -9,6 +9,6 @@ namespace NewInvoiceDataLayer.Interfaces
         /// </summary>
         /// <param name="toCreate"></param>
         /// <returns></returns>
-        Task<DO_InvoiceException> CreateInvoiceExceptionAsync(DO_InvoiceException toCreate);
+        Task<DO_InvoiceException> SaveInvoiceExceptionAsync(DO_InvoiceException toCreate);
     }
 }

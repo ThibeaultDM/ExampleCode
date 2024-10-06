@@ -61,7 +61,6 @@ namespace InvoiceBusinessLayer
         public async Task<BO_InvoiceHeader> UC_301_002_AddInvoiceLineToHeaderAsync(Guid invoiceHeaderId, BO_InvoiceLine boInvoiceLine)
         {
             BO_InvoiceHeader invoiceHeaderBO = new BO_InvoiceHeader();
-            invoiceHeaderBO.Id = invoiceHeaderId; // don't see the use of this TODO ask, line 75 asigns again
 
             invoiceHeaderBO = await UC_301_003_GetInvoiceByNameAsync(invoiceHeaderId);
 

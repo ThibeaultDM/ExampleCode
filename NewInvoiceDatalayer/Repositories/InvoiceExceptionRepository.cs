@@ -10,7 +10,7 @@ namespace NewInvoiceDataLayer.Repositories
         {
         }
 
-        public async Task<DO_InvoiceException> CreateInvoiceExceptionAsync(DO_InvoiceException toCreate)
+        public async Task<DO_InvoiceException> SaveInvoiceExceptionAsync(DO_InvoiceException toCreate)
         {
             DO_InvoiceException created;
 

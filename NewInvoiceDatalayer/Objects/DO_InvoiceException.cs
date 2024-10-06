@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NewInvoiceDataLayer.Objects
 {
-    [Table("InvoiceException")]
+    [Table("InvoiceExceptions")]
     public class DO_InvoiceException : DataObjectBase
     {
         [Required]

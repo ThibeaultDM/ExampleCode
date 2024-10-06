@@ -24,7 +24,7 @@ namespace NewInvoiceServiceLayer.Rules
             catch (Exception ex)
             {
                 this.Passed = false;
-                SetFailedMessage($"An Error occurred while calculating total _amount to be paid for an invoiceLine.: {ex.Message}");
+                SetFailedMessage($"An Error occurred while calculating total amount to be paid for an invoiceLine.: {ex.Message}");
             }
 
             return this;
@@ -49,7 +49,7 @@ namespace NewInvoiceServiceLayer.Rules
             catch (Exception ex)
             {
                 this.Passed = false;
-                SetFailedMessage($"An Error occurred while calculating total _amount of tax to be paid for an invoiceLine.: {ex.Message}");
+                SetFailedMessage($"An Error occurred while calculating total amount of tax to be paid for an invoiceLine.: {ex.Message}");
             }
 
             return this;
@@ -94,8 +94,7 @@ namespace NewInvoiceServiceLayer.Rules
                 this.Passed = false;
                 SetFailedMessage($"A valid VATNumber needs to start with BE0.");
             }
-
-            if (!CheckValidityVatNumberModulo97(vatNumber))
+            else if (!CheckValidityVatNumberModulo97(vatNumber))
             {
                 this.Passed = false;
                 SetFailedMessage($"Not a valid VATNumber.");

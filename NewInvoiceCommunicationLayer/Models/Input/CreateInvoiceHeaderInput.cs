@@ -1,4 +1,4 @@
-﻿namespace InvoiceCommunicationLayer.Models.Input
+﻿namespace NewInvoiceCommunicationLayer.Models.Input
 {
     public class CreateInvoiceHeaderInput
     {

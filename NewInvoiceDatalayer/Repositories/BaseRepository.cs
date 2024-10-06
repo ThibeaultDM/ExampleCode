@@ -19,7 +19,7 @@ namespace NewInvoiceDataLayer.Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="toUpdate"></param>
         /// <returns></returns>
-        public T Update<T>(T toUpdate) where T : DataObjectBase
+        protected T Update<T>(T toUpdate) where T : DataObjectBase
         {
             toUpdate.UpdatedOn = DateTime.Now;
             toUpdate.UpdatedBy = Environment.UserName;
@@ -33,7 +33,7 @@ namespace NewInvoiceDataLayer.Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="toUpdate"></param>
         /// <returns></returns>
-        public T Create<T>(T toCreate) where T : DataObjectBase
+        protected T Create<T>(T toCreate) where T : DataObjectBase
         {
             toCreate.CreatedOn = DateTime.Now;
             toCreate.CreatedBy = Environment.UserName;
@@ -47,7 +47,7 @@ namespace NewInvoiceDataLayer.Repositories
         /// <typeparam name="T"></typeparam>
         /// <param name="toDelete"></param>
         /// <returns></returns>
-        public T Delete<T>(T toDelete) where T : DataObjectBase
+        protected T Delete<T>(T toDelete) where T : DataObjectBase
         {
             toDelete.DeletedOn = DateTime.Now;
             toDelete.DeletedBy = Environment.UserName;
@@ -72,6 +72,7 @@ namespace NewInvoiceDataLayer.Repositories
             }
             this._disposed = true;
         }
+
         protected async Task SaveAsync()
         {
             await _dataContext.SaveChangesAsync();

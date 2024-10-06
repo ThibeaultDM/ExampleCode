@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orchestration", "Orchestrat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training UI", "Training UI\Training UI.csproj", "{F071E082-4923-4456-89F1-A977C2EFEA97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceTestLayer", "InvoiceTestLayer\InvoiceTestLayer.csproj", "{36DF235D-6AD9-4FAD-905B-201457A2307E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceTestLayer", "InvoiceTestLayer\InvoiceTestLayer.csproj", "{36DF235D-6AD9-4FAD-905B-201457A2307E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewInvoice", "NewInvoice", "{16C9D9BC-CE24-4D9A-AC82-E1BFA5492F73}"
 EndProject

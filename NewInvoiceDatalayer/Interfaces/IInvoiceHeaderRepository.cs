@@ -15,14 +15,14 @@ namespace NewInvoiceDataLayer.Interfaces
         /// </summary>
         /// <param name="toCreate"></param>
         /// <returns></returns>
-        Task<DO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(DO_InvoiceHeader toCreate);
+        Task<DO_InvoiceHeader> CreateInvoiceHeaderAsync(DO_InvoiceHeader toCreate);
 
         /// <summary>
         /// Finds a specific invoiceHeader in the database
         /// </summary>
         /// <param name="toFind"></param>
         /// <returns></returns>
-        Task<DO_InvoiceHeader> UC_301_003_FindInvoiceHeaderAsync(Guid toFind);
+        Task<DO_InvoiceHeader> FindInvoiceHeaderAsync(Guid toFind);
 
         /// <summary>
         /// Updates an invoiceHeader in the database

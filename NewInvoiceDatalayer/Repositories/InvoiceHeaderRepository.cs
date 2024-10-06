@@ -6,11 +6,9 @@ namespace NewInvoiceDataLayer.Repositories
 {
     public class InvoiceHeaderRepository : BaseRepository, IInvoiceHeaderRepository
     {
-        public InvoiceHeaderRepository(IInvoiceDbContext invoiceDbContext) : base(invoiceDbContext)
-        {
-        }
+        public InvoiceHeaderRepository(IInvoiceDbContext invoiceDbContext) : base(invoiceDbContext) { }
 
-        public async Task<DO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(DO_InvoiceHeader toCreate)
+        public async Task<DO_InvoiceHeader> CreateInvoiceHeaderAsync(DO_InvoiceHeader toCreate)
         {
             DO_InvoiceHeader created;
 
@@ -25,7 +23,7 @@ namespace NewInvoiceDataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return created;
@@ -41,13 +39,13 @@ namespace NewInvoiceDataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return invoiceHeaders;
         }
 
-        public async Task<DO_InvoiceHeader> UC_301_003_FindInvoiceHeaderAsync(Guid toFind)
+        public async Task<DO_InvoiceHeader> FindInvoiceHeaderAsync(Guid toFind)
         {
             DO_InvoiceHeader invoiceHeader;
 
@@ -57,7 +55,7 @@ namespace NewInvoiceDataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return invoiceHeader;
@@ -83,7 +81,7 @@ namespace NewInvoiceDataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return UpDated;
@@ -102,7 +100,7 @@ namespace NewInvoiceDataLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return succes;

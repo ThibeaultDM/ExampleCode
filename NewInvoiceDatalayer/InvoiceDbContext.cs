@@ -30,8 +30,14 @@ namespace NewInvoiceDataLayer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => base.OnConfiguring(optionsBuilder);
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) => base.OnModelCreating(modelBuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<DO_InvoiceLine>().HasOne<DO_InvoiceHeader>()
+                                                 .WithMany(ih => ih.InvoiceLines)
+                                                 .HasForeignKey(l => l.InvoiceHeaderId);
 
+            base.OnModelCreating(modelBuilder);
+        }
         #endregion Exposed for proper functioning of class
     }
 }
