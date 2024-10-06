@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure;
 using NewInvoiceCommunicationLayer.Interfaces;
 using NewInvoiceCommunicationLayer.Models.Input;
 using NewInvoiceCommunicationLayer.Models.Response;
@@ -7,7 +6,6 @@ using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
 using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.Exceptions;
-using System.Collections.Generic;
 
 namespace NewInvoiceCommunicationLayer.Service
 {
@@ -25,7 +23,6 @@ namespace NewInvoiceCommunicationLayer.Service
             _exceptionRepository = exceptionRepository;
             _mapper = mapper;
         }
-
 
         public async Task<CreateInvoiceHeaderResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input)
         {
@@ -46,7 +43,6 @@ namespace NewInvoiceCommunicationLayer.Service
 
                 response = _mapper.Map<CreateInvoiceHeaderResponse>(invoiceHeaderBo);
                 invoiceHeaderBo.BrokenRules.ForEach(br => response.SetErrors(new(br.PropertyName, br.FailedMessage)));
-
             }
             catch (Exception ex)
             {
@@ -170,7 +166,6 @@ namespace NewInvoiceCommunicationLayer.Service
                 if (invoiceHeadersDo.Count > 0)
                 {
                     response = _mapper.Map<List<DO_InvoiceHeader>, List<BO_InvoiceHeader>>(invoiceHeadersDo);
-
                 }
                 else
                 {
@@ -210,6 +205,5 @@ namespace NewInvoiceCommunicationLayer.Service
 
             return result;
         }
-
     }
 }

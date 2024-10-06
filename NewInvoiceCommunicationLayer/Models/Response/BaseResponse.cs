@@ -13,9 +13,8 @@
             {
                 Errors = new();
             }
-            
+
             Errors.Add(error);
         }
-
     }
 }

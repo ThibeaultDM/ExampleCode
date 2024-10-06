@@ -6,7 +6,6 @@ namespace NewInvoiceCommunicationLayer.Models.Input
     {
         public Guid InvoiceHeaderId { get; set; }
 
-
         [Range(0, int.MaxValue)]
         public decimal VATRate { get; set; }
 
@@ -18,6 +17,5 @@ namespace NewInvoiceCommunicationLayer.Models.Input
 
         [MaxLength(100)]
         public string? Description { get; set; } = "Add description";
-
     }
 }

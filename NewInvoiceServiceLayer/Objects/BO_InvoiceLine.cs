@@ -39,8 +39,8 @@ namespace NewInvoiceServiceLayer.Objects
 
         [MaxLength(100)]
         public string? Description { get; set; }
-        public Guid InvoiceHeaderId { get; set; }
 
+        public Guid InvoiceHeaderId { get; set; }
 
         public override bool AddBusinessRules()
         {

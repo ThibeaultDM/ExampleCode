@@ -12,18 +12,24 @@ namespace NewInvoiceCommunicationLayer.Service
         public AutoMapperConfig()
         {
             #region Service objects
+
             CreateMap<BO_InvoiceHeader, DO_InvoiceHeader>().ReverseMap();
             CreateMap<BO_InvoiceLine, DO_InvoiceLine>().ReverseMap();
-            #endregion
+
+            #endregion Service objects
 
             #region Input models
+
             CreateMap<FrameworkException, DO_InvoiceException>();
             CreateMap<AddInvoiceLineToInvoiceHeaderInput, BO_InvoiceLine>();
-            #endregion
+
+            #endregion Input models
 
             #region Response models
+
             CreateMap<BO_InvoiceHeader, CreateInvoiceHeaderResponse>();
-            #endregion
+
+            #endregion Response models
         }
     }
 }

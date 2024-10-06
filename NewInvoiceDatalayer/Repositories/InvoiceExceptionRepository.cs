@@ -37,6 +37,5 @@ namespace NewInvoiceDataLayer.Repositories
         }
 
         #endregion Helper methodes
-
     }
 }

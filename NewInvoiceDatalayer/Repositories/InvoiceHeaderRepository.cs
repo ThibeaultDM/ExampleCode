@@ -6,7 +6,9 @@ namespace NewInvoiceDataLayer.Repositories
 {
     public class InvoiceHeaderRepository : BaseRepository, IInvoiceHeaderRepository
     {
-        public InvoiceHeaderRepository(IInvoiceDbContext invoiceDbContext) : base(invoiceDbContext) { }
+        public InvoiceHeaderRepository(IInvoiceDbContext invoiceDbContext) : base(invoiceDbContext)
+        {
+        }
 
         public async Task<DO_InvoiceHeader> CreateInvoiceHeaderAsync(DO_InvoiceHeader toCreate)
         {

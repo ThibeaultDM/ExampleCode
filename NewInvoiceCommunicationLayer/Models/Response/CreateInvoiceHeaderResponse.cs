@@ -22,6 +22,5 @@
         public int InvoiceNumber { get; set; }
         public string VatNumber { get; set; }
         public bool IsPaid { get; set; }
-
     }
 }

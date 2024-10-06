@@ -8,7 +8,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
 {
     [ApiController]
     [Route("api/Invoice")]
-
     public class NewInvoiceController : Controller
     {
         private readonly IConfiguration _config;
@@ -40,7 +39,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-
                 response = BadRequest(ex.InnerException);
             }
 
@@ -67,7 +65,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-
                 response = BadRequest(ex.Message);
             }
 
@@ -94,7 +91,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-
                 response = BadRequest(ex.InnerException);
             }
 
@@ -121,7 +117,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-
                 response = BadRequest(ex.InnerException);
             }
 
@@ -148,12 +143,10 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-
                 response = BadRequest(ex.InnerException);
             }
 
             return response;
         }
-
     }
 }

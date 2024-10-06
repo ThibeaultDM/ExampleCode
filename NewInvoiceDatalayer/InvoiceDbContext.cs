@@ -38,6 +38,7 @@ namespace NewInvoiceDataLayer
 
             base.OnModelCreating(modelBuilder);
         }
+
         #endregion Exposed for proper functioning of class
     }
 }

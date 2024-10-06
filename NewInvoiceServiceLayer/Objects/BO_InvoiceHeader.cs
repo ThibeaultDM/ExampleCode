@@ -7,7 +7,9 @@ namespace NewInvoiceServiceLayer.Objects
     {
         private decimal _amount, _vatAmount, _totalAmount = 0;
 
-        public BO_InvoiceHeader() { }
+        public BO_InvoiceHeader()
+        { }
+
         public BO_InvoiceHeader(string vatNumber)
         {
             VatNumber = vatNumber;
