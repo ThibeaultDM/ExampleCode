@@ -17,6 +17,11 @@ namespace NewInvoiceDataLayer.Repositories
 
         #region CRUD
 
+        /// <summary>
+        /// Add a DataObjectBase to the database
+        /// </summary>
+        /// <param name="toAdd"></param>
+        /// <returns></returns>
         protected async Task<T> AddAsync(T toAdd)
         {
             T created;
@@ -37,6 +42,11 @@ namespace NewInvoiceDataLayer.Repositories
             return created;
         }
 
+        /// <summary>
+        /// Updates a DataObjectBase
+        /// </summary>
+        /// <param name="toUpdate"></param>
+        /// <returns></returns>
         protected async Task<T> UpdateAsync(T toUpdate)
         {
             T updated;
@@ -57,6 +67,10 @@ namespace NewInvoiceDataLayer.Repositories
             return updated;
         }
 
+        /// <summary>
+        /// Gets all DataObjectBases
+        /// </summary>
+        /// <returns></returns>
         protected async Task<List<T>> GetAllAsync()
         {
             List<T> AllThings;
@@ -73,6 +87,11 @@ namespace NewInvoiceDataLayer.Repositories
             return AllThings;
         }
 
+        /// <summary>
+        /// Deletes a DataObjectBase from the database
+        /// </summary>
+        /// <param name="toDelete"></param>
+        /// <returns></returns>
         protected async Task<bool> DeleteAsync(T toDelete)
         {
             bool success = false;
