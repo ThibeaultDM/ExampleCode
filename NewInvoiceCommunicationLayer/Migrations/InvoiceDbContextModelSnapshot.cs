@@ -76,6 +76,9 @@ namespace NewInvoiceCommunicationLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid?>("CompanyProxyId")
                         .HasColumnType("uniqueidentifier");
 

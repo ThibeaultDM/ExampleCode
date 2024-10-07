@@ -44,6 +44,7 @@ namespace NewInvoiceServiceLayer.Rules
             calculatedVatAmount = 0;
             try
             {
+                // TODO how will the VATRate be given, as a percentage or ... 
                 calculatedVatAmount = amountWhitOutVat / 100 * vatRate;
             }
             catch (Exception ex)
@@ -94,11 +95,11 @@ namespace NewInvoiceServiceLayer.Rules
                 this.Passed = false;
                 SetFailedMessage($"A valid VATNumber needs to start with BE0.");
             }
-            else if (!CheckValidityVatNumberModulo97(vatNumber))
-            {
-                this.Passed = false;
-                SetFailedMessage($"Not a valid VATNumber.");
-            }
+            //else if (!CheckValidityVatNumberModulo97(vatNumber))
+            //{
+            //    this.Passed = false;
+            //    SetFailedMessage($"Not a valid VATNumber.");
+            //}
 
             return this;
         }
@@ -148,7 +149,7 @@ namespace NewInvoiceServiceLayer.Rules
 
             try
             {
-                invoiceLines.Select(l => l.VATAmount).Sum();
+                calculatedTotalVAT = invoiceLines.Select(l => l.VATAmount).Sum();
             }
             catch (Exception ex)
             {

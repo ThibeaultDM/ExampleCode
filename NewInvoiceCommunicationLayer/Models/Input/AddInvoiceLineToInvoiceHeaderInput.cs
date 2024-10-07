@@ -16,6 +16,6 @@ namespace NewInvoiceCommunicationLayer.Models.Input
         public int Quantity { get; set; }
 
         [MaxLength(100)]
-        public string? Description { get; set; } = "Add description";
+        public string? Description { get; set; } = "AddAsync description";
     }
 }

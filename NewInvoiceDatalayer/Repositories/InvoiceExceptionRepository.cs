@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NewInvoiceDataLayer.Interfaces;
+﻿using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
 
 namespace NewInvoiceDataLayer.Repositories
 {
-    public class InvoiceExceptionRepository : BaseRepository, IInvoiceExceptionRepository
+    public class InvoiceExceptionRepository : BaseRepository<DO_InvoiceException>, IInvoiceExceptionRepository
     {
         public InvoiceExceptionRepository(IInvoiceDbContext dataContext) : base(dataContext)
         {
+            _dataObjectTable = dataContext.InvoiceExceptions;
         }
 
         public async Task<DO_InvoiceException> SaveInvoiceExceptionAsync(DO_InvoiceException toCreate)
@@ -16,26 +16,14 @@ namespace NewInvoiceDataLayer.Repositories
 
             try
             {
-                toCreate = Create(toCreate);
-                await TableInvoiceExceptions().AddAsync(toCreate);
-                await SaveAsync();
-                created = toCreate;
+                created = await AddAsync(toCreate);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw ex;
             }
 
             return created;
         }
-
-        #region Helper methodes
-
-        private DbSet<DO_InvoiceException> TableInvoiceExceptions()
-        {
-            return _dataContext.InvoiceExceptions;
-        }
-
-        #endregion Helper methodes
     }
 }

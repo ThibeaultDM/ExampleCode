@@ -15,7 +15,7 @@ namespace NewInvoiceCommunicationLayer.Interfaces
         Task<CreateInvoiceHeaderResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input);
 
         /// <summary>
-        /// Add an invoiceLine to an invoiceHeader
+        /// AddAsync an invoiceLine to an invoiceHeader
         /// </summary>
         /// <param name="invoiceHeaderId"></param>
         /// <param name="boInvoiceLine"></param>

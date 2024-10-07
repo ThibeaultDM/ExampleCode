@@ -12,8 +12,8 @@ using NewInvoiceDataLayer;
 namespace NewInvoiceCommunicationLayer.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    [Migration("20241006161426_Initial")]
-    partial class Initial
+    [Migration("20241007091117_Initialize")]
+    partial class Initialize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,9 @@ namespace NewInvoiceCommunicationLayer.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("CompanyProxyId")
                         .HasColumnType("uniqueidentifier");

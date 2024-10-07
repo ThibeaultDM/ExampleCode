@@ -36,6 +36,12 @@ namespace NewInvoiceDataLayer.Objects
         [Range(0, int.MaxValue)]
         public decimal? VATAmount { get; set; }
 
+        /// <summary>
+        /// Total amount of taxes that need to be paid
+        /// </summary>
+        [Range(0, int.MaxValue)]
+        public decimal? Amount { get; set; }
+
         public virtual List<DO_InvoiceLine>? InvoiceLines { get; set; }
         public virtual Guid? CompanyProxyId { get; set; }
     }

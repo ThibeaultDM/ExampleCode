@@ -3,34 +3,34 @@ using NewInvoiceDataLayer.Objects;
 
 namespace NewInvoiceDataLayer.Repositories
 {
-    public class InvoiceNumberRepository : BaseRepository, IInvoiceNumberRepository
+    public class InvoiceNumberRepository : BaseRepository<DO_InvoiceNumber>, IInvoiceNumberRepository
     {
         public InvoiceNumberRepository(IInvoiceDbContext dataContext) : base(dataContext)
         {
+            _dataObjectTable = dataContext.InvoiceNumber;
         }
 
         public async Task<int> GetNextNumber()
         {
+            DO_InvoiceNumber invoiceNumber;
+
             try
             {
-                var invoiceNumber = _dataContext.InvoiceNumber.FirstOrDefault();
+                invoiceNumber = _dataObjectTable.FirstOrDefault();
 
                 if (invoiceNumber == null)
                 {
                     // TODO Load one in the database on initialization
                     invoiceNumber = new DO_InvoiceNumber();
                     invoiceNumber.LastUsedNumber = 1;
-                    invoiceNumber = Create(invoiceNumber);
-                    await _dataContext.InvoiceNumber.AddAsync(invoiceNumber);
+                    invoiceNumber = await AddAsync(invoiceNumber);
                 }
                 else
                 {
                     invoiceNumber.LastUsedNumber += 1;
-                    invoiceNumber = Create(invoiceNumber);
-                    _dataContext.Entry(invoiceNumber).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    invoiceNumber = await UpdateAsync(invoiceNumber);
                 }
 
-                await SaveAsync();
                 return invoiceNumber.LastUsedNumber;
             }
             catch (Exception ex)

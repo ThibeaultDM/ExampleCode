@@ -9,6 +9,7 @@ using QueasoFramework.Exceptions;
 
 namespace NewInvoiceCommunicationLayer.Service
 {
+    // TODO mabye null passed rules
     public class InvoiceUseCases : IInvoiceUseCases
     {
         private readonly IInvoiceHeaderRepository _headerRepository;
