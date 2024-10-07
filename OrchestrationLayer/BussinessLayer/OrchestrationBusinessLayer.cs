@@ -85,7 +85,7 @@ namespace Orchestration.BusinessLayer
                 {
                     InvoiceDetailResponse toCreate = await _invoiceService.UC_301_001_CreateInvoiceHeaderAsync(invoice.VatNumber);
 
-                    if (toCreate != null && toCreate.Succes == true)
+                    if (toCreate != null && toCreate.Success == true)
                     {
                         foreach (CreateInvoiceLine invoiceLine in invoice.InvoiceLines)
                         {
@@ -93,10 +93,10 @@ namespace Orchestration.BusinessLayer
 
                             var res = await _invoiceService.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLine);
 
-                            if (res.Succes == false)
+                            if (res.Success == false)
                             {
                                 customer.Errors.AddRange(res.Errors);
-                                customer.Succes = false;
+                                customer.Success = false;
                                 break;
                             }
                         }
@@ -107,9 +107,9 @@ namespace Orchestration.BusinessLayer
                     }
                     else
                     {
-                        if (toCreate.Succes == false)
+                        if (toCreate.Success == false)
                         {
-                            toCreate.Succes = false;
+                            toCreate.Success = false;
                             customer.Errors.AddRange(toCreate.Errors);
                         }
                     }

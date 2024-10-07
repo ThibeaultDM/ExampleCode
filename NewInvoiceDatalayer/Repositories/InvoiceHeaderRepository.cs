@@ -65,7 +65,7 @@ namespace NewInvoiceDataLayer.Repositories
 
             try
             {
-                if (toUpdate.InvoiceLines.Count > 0)
+                if (toUpdate.InvoiceLines != null && toUpdate.InvoiceLines.Count > 0)
                 {
                     await _dataContext.InvoiceLines.AddAsync(UpdateCreateProperties(toUpdate.InvoiceLines.Last()));
                 }

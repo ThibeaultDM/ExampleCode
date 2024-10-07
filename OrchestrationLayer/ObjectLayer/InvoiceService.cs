@@ -38,7 +38,14 @@ namespace Orchestration.ObjectLayer
                                           .AppendPathSegments(invoicePathSeg, "AddInvoiceLineToInvoiceHeader")
                                           .PostJsonAsync(invoiceLineInput)
                                           .ReceiveJson<InvoiceResponse>();
+                // TODO remove this
+                if (result.Errors.Count == 0)
+                {
+                    result.Success = true;
+                }
+
                 return result;
+
             }
             catch { throw; }
         }

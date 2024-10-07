@@ -4,11 +4,11 @@
     {
         public ArchiveInvoiceJournalEntryInput(Guid journalEntryId, Guid journalHeaderId)
         {
-            JournalEntryId = journalEntryId;
-            JournalHeaderId = journalHeaderId;
+            proxyCompanyId = journalEntryId;
+            InvoiceHeaderId = journalHeaderId;
         }
 
-        public Guid JournalEntryId { get; set; }
-        public Guid JournalHeaderId { get; set; }
+        public Guid proxyCompanyId { get; set; }
+        public Guid InvoiceHeaderId { get; set; }
     }
 }

@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col">
                     <label>Company Name:</label>
-                    <input type="text" @bind="Customer.Company.FirstName" class="form-control">
+                    <input type="text" @bind="Customer.Company.PublicName" class="form-control">
                 </div>
                 <div class="col">
                     <label>VAT number:</label>
@@ -129,6 +129,7 @@
 }
 else
 {
+    <Training_UI.Components.ExceptionList Errors="Errors"></Training_UI.Components.ExceptionList>
 }
 @code {
 
@@ -191,6 +192,10 @@ else
         if (customerDetail.Errors.Count != 0)
         {
             Errors = customerDetail.Errors;
+        }
+        else
+        {
+            Errors = new();
         }
 
         StateHasChanged();

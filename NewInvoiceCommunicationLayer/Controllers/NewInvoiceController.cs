@@ -34,7 +34,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 }
                 else
                 {
-                    response = BadRequest(result);
+                    response = Ok(result);
                 }
             }
             catch (Exception ex)
@@ -60,7 +60,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 }
                 else
                 {
-                    response = BadRequest("InvoiceHeader not Found");
+                    response = Ok("InvoiceHeader not Found");
                 }
             }
             catch (Exception ex)
@@ -86,7 +86,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 }
                 else
                 {
-                    response = BadRequest("InvoiceHeader not Found");
+                    response = Ok("InvoiceHeader not Found");
                 }
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 }
                 else
                 {
-                    response = BadRequest("No invoiceHeaders in database");
+                    response = Ok("No invoiceHeaders in database");
                 }
             }
             catch (Exception ex)
@@ -138,7 +138,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 }
                 else
                 {
-                    response = BadRequest("InvoiceHeader not Found");
+                    response = Ok("InvoiceHeader not Found");
                 }
             }
             catch (Exception ex)

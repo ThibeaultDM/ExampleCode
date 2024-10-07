@@ -1,4 +1,6 @@
 ﻿<div class="row pt-2">
+    @if (Errors.Count > 0)
+    {
         @foreach (ErrorResponse error in Errors)
         {
             <div class="row pt-2">
@@ -8,6 +10,8 @@
                 </div>
             </div>
         }
+
+    }
 </div>
 
 @code {
