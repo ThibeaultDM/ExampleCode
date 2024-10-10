@@ -116,7 +116,7 @@ namespace NewInvoiceServiceLayer.Rules
             try
             {
                 int lastTwoNumbers = Convert.ToInt32(vatNumber.Substring((vatNumber.Length - 2)));
-                int otherNumbers = Convert.ToInt32(vatNumber.Substring(2));
+                int otherNumbers = Convert.ToInt32(vatNumber.Substring(1));
 
                 if (97 - (otherNumbers - (otherNumbers / 97 * 97)) == lastTwoNumbers)
                 {

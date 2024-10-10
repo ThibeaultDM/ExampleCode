@@ -40,6 +40,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             catch (Exception ex)
             {
                 response = BadRequest(ex.InnerException);
+
             }
 
             return response;

@@ -29,7 +29,7 @@ namespace NewInvoiceCommunicationLayer.Service
         {
             CreateInvoiceHeaderResponse response = new();
             BO_InvoiceHeader invoiceHeaderBo = new(input.VATNumber);
-        
+
             try
             {
                 invoiceHeaderBo.InvoiceNumber = await _numberRepository.GetNextNumber();
