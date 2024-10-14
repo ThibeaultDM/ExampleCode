@@ -1,9 +1,9 @@
-﻿<Application x:Class="WPF_training.App"
+﻿<Application x:Class="WPF_UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WPF_training"
-             xmlns:prism="http://prismlibrary.com/">
+             xmlns:local="clr-namespace:WPF_UI"
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+         
     </Application.Resources>
 </Application>
