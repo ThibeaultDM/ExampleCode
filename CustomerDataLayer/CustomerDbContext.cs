@@ -27,11 +27,6 @@ namespace CustomerDataLayer
 
         protected override void OnModelCreating(ModelBuilder mb)
         {
-            mb.Entity<DO_Person>().ToTable("Customer");
-            mb.Entity<DO_Company>().ToTable("Company");
-            mb.Entity<DO_Address>().ToTable("Address");
-            mb.Entity<DO_CreditInfo>().ToTable("CreditInfo");
-
             mb.Entity<DO_Person>().HasIndex(p => p.Id).IsUnique();
             mb.Entity<DO_Company>().HasIndex(c => c.Id).IsUnique();
             mb.Entity<DO_Address>().HasIndex(c => c.Id).IsUnique();
