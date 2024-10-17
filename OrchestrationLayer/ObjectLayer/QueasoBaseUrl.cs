@@ -12,11 +12,11 @@ namespace Orchestration.ObjectLayer
 
         public QueasoBaseUrl(IConfiguration config)
         {
-            url = config.GetValue<string>("ServiceUrl") ?? throw new Exception("Could not fetch ServiceUrl");
+            url = config["ServiceUrl"] ?? throw new Exception("Could not fetch ServiceUrl");
             CustomerPort = config.GetValue<int>("CustomerPort");
-            CustomerSubDomain = config.GetValue<string>("CustomerSubDomain") ?? throw new Exception("Could not fetch CustomerSubDomain");
+            CustomerSubDomain = config["CustomerSubDomain"] ?? throw new Exception("Could not fetch CustomerSubDomain");
             InvoicePort = config.GetValue<int>("InvoicePort");
-            InvoiceSubDomain = config.GetValue<string>("InvoiceSubDomain") ?? throw new Exception("Could not fetch InvoiceSubDomain");
+            InvoiceSubDomain = config["InvoiceSubDomain"] ?? throw new Exception("Could not fetch InvoiceSubDomain");
         }
 
         public string BaseUrlBuilder(BaseUrlComponent _baseUr1Component)

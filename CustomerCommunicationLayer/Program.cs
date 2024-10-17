@@ -58,7 +58,7 @@ internal class Program
             app.Urls.Add(args[1]);  // Ensure args[1] contains the correct URL
         }
 
-        string url = builder.Configuration.GetValue<string>("Url") ?? throw new Exception("No url configured");
+        string url = builder.Configuration["Kestrel:Endpoints:MyHttpEndpoint:Url"] ?? throw new Exception("No url configured");
 
         app.Run(url);
     }

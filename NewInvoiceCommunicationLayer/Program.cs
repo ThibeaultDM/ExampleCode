@@ -61,7 +61,7 @@ internal class Program
 
         app.MapControllers();
 
-        string url = builder.Configuration.GetValue<string>("Url") ?? throw new Exception("No url configured");
+        string url = builder.Configuration["Kestrel:Endpoints:MyHttpEndpoint:Url"] ?? throw new Exception("No url configured");
 
         app.Run(url);
     }
