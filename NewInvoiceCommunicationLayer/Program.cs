@@ -6,50 +6,63 @@ using NewInvoiceDataLayer;
 using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Repositories;
 
-var builder = WebApplication.CreateBuilder(args);
-
-string connectionString = builder.Configuration.GetConnectionString("Development") ?? throw new Exception("Connection string not found");
-
-builder.Services.AddDbContext<InvoiceDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("NewInvoiceCommunicationLayer")).EnableSensitiveDataLogging());
-
-// AddAsync services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(config =>
+internal class Program
 {
-    config.SwaggerDoc("v1", new OpenApiInfo() { Title = "Queaso Services Methodology", Version = "v1" });
-});
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IInvoiceDbContext, InvoiceDbContext>();
-builder.Services.AddTransient<IInvoiceExceptionRepository, InvoiceExceptionRepository>();
-builder.Services.AddTransient<IInvoiceHeaderRepository, InvoiceHeaderRepository>();
-builder.Services.AddScoped<IInvoiceNumberRepository, InvoiceNumberRepository>();
+        string connectionString;
+        bool localeDb = builder.Configuration.GetValue<bool>("LocaleDb");
 
-builder.Services.AddTransient<IInvoiceUseCases, InvoiceUseCases>();
+        if (localeDb)
+        {
+            connectionString = builder.Configuration.GetConnectionString("Development") ?? throw new Exception("Connection string not found");
+        }
+        else
+        {
+            connectionString = builder.Configuration.GetConnectionString("Live") ?? throw new Exception("Connection string not found");
+        }
 
-builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
+        builder.Services.AddDbContext<InvoiceDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("NewInvoiceCommunicationLayer")).EnableSensitiveDataLogging());
 
-var app = builder.Build();
+        // AddAsync services to the container.
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        builder.Services.AddControllers();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(config =>
+        {
+            config.SwaggerDoc("v1", new OpenApiInfo() { Title = "Queaso Services Methodology", Version = "v1" });
+        });
+
+        builder.Services.AddScoped<IInvoiceDbContext, InvoiceDbContext>();
+        builder.Services.AddTransient<IInvoiceExceptionRepository, InvoiceExceptionRepository>();
+        builder.Services.AddTransient<IInvoiceHeaderRepository, InvoiceHeaderRepository>();
+        builder.Services.AddScoped<IInvoiceNumberRepository, InvoiceNumberRepository>();
+
+        builder.Services.AddTransient<IInvoiceUseCases, InvoiceUseCases>();
+
+        builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
+
+        var app = builder.Build();
+
+        bool enableSwagger = builder.Configuration.GetValue<bool>("EnableSwagger");
+        // Configure the HTTP request pipeline.
+        if (enableSwagger)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        string url = builder.Configuration.GetValue<string>("Url") ?? throw new Exception("No url configured");
+
+        app.Run(url);
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-// Add URLs from command line args if provided
-if (args.Length > 0)
-{
-    Console.WriteLine($"Using URL: {string.Join(", ", args)}");
-    app.Urls.Add(args[1]);  // Ensure args[1] contains the correct URL
-}
-app.Run();

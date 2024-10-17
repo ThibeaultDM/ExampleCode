@@ -1,4 +1,6 @@
-﻿using Flurl.Http;
+﻿using Flurl;
+using Flurl.Http;
+using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ModuleCustomer.Models
 {
-    public class DataModel
+    public class DataModel : IDataModel
     {
         private FlurlClient _client;
 
@@ -16,6 +18,7 @@ namespace ModuleCustomer.Models
         {
             Console.WriteLine("DataModel constructor working");
             _client = client;
+            _client.BaseUrl = "https://localhost:7089/Orchestration/";
         }
 
         private List<CustomerResponse> customers;

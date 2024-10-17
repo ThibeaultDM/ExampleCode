@@ -1,9 +1,14 @@
-﻿using Training_UI.Interfaces;
-using Training_UI.Models.Response;
+﻿using ModuleCustomer.Interfaces;
+using ModuleCustomer.Models.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Training_UI.ViewModels
+namespace ModuleCustomer
 {
-    public class CustomerViewModel : ICustomerViewModel
+    public class CustomerViewModel: BindableBase
     {
         private IDataModel customerModel;
         private List<CustomerResponse> listCustomers;
@@ -12,11 +17,12 @@ namespace Training_UI.ViewModels
         {
             Console.WriteLine("CustomerViewModel constructor working");
             this.customerModel = customerModel;
+            GetCustomersAsync();
         }
 
         public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
 
-        public async Task GetCustomersAsync()
+        public async void GetCustomersAsync()
         {
             await customerModel.GetAllCustomersAsync();
 

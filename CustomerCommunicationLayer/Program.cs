@@ -11,10 +11,19 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-        string connectionstring = builder.Configuration.GetConnectionString("Development");
+        string connectionString;
+        bool localeDb = builder.Configuration.GetValue<bool>("LocaleDb");
 
-        builder.Services.AddDbContext<CustomerDbContext>(options => options.UseSqlServer(connectionstring, b => b.MigrationsAssembly("CustomerCommunicationLayer")).EnableSensitiveDataLogging());
+        if (localeDb)
+        {
+            connectionString = builder.Configuration.GetConnectionString("Development") ?? throw new Exception("Connection string not found");
+        }
+        else
+        {
+            connectionString = builder.Configuration.GetConnectionString("Live") ?? throw new Exception("Connection string not found");
+        }
+
+        builder.Services.AddDbContext<CustomerDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("CustomerCommunicationLayer")).EnableSensitiveDataLogging());
 
         builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
         builder.Services.AddTransient<ICustomerExceptionRepository, CustomerExceptionRepository>();
@@ -28,8 +37,9 @@ internal class Program
 
         var app = builder.Build();
 
+        bool enableSwagger = builder.Configuration.GetValue<bool>("EnableSwagger");
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        if (enableSwagger)
         {
             app.UseSwagger();
             app.UseSwaggerUI();
@@ -48,6 +58,8 @@ internal class Program
             app.Urls.Add(args[1]);  // Ensure args[1] contains the correct URL
         }
 
-        app.Run();
+        string url = builder.Configuration.GetValue<string>("Url") ?? throw new Exception("No url configured");
+
+        app.Run(url);
     }
 }

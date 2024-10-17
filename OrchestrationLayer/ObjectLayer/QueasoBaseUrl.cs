@@ -12,7 +12,7 @@ namespace Orchestration.ObjectLayer
 
         public QueasoBaseUrl(IConfiguration config)
         {
-            url = config.GetValue<string>("Url") ?? throw new Exception("Could not fetch Url");
+            url = config.GetValue<string>("ServiceUrl") ?? throw new Exception("Could not fetch ServiceUrl");
             CustomerPort = config.GetValue<int>("CustomerPort");
             CustomerSubDomain = config.GetValue<string>("CustomerSubDomain") ?? throw new Exception("Could not fetch CustomerSubDomain");
             InvoicePort = config.GetValue<int>("InvoicePort");
