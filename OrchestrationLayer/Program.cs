@@ -15,10 +15,9 @@ internal class Program
         {
             options.AddPolicy(_OrchestrationCorsPolicy, policy =>
             {
-                policy.WithOrigins("https://localhost:5001") // Specify the Blazor app URL
+                policy.AllowAnyOrigin()
                       .AllowAnyMethod()
-                      .AllowAnyHeader()
-                      .AllowCredentials(); // Only allow credentials if necessary
+                      .AllowAnyHeader();
             });
         });
 

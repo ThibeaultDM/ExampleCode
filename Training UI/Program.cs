@@ -14,7 +14,7 @@ internal class Program
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
-        builder.Services.AddScoped(sp => new FlurlClient { BaseUrl = "https://localhost:7089/Orchestration/" });
+        builder.Services.AddScoped(sp => new FlurlClient { BaseUrl = "http://localhost:7089/Orchestration/" });
         builder.Services.AddTransient<IDataModel, DataModel>();
         builder.Services.AddTransient<ICustomerViewModel, CustomerViewModel>();
         builder.Services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
