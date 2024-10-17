@@ -46,4 +46,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Add URLs from command line args if provided
+if (args.Length > 0)
+{
+    Console.WriteLine($"Using URL: {string.Join(", ", args)}");
+    app.Urls.Add(args[1]);  // Ensure args[1] contains the correct URL
+}
 app.Run();

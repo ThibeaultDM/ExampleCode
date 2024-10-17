@@ -70,7 +70,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_Company", b =>
@@ -114,7 +114,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_CreditInfo", b =>
@@ -130,7 +130,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("CreditInfo", (string)null);
+                    b.ToTable("CredritInfo");
                 });
 
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_CustomerException", b =>
@@ -234,7 +234,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Customer", (string)null);
+                    b.ToTable("People");
 
                     b.UseTptMappingStrategy();
                 });

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerCommunicationLayer.Migrations
 {
     [DbContext(typeof(CustomerDbContext))]
-    [Migration("20240930083635_Initial")]
-    partial class Initial
+    [Migration("20241015132704_intial")]
+    partial class intial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,7 +73,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_Company", b =>
@@ -117,7 +117,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_CreditInfo", b =>
@@ -133,7 +133,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("CreditInfo", (string)null);
+                    b.ToTable("CredritInfo");
                 });
 
             modelBuilder.Entity("CustomerDataLayer.DataModels.DO_CustomerException", b =>
@@ -237,7 +237,7 @@ namespace CustomerCommunicationLayer.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Customer", (string)null);
+                    b.ToTable("People");
 
                     b.UseTptMappingStrategy();
                 });

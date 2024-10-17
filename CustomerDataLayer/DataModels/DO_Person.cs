@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomerDataLayer.DataModels
 {
+    [Table("People")]
     public class DO_Person : DataObjectBase
     {
         [Required]
