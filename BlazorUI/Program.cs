@@ -30,4 +30,14 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-app.Run();
+bool OnServer = builder.Configuration.GetValue<bool>("OnServer");
+
+if (OnServer)
+{
+    string url = builder.Configuration["Kestrel:Endpoints:MyHttpEndpoint:Url"] ?? throw new Exception("No url configured");
+    app.Run(url);
+}
+else
+{
+    app.Run();
+}
