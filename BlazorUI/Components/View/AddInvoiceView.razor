@@ -1,6 +1,7 @@
 ﻿@page "/AddInvoice/{id}"
+@rendermode InteractiveServer
+
 @inject IAddInvoiceViewModel _serviceInvoice
-@attribute [StreamRendering]
 
 <h3>AddInvoiceView</h3>
 @if (Customer != null)
