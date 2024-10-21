@@ -1,10 +1,9 @@
 ﻿@page "/"
 @inject ICustomerViewModel _serviceCustomer
 @inject NavigationManager navMng
+@attribute [StreamRendering]
 
 <PageTitle>CustomerView</PageTitle>
-
-
 
 @if (_serviceCustomer.ListCustomers == null)
 {
@@ -15,11 +14,9 @@
 }
 else
 {
-    @*     <Training_UI.Components.CustomerList Customers="_serviceCustomer.ListCustomers"></Training_UI.Components.CustomerList>
- *@
     <h1>CustomerView</h1>
     <div>
-        <select @bind="Id" @bind:event="onchange" class="form-select">
+        <select @onchange="OnCustomerSelect" class="form-select">
             <option selected>Open this select menu</option>
             @foreach (CustomerResponse customer in _serviceCustomer.ListCustomers)
             {
@@ -59,7 +56,6 @@ else
 @code {
 
     private CustomerResponse _customer;
-    private Guid _id;
 
     [Parameter]
     public CustomerResponse Customer
@@ -71,24 +67,19 @@ else
             StateHasChanged();
         }
     }
-
-    [Parameter]
-    public Guid Id
-    {
-        get { return _id; }
-        set
-        {
-            _id = value;
-            Customer = _serviceCustomer.ListCustomers.Single(c => c.Id == Id);
-        }
-    }
-
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("Loading CustomerView");
         await base.OnInitializedAsync();
 
         await _serviceCustomer.GetCustomersAsync();
+    }
+
+    private async Task OnCustomerSelect(ChangeEventArgs e)
+    {
+        Customer = _serviceCustomer.ListCustomers.Single(c => c.Id == (Guid)e.Value);
+
+        await Task.CompletedTask;
     }
 
     private void AddInvoice()
