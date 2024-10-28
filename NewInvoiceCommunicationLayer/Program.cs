@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using NewInvoiceCommunicationLayer.Interfaces;
-using NewInvoiceCommunicationLayer.Service;
+using NewInvoiceCommunicationLayer;
 using NewInvoiceDataLayer;
 using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Repositories;
+using NewInvoiceServiceLayer.Interfaces;
+using NewInvoiceServiceLayer.Service;
 
 internal class Program
 {

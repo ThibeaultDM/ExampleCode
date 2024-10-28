@@ -74,16 +74,16 @@
             <div class="form-group pt-1">
                 <div class="row">
                     <div class="col">
-                        <input type="text" @bind="invoiceLine.Description" class="form-control">
+                        <input type="text" @bind="invoiceLine.Description" class="form-control" disabled readonly>
                     </div>
                     <div class="col">
-                        <input type="number" @bind="invoiceLine.Quantity" class="form-control">
+                        <input type="number" @bind="invoiceLine.Quantity" class="form-control" disabled readonly>
                     </div>
                     <div class="col">
-                        <input type="number" @bind="invoiceLine.PricePerUnit" class="form-control">
+                        <input type="number" @bind="invoiceLine.PricePerUnit" class="form-control" disabled readonly>
                     </div>
                     <div class="col">
-                        <input type="number" @bind="invoiceLine.VATRate" class="form-control">
+                        <input type="number" @bind="invoiceLine.VATRate" class="form-control" disabled readonly>
                     </div>
                     <div class="col">
                     </div>
@@ -97,13 +97,13 @@
                     <input type="text" @bind="InvoiceLine.Description" class="form-control">
                 </div>
                 <div class="col">
-                    <input type="number" @bind="InvoiceLine.Quantity" class="form-control">
+                    <input type="number" min="0" @bind="InvoiceLine.Quantity" class="form-control">
                 </div>
                 <div class="col">
-                    <input type="number" @bind="InvoiceLine.PricePerUnit" class="form-control">
+                    <input type="number" min="0" @bind="InvoiceLine.PricePerUnit" class="form-control">
                 </div>
                 <div class="col">
-                    <input type="number" @bind="InvoiceLine.VATRate" class="form-control">
+                    <input type="number" min="0" @bind="InvoiceLine.VATRate" class="form-control">
                 </div>
                 <div class="col">
                     <button type="button" class="btn btn-secondary" @onclick="AddInvoiceLine" data-toggle="button" aria-pressed="false" autocomplete="off">

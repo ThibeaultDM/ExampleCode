@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NewInvoiceCommunicationLayer.Interfaces;
+using NewInvoiceServiceLayer.Interfaces;
 using NewInvoiceCommunicationLayer.Models.Input;
 using NewInvoiceCommunicationLayer.Models.Response;
 using NewInvoiceServiceLayer.Objects;
+using AutoMapper;
 
 namespace NewInvoiceCommunicationLayer.Controllers
 {
@@ -12,30 +13,29 @@ namespace NewInvoiceCommunicationLayer.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IInvoiceUseCases _invoiceUseCases;
+        private readonly IMapper _mapper;
 
-        public NewInvoiceController(IConfiguration config, IInvoiceUseCases invoiceUseCases)
+        public NewInvoiceController(IConfiguration config, IInvoiceUseCases invoiceUseCases, IMapper mapper)
         {
-            _config = config;
-            _invoiceUseCases = invoiceUseCases;
+            this._config = config;
+            this._invoiceUseCases = invoiceUseCases;
+            this._mapper = mapper;
         }
 
         [HttpPost("CreateInvoiceHeader")]
         public async Task<IActionResult> CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input)
         {
             ObjectResult response;
-
             try
             {
-                CreateInvoiceHeaderResponse result = await _invoiceUseCases.UC_301_001_CreateInvoiceHeaderAsync(input);
+                BO_InvoiceHeader invoiceHeaderBo = await _invoiceUseCases.UC_301_001_CreateInvoiceHeaderAsync(input.VATNumber);
 
-                if (result.Success)
-                {
-                    response = Ok(result);
-                }
-                else
-                {
-                    response = Ok(result);
-                }
+                CreateInvoiceHeaderResponse result = _mapper.Map<CreateInvoiceHeaderResponse>(invoiceHeaderBo);
+
+                SetErrorMessage(result, invoiceHeaderBo);
+
+                response = Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -46,6 +46,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             return response;
         }
 
+
         [HttpPost("AddInvoiceLineToInvoiceHeader")]
         public async Task<IActionResult> AddInvoiceLineToInvoiceHeaderAsync(AddInvoiceLineToInvoiceHeaderInput input)
         {
@@ -53,16 +54,10 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             try
             {
-                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_002_AddInvoiceLineToHeaderAsync(input);
+                BO_InvoiceLine invoiceLineBO = _mapper.Map<BO_InvoiceLine>(input);
+                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLineBO);
 
-                if (result != null)
-                {
-                    response = Ok(result);
-                }
-                else
-                {
-                    response = Ok("InvoiceHeader not Found");
-                }
+                response = Ok(result);
             }
             catch (Exception ex)
             {
@@ -79,7 +74,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             try
             {
-                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_003_FindInvoiceHeaderAsync(input);
+                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_003_FindInvoiceHeaderAsync(input.InvoiceHeaderId);
 
                 if (result != null)
                 {
@@ -89,6 +84,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 {
                     response = Ok("InvoiceHeader not Found");
                 }
+
             }
             catch (Exception ex)
             {
@@ -107,7 +103,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             {
                 List<BO_InvoiceHeader> result = await _invoiceUseCases.UC_301_005_GetAllInvoicesHeadersAsync();
 
-                if (result != null)
+                if (result.Count > 0)
                 {
                     response = Ok(result);
                 }
@@ -131,7 +127,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             try
             {
-                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input);
+                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input.proxyCompanyId, input.InvoiceHeaderId);
 
                 if (result != null)
                 {
@@ -149,5 +145,15 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             return response;
         }
+
+        private static void SetErrorMessage<T>(T result, BO_InvoiceHeader invoiceHeaderBo) where T : BaseResponse
+        {
+            if (invoiceHeaderBo.BrokenRules.Count > 0)
+            {
+                invoiceHeaderBo.BrokenRules.ForEach(br => result.SetErrors(new(br.PropertyName, br.FailedMessage)));
+
+            }
+        }
+
     }
 }

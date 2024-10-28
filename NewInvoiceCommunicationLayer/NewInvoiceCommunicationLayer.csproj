@@ -17,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewInvoiceDatalayer\NewInvoiceDataLayer.csproj" />
-    <ProjectReference Include="..\NewInvoiceServiceLayer\NewInvoiceServiceLayer.csproj" />
+    <ProjectReference Include="..\NewInvoiceServiceLayer\NewInvoiceBusinessLayer.csproj" />
   </ItemGroup>
 
 </Project>

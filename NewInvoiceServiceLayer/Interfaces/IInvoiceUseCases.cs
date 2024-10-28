@@ -1,9 +1,7 @@
-﻿using NewInvoiceCommunicationLayer.Models.Input;
-using NewInvoiceCommunicationLayer.Models.Response;
-using NewInvoiceServiceLayer.Objects;
+﻿using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.Exceptions;
 
-namespace NewInvoiceCommunicationLayer.Interfaces
+namespace NewInvoiceServiceLayer.Interfaces
 {
     public interface IInvoiceUseCases
     {
@@ -12,7 +10,7 @@ namespace NewInvoiceCommunicationLayer.Interfaces
         /// </summary>
         /// <param name="vatNumber"></param>
         /// <returns></returns>
-        Task<CreateInvoiceHeaderResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input);
+        Task<BO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(string VATNumber);
 
         /// <summary>
         /// AddAsync an invoiceLine to an invoiceHeader
@@ -20,14 +18,14 @@ namespace NewInvoiceCommunicationLayer.Interfaces
         /// <param name="invoiceHeaderId"></param>
         /// <param name="boInvoiceLine"></param>
         /// <returns></returns>
-        Task<BO_InvoiceHeader> UC_301_002_AddInvoiceLineToHeaderAsync(AddInvoiceLineToInvoiceHeaderInput input);
+        Task<BO_InvoiceHeader> UC_301_002_AddInvoiceLineToHeaderAsync(BO_InvoiceLine input);
 
         /// <summary>
         /// Finds an invoiceHeader and it's corresponding invoiceLines by the invoiceHeaders id
         /// </summary>
         /// <param name="toFind"></param>
         /// <returns></returns>
-        Task<BO_InvoiceHeader> UC_301_003_FindInvoiceHeaderAsync(GetInvoiceByNameInput toFind);
+        Task<BO_InvoiceHeader> UC_301_003_FindInvoiceHeaderAsync(Guid toFind);
 
         /// <summary>
         /// Links an existing invoiceHeader to an existing company
@@ -35,7 +33,7 @@ namespace NewInvoiceCommunicationLayer.Interfaces
         /// <param name="companyProxyId"></param>
         /// <param name="invoiceHeaderId"></param>
         /// <returns></returns>
-        Task<BO_InvoiceHeader> UC_301_004_ArchiveJournalEntryForInvoiceAsync(ArchiveInvoiceJournalEntryInput input);
+        Task<BO_InvoiceHeader> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid proxyCompanyId, Guid InvoiceHeaderId);
 
         /// <summary>
         /// Gets all invoiceHeaders without their invoiceLines

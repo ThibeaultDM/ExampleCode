@@ -5,7 +5,7 @@ using NewInvoiceDataLayer.Objects;
 using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.Exceptions;
 
-namespace NewInvoiceCommunicationLayer.Service
+namespace NewInvoiceCommunicationLayer
 {
     public class AutoMapperConfig : Profile
     {
