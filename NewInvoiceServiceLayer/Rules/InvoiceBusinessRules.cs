@@ -44,7 +44,7 @@ namespace NewInvoiceServiceLayer.Rules
             calculatedVatAmount = 0;
             try
             {
-                // TODO how will the VATRate be given, as a percentage or ... 
+                // TODO how will the VATRate be given, as a percentage or ...
                 calculatedVatAmount = amountWhitOutVat / 100 * vatRate;
             }
             catch (Exception ex)

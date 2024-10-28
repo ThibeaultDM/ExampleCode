@@ -60,5 +60,10 @@ namespace NewInvoiceServiceLayer.Objects
 
             return base.AddBusinessRules();
         }
+
+        public override string ToString()
+        {
+            return $"InvoiceLineBO with id: {Id}, InvoiceHeaderId: {InvoiceHeaderId}, Amount: {Amount}, VATAmount: {VATAmount}, VATRate: {VATRate}, LineAmount: {LineAmount}, PricePerUnit: {PricePerUnit}, Quantity: {Quantity}, Description: {Description},";
+        }
     }
 }

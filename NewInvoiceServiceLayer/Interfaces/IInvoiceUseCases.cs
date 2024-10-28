@@ -1,5 +1,4 @@
 ﻿using NewInvoiceServiceLayer.Objects;
-using QueasoFramework.Exceptions;
 
 namespace NewInvoiceServiceLayer.Interfaces
 {
@@ -46,6 +45,6 @@ namespace NewInvoiceServiceLayer.Interfaces
         /// </summary>
         /// <param name="exception"></param>
         /// <returns></returns>
-        Task SaveInvoiceExceptionAsync(FrameworkException exception);
+        //Task SaveInvoiceExceptionAsync(FrameworkException exception);
     }
 }

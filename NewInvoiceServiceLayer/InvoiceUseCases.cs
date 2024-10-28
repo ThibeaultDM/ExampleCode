@@ -1,11 +1,10 @@
-﻿using NewInvoiceServiceLayer.Interfaces;
+﻿using AutoMapper;
 using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
+using NewInvoiceServiceLayer.Interfaces;
 using NewInvoiceServiceLayer.Objects;
-using QueasoFramework.Exceptions;
-using AutoMapper;
-using QueasoFramework.BusinessModels.Rules;
 using QueasoFramework.BusinessModels;
+using QueasoFramework.BusinessModels.Rules;
 
 namespace NewInvoiceServiceLayer.Service
 {
@@ -39,9 +38,21 @@ namespace NewInvoiceServiceLayer.Service
 
                     invoiceHeaderBO = _mapper.Map<BO_InvoiceHeader>(invoiceHeaderDo);
                 }
+                else
+                {
+                    await _exceptionRepository.SaveInvoiceExceptionAsync(new()
+                    {
+                        Type = 4,
+                        NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
+                        Message = "No Valid invoiceHeader was created",
+                        InputParameters = input
+                    });
+                }
             }
             catch (Exception ex)
             {
+                await SaveErrorException(input, ex);
+
                 invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
             }
 
@@ -79,10 +90,14 @@ namespace NewInvoiceServiceLayer.Service
                 else
                 {
                     invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "Not Found Error", FailedMessage = "InvoiceHeader not found" });
+
+                    await SaveHeaderNotFoundException(input.ToString());
                 }
             }
             catch (Exception ex)
             {
+                await SaveErrorException(input.ToString(), ex);
+
                 invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
             }
 
@@ -103,11 +118,14 @@ namespace NewInvoiceServiceLayer.Service
                 }
                 else
                 {
+                    await SaveHeaderNotFoundException(toFind.ToString());
                     invoiceHeaderBO = null;
                 }
             }
             catch (Exception ex)
             {
+                await SaveErrorException(toFind.ToString(), ex);
+
                 invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
             }
 
@@ -133,11 +151,15 @@ namespace NewInvoiceServiceLayer.Service
                 }
                 else
                 {
+                    await SaveHeaderNotFoundException($"{proxyCompanyId}, {InvoiceHeaderId}");
+
                     invoiceHeaderBO = null;
                 }
             }
             catch (Exception ex)
             {
+                await SaveErrorException($"{proxyCompanyId}, {InvoiceHeaderId}", ex);
+
                 invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
             }
 
@@ -168,13 +190,7 @@ namespace NewInvoiceServiceLayer.Service
             return listInvoiceHeaderBO;
         }
 
-        // TODO implement this and it probably should give a response
-        public async Task SaveInvoiceExceptionAsync(FrameworkException exception)
-        {
-            DO_InvoiceException invoiceException = _mapper.Map<DO_InvoiceException>(exception);
-
-            await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceException);
-        }
+        #region Private Methodes
 
         private T HandleException<T>(T problemChild, Exception ex) where T : BusinessObjectBase
         {
@@ -192,5 +208,29 @@ namespace NewInvoiceServiceLayer.Service
 
             return result;
         }
+
+        private async Task SaveErrorException(string InputParameters, Exception ex)
+        {
+            await _exceptionRepository.SaveInvoiceExceptionAsync(new()
+            {
+                Type = 1,
+                NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
+                Message = ex.InnerException.Message,
+                InputParameters = InputParameters
+            });
+        }
+
+        private async Task SaveHeaderNotFoundException(string inputParameters)
+        {
+            await _exceptionRepository.SaveInvoiceExceptionAsync(new()
+            {
+                Type = 6,
+                NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
+                Message = "InvoiceHeader not found",
+                InputParameters = inputParameters
+            });
+        }
+
+        #endregion Private Methodes
     }
 }

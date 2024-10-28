@@ -42,7 +42,6 @@ internal class Program
 
         var app = builder.Build();
 
-
         bool enableSwagger = builder.Configuration.GetValue<bool>("EnableSwagger");
         // Configure the HTTP request pipeline.
         if (enableSwagger)

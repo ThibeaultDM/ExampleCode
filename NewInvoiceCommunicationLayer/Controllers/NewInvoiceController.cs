@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NewInvoiceServiceLayer.Interfaces;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NewInvoiceCommunicationLayer.Models.Input;
 using NewInvoiceCommunicationLayer.Models.Response;
+using NewInvoiceServiceLayer.Interfaces;
 using NewInvoiceServiceLayer.Objects;
-using AutoMapper;
 
 namespace NewInvoiceCommunicationLayer.Controllers
 {
@@ -35,17 +35,14 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 SetErrorMessage(result, invoiceHeaderBo);
 
                 response = Ok(result);
-
             }
             catch (Exception ex)
             {
                 response = BadRequest(ex.InnerException);
-
             }
 
             return response;
         }
-
 
         [HttpPost("AddInvoiceLineToInvoiceHeader")]
         public async Task<IActionResult> AddInvoiceLineToInvoiceHeaderAsync(AddInvoiceLineToInvoiceHeaderInput input)
@@ -84,7 +81,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 {
                     response = Ok("InvoiceHeader not Found");
                 }
-
             }
             catch (Exception ex)
             {
@@ -151,9 +147,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             if (invoiceHeaderBo.BrokenRules.Count > 0)
             {
                 invoiceHeaderBo.BrokenRules.ForEach(br => result.SetErrors(new(br.PropertyName, br.FailedMessage)));
-
             }
         }
-
     }
 }

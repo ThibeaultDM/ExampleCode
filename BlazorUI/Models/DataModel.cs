@@ -1,8 +1,8 @@
-﻿using Flurl;
-using Flurl.Http;
-using BlazorUI.Interfaces;
+﻿using BlazorUI.Interfaces;
 using BlazorUI.Models.Input;
 using BlazorUI.Models.Response;
+using Flurl;
+using Flurl.Http;
 
 namespace BlazorUI.Models
 {

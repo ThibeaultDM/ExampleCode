@@ -1,9 +1,8 @@
 using BlazorUI.Components;
 using BlazorUI.Interfaces;
-using BlazorUI.ViewModels;
 using BlazorUI.Models;
+using BlazorUI.ViewModels;
 using Flurl.Http;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
