@@ -12,15 +12,15 @@ using NewInvoiceDataLayer;
 namespace NewInvoiceCommunicationLayer.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    [Migration("20241007091117_Initialize")]
-    partial class Initialize
+    [Migration("20241029154921_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -223,6 +223,45 @@ namespace NewInvoiceCommunicationLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InvoiceNumber");
+                });
+
+            modelBuilder.Entity("NewInvoiceDataLayer.Objects.DO_JournalEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("InvoiceHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JournalHeaderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JournalEntries");
                 });
 
             modelBuilder.Entity("NewInvoiceDataLayer.Objects.DO_InvoiceLine", b =>

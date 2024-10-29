@@ -1,4 +1,5 @@
-﻿using NewInvoiceServiceLayer.Objects;
+﻿using NewInvoiceBusinessLayer.Objects;
+using NewInvoiceServiceLayer.Objects;
 
 namespace NewInvoiceServiceLayer.Interfaces
 {
@@ -9,7 +10,7 @@ namespace NewInvoiceServiceLayer.Interfaces
         /// </summary>
         /// <param name="vatNumber"></param>
         /// <returns></returns>
-        Task<BO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(string VATNumber);
+        Task<BO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(string vatNumber, string proxyCompanyId);
 
         /// <summary>
         /// AddAsync an invoiceLine to an invoiceHeader
@@ -32,7 +33,7 @@ namespace NewInvoiceServiceLayer.Interfaces
         /// <param name="companyProxyId"></param>
         /// <param name="invoiceHeaderId"></param>
         /// <returns></returns>
-        Task<BO_InvoiceHeader> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid proxyCompanyId, Guid InvoiceHeaderId);
+        Task<BO_JournalEntry> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid journalEntryId, Guid InvoiceHeaderId);
 
         /// <summary>
         /// Gets all invoiceHeaders without their invoiceLines

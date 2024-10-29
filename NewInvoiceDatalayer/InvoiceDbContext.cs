@@ -15,6 +15,7 @@ namespace NewInvoiceDataLayer
         public DbSet<DO_InvoiceLine> InvoiceLines { get; set; }
         public DbSet<DO_InvoiceException> InvoiceExceptions { get; set; }
         public DbSet<DO_InvoiceNumber> InvoiceNumber { get; set; }
+        public DbSet<DO_JournalEntry> JournalEntries { get; set; }
 
         #region Exposed for interface
 

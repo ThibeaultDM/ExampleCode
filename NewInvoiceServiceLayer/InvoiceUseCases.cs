@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NewInvoiceBusinessLayer.Objects;
 using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
 using NewInvoiceServiceLayer.Interfaces;
@@ -13,19 +14,21 @@ namespace NewInvoiceServiceLayer.Service
         private readonly IInvoiceHeaderRepository _headerRepository;
         private readonly IInvoiceNumberRepository _numberRepository;
         private readonly IInvoiceExceptionRepository _exceptionRepository;
+        private readonly IJournalEntryRepository _journalEntryRepository;
         private readonly IMapper _mapper;
 
-        public InvoiceUseCases(IInvoiceHeaderRepository headerRepository, IInvoiceNumberRepository numberRepository, IInvoiceExceptionRepository exceptionRepository, IMapper mapper)
+        public InvoiceUseCases(IInvoiceHeaderRepository headerRepository, IInvoiceNumberRepository numberRepository, IInvoiceExceptionRepository exceptionRepository, IJournalEntryRepository journalEntryRepository, IMapper mapper)
         {
             _headerRepository = headerRepository;
             _numberRepository = numberRepository;
             _exceptionRepository = exceptionRepository;
+            _journalEntryRepository = journalEntryRepository;
             _mapper = mapper;
         }
 
-        public async Task<BO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(string input)
+        public async Task<BO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(string vatNumber, string proxyCompanyId)
         {
-            BO_InvoiceHeader invoiceHeaderBO = new(input);
+            BO_InvoiceHeader invoiceHeaderBO = new(vatNumber, proxyCompanyId);
 
             try
             {
@@ -40,20 +43,23 @@ namespace NewInvoiceServiceLayer.Service
                 }
                 else
                 {
-                    await _exceptionRepository.SaveInvoiceExceptionAsync(new()
+                    BO_InvoiceException invoiceExceptionBO = new()
                     {
-                        Type = 4,
+                        Type = NewInvoiceBusinessLayer.Enums.InvoiceExceptionTypes.InvalidVATNumber,
                         NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
                         Message = "No Valid invoiceHeader was created",
-                        InputParameters = input
-                    });
+                        InputParameters = $"{vatNumber}, {proxyCompanyId}"
+                    };
+
+                    DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
+                    await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
                 }
             }
             catch (Exception ex)
             {
-                await SaveErrorException(input, ex);
+                await SaveErrorException($"{vatNumber}, {proxyCompanyId}", ex);
 
-                invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
+                invoiceHeaderBO = HandleCriticalErrorResponse(invoiceHeaderBO, ex);
             }
 
             return invoiceHeaderBO;
@@ -63,7 +69,6 @@ namespace NewInvoiceServiceLayer.Service
         public async Task<BO_InvoiceHeader> UC_301_002_AddInvoiceLineToHeaderAsync(BO_InvoiceLine input)
         {
             BO_InvoiceHeader invoiceHeaderBO = new();
-            string dontWantToTouchApiAndUiModelSetUp = "";
             try
             {
                 DO_InvoiceHeader invoiceHeaderDo = await _headerRepository.FindInvoiceHeaderAsync(input.InvoiceHeaderId);
@@ -74,7 +79,6 @@ namespace NewInvoiceServiceLayer.Service
 
                     if (input.Valid)
                     {
-                        DO_InvoiceLine invoiceLineDo = _mapper.Map<DO_InvoiceLine>(input);
                         invoiceHeaderBO.AddInvoiceLineToHeader(input);
 
                         invoiceHeaderDo = _mapper.Map<DO_InvoiceHeader>(invoiceHeaderBO);
@@ -82,23 +86,19 @@ namespace NewInvoiceServiceLayer.Service
                     }
                     else
                     {
-                        input.BrokenRules.ForEach(br => dontWantToTouchApiAndUiModelSetUp += $"{br.PropertyName}: {br.FailedMessage}\n");
-
-                        throw new Exception(dontWantToTouchApiAndUiModelSetUp);
+                        await ResolveBusinessRulesBroken(input);
                     }
                 }
                 else
                 {
-                    invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "Not Found Error", FailedMessage = "InvoiceHeader not found" });
-
-                    await SaveHeaderNotFoundException(input.ToString());
+                    invoiceHeaderBO = await ResolveInvoiceHeaderNotFound(input.InvoiceHeaderId.ToString(), invoiceHeaderBO);
                 }
             }
             catch (Exception ex)
             {
                 await SaveErrorException(input.ToString(), ex);
 
-                invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
+                invoiceHeaderBO = HandleCriticalErrorResponse(invoiceHeaderBO, ex);
             }
 
             return invoiceHeaderBO;
@@ -118,52 +118,38 @@ namespace NewInvoiceServiceLayer.Service
                 }
                 else
                 {
-                    await SaveHeaderNotFoundException(toFind.ToString());
-                    invoiceHeaderBO = null;
+                    invoiceHeaderBO = await ResolveInvoiceHeaderNotFound(toFind.ToString(), invoiceHeaderBO);
                 }
             }
             catch (Exception ex)
             {
                 await SaveErrorException(toFind.ToString(), ex);
 
-                invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
+                invoiceHeaderBO = HandleCriticalErrorResponse(invoiceHeaderBO, ex);
             }
 
             return invoiceHeaderBO;
         }
 
-        public async Task<BO_InvoiceHeader> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid proxyCompanyId, Guid InvoiceHeaderId)
+        public async Task<BO_JournalEntry> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid idJournalEntry, Guid idInvoiceHeader)
         {
-            BO_InvoiceHeader invoiceHeaderBO = new();
+            BO_JournalEntry journalEntryBO = new(idJournalEntry, idInvoiceHeader);
 
             try
             {
-                DO_InvoiceHeader invoiceHeaderDO = await _headerRepository.FindInvoiceHeaderAsync(InvoiceHeaderId);
+                DO_JournalEntry journalEntryDO = _mapper.Map<DO_JournalEntry>(journalEntryBO);
+                journalEntryDO = await _journalEntryRepository.SaveJournalEntryAsync(journalEntryDO);
 
-                if (invoiceHeaderDO != null)
-                {
-                    invoiceHeaderDO.CompanyProxyId = proxyCompanyId;
-                    // To avoid any duplicate line being added to the database when updating header
-                    invoiceHeaderDO.InvoiceLines = null;
-
-                    invoiceHeaderDO = await _headerRepository.UpdateInvoiceHeaderAsync(invoiceHeaderDO);
-                    invoiceHeaderBO = _mapper.Map<BO_InvoiceHeader>(invoiceHeaderDO);
-                }
-                else
-                {
-                    await SaveHeaderNotFoundException($"{proxyCompanyId}, {InvoiceHeaderId}");
-
-                    invoiceHeaderBO = null;
-                }
+                journalEntryBO = _mapper.Map<BO_JournalEntry>(journalEntryDO);
             }
             catch (Exception ex)
             {
-                await SaveErrorException($"{proxyCompanyId}, {InvoiceHeaderId}", ex);
+                await SaveErrorException($"idJournalEntry: {idJournalEntry}, idInvoiceHeader: {idInvoiceHeader}", ex);
 
-                invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
+                journalEntryBO = HandleCriticalErrorResponse(journalEntryBO, ex);
             }
 
-            return invoiceHeaderBO;
+            return journalEntryBO;
         }
 
         public async Task<List<BO_InvoiceHeader>> UC_301_005_GetAllInvoicesHeadersAsync()
@@ -182,7 +168,9 @@ namespace NewInvoiceServiceLayer.Service
             }
             catch (Exception ex)
             {
-                invoiceHeaderBO = HandleException(invoiceHeaderBO, ex);
+                await SaveErrorException($"UC_301_005_GetAllInvoicesHeadersAsync has no InputParameters", ex);
+
+                invoiceHeaderBO = HandleCriticalErrorResponse(invoiceHeaderBO, ex);
                 //TODO doesn't really work here
                 listInvoiceHeaderBO.Add(invoiceHeaderBO);
             }
@@ -192,13 +180,13 @@ namespace NewInvoiceServiceLayer.Service
 
         #region Private Methodes
 
-        private T HandleException<T>(T problemChild, Exception ex) where T : BusinessObjectBase
+        private T HandleCriticalErrorResponse<T>(T problemChild, Exception ex) where T : BusinessObjectBase
         {
             T result;
 
             if (ex.InnerException != null)
             {
-                result = HandleException<T>(problemChild, ex.InnerException);
+                result = HandleCriticalErrorResponse<T>(problemChild, ex.InnerException);
             }
             else
             {
@@ -209,26 +197,57 @@ namespace NewInvoiceServiceLayer.Service
             return result;
         }
 
-        private async Task SaveErrorException(string InputParameters, Exception ex)
+        private async Task SaveErrorException(string inputParameters, Exception ex)
         {
-            await _exceptionRepository.SaveInvoiceExceptionAsync(new()
+            BO_InvoiceException invoiceExceptionBO = new()
             {
-                Type = 1,
+                Type = NewInvoiceBusinessLayer.Enums.InvoiceExceptionTypes.Error,
                 NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
-                Message = ex.InnerException.Message,
-                InputParameters = InputParameters
-            });
+                Message = ex.Message,
+                InputParameters = inputParameters
+            };
+
+            DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
+            await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
         }
 
         private async Task SaveHeaderNotFoundException(string inputParameters)
         {
-            await _exceptionRepository.SaveInvoiceExceptionAsync(new()
+            BO_InvoiceException invoiceExceptionBO = new()
             {
-                Type = 6,
+                Type = NewInvoiceBusinessLayer.Enums.InvoiceExceptionTypes.HeaderNotFound,
                 NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
                 Message = "InvoiceHeader not found",
                 InputParameters = inputParameters
-            });
+            };
+
+            DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
+            await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
+        }
+
+        private async Task ResolveBusinessRulesBroken(BO_InvoiceLine input)
+        {
+            string businessRuleViolationMessage = "";
+            input.BrokenRules.ForEach(br => businessRuleViolationMessage += $"{br.PropertyName}: {br.FailedMessage}\n");
+
+            BO_InvoiceException invoiceExceptionBO = new()
+            {
+                Type = NewInvoiceBusinessLayer.Enums.InvoiceExceptionTypes.BusinessRuleViolation,
+                NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
+                Message = businessRuleViolationMessage,
+                InputParameters = input.ToString()
+            };
+
+            DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
+            await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
+        }
+
+        private async Task<BO_InvoiceHeader> ResolveInvoiceHeaderNotFound(string input, BO_InvoiceHeader invoiceHeaderBO)
+        {
+            invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = "InvoiceHeader not found" });
+
+            await SaveHeaderNotFoundException(input);
+            return invoiceHeaderBO;
         }
 
         #endregion Private Methodes

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NewInvoiceBusinessLayer.Objects;
 using NewInvoiceCommunicationLayer.Models.Input;
 using NewInvoiceCommunicationLayer.Models.Response;
 using NewInvoiceServiceLayer.Interfaces;
 using NewInvoiceServiceLayer.Objects;
+using QueasoFramework.BusinessModels;
 
 namespace NewInvoiceCommunicationLayer.Controllers
 {
@@ -22,13 +24,13 @@ namespace NewInvoiceCommunicationLayer.Controllers
             this._mapper = mapper;
         }
 
-        [HttpPost("CreateInvoiceHeader")]
+        [HttpPost("UC_301_001_CreateInvoiceHeader")]
         public async Task<IActionResult> CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input)
         {
             ObjectResult response;
             try
             {
-                BO_InvoiceHeader invoiceHeaderBo = await _invoiceUseCases.UC_301_001_CreateInvoiceHeaderAsync(input.VATNumber);
+                BO_InvoiceHeader invoiceHeaderBo = await _invoiceUseCases.UC_301_001_CreateInvoiceHeaderAsync(input.VATNumber, input.ProxyCompanyId);
 
                 CreateInvoiceHeaderResponse result = _mapper.Map<CreateInvoiceHeaderResponse>(invoiceHeaderBo);
 
@@ -38,13 +40,13 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-                response = BadRequest(ex.InnerException);
+                response = BadRequest(HandleException(ex));
             }
 
             return response;
         }
 
-        [HttpPost("AddInvoiceLineToInvoiceHeader")]
+        [HttpPost("UC_301_002_AddInvoiceLineToHeader")]
         public async Task<IActionResult> AddInvoiceLineToInvoiceHeaderAsync(AddInvoiceLineToInvoiceHeaderInput input)
         {
             ObjectResult response;
@@ -52,102 +54,155 @@ namespace NewInvoiceCommunicationLayer.Controllers
             try
             {
                 BO_InvoiceLine invoiceLineBO = _mapper.Map<BO_InvoiceLine>(input);
-                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLineBO);
+                BO_InvoiceHeader invoiceHeaderBO = await _invoiceUseCases.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLineBO);
 
-                response = Ok(result);
+                response = CheckIfHeaderBOIsValidAndGiveResponse(invoiceHeaderBO);
             }
             catch (Exception ex)
             {
-                response = BadRequest(ex.Message);
+                response = BadRequest(HandleException(ex));
             }
 
             return response;
         }
 
-        [HttpPost("GetInvoiceById")]
+        [HttpPost("UC_301_003_FindInvoiceHeader")]
         public async Task<IActionResult> FindInvoiceByIdAsync(GetInvoiceByNameInput input)
         {
             ObjectResult response;
 
             try
             {
-                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_003_FindInvoiceHeaderAsync(input.InvoiceHeaderId);
+                BO_InvoiceHeader invoiceHeaderBO = await _invoiceUseCases.UC_301_003_FindInvoiceHeaderAsync(input.InvoiceHeaderId);
 
-                if (result != null)
-                {
-                    response = Ok(result);
-                }
-                else
-                {
-                    response = Ok("InvoiceHeader not Found");
-                }
+                response = CheckIfHeaderBOIsValidAndGiveResponse(invoiceHeaderBO);
             }
             catch (Exception ex)
             {
-                response = BadRequest(ex.InnerException);
+                response = BadRequest(HandleException(ex));
             }
 
             return response;
         }
 
-        [HttpGet("GetAllInvoices")]
+        [HttpPost("UC_301_005_GetAllInvoicesHeaders")]
         public async Task<IActionResult> GetAllInvoicesAsync()
         {
             ObjectResult response;
 
             try
             {
-                List<BO_InvoiceHeader> result = await _invoiceUseCases.UC_301_005_GetAllInvoicesHeadersAsync();
+                List<BO_InvoiceHeader> invoiceHeaderBOs = await _invoiceUseCases.UC_301_005_GetAllInvoicesHeadersAsync();
 
-                if (result.Count > 0)
+                if (invoiceHeaderBOs.Count > 0)
                 {
+                    List<AddInvoiceLineToInvoiceHeaderResponse> result = invoiceHeaderBOs.Select(ih => MappingDetailedInvoiceHeaderResponse(ih)).ToList();
+
                     response = Ok(result);
                 }
                 else
                 {
-                    response = Ok("No invoiceHeaders in database");
+                    BaseResponse result = new();
+                    result.SetErrors(new(null, "No InvoiceHeaders Available"));
+
+                    response = Ok(result);
                 }
             }
             catch (Exception ex)
             {
-                response = BadRequest(ex.InnerException);
+                response = BadRequest(HandleException(ex));
             }
 
             return response;
         }
 
-        [HttpPost("ArchiveInvoiceJournalEntry")]
-        public async Task<IActionResult> ArchiveInvoiceJournalEntryAsync(ArchiveInvoiceJournalEntryInput input)
+        [HttpPost("UC_301_004_ArchiveJournalEntryForInvoice")]
+        public async Task<IActionResult> ArchiveInvoiceJournalEntryAsync(ArchiveInvoiceJournalEntry input)
         {
             ObjectResult response;
 
             try
             {
-                BO_InvoiceHeader result = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input.proxyCompanyId, input.InvoiceHeaderId);
+                BO_JournalEntry journalEntryBO = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input.JournalHeaderId, input.InvoiceHeaderId);
 
-                if (result != null)
-                {
-                    response = Ok(result);
-                }
-                else
-                {
-                    response = Ok("InvoiceHeader not Found");
-                }
+                ArchiveInvoiceJournalEntry result = _mapper.Map<ArchiveInvoiceJournalEntry>(journalEntryBO);
+                response = Ok(result);
             }
             catch (Exception ex)
             {
-                response = BadRequest(ex.InnerException);
+                response = BadRequest(HandleException(ex));
             }
 
             return response;
         }
 
-        private static void SetErrorMessage<T>(T result, BO_InvoiceHeader invoiceHeaderBo) where T : BaseResponse
+        #region Helper Methodes
+
+        private static void SetErrorMessage<T>(T result, BusinessObjectBase BusinessObject) where T : BaseResponse
         {
-            if (invoiceHeaderBo.BrokenRules.Count > 0)
+            if (BusinessObject.BrokenRules.Count > 0)
             {
-                invoiceHeaderBo.BrokenRules.ForEach(br => result.SetErrors(new(br.PropertyName, br.FailedMessage)));
+                BusinessObject.BrokenRules.ForEach(br => result.SetErrors(new(br.PropertyName, br.FailedMessage)));
             }
         }
+
+        private AddInvoiceLineToInvoiceHeaderResponse MappingDetailedInvoiceHeaderResponse(BO_InvoiceHeader invoiceHeaderBO)
+        {
+            AddInvoiceLineToInvoiceHeaderResponse result = _mapper.Map<AddInvoiceLineToInvoiceHeaderResponse>(invoiceHeaderBO);
+            SetErrorMessage(result, invoiceHeaderBO);
+
+            if (invoiceHeaderBO.InvoiceLines.Count > 0)
+            {
+                InvoiceLineResponse invoiceLineResponse = new();
+                foreach (BO_InvoiceLine invoiceLine in invoiceHeaderBO.InvoiceLines)
+                {
+                    invoiceLineResponse = _mapper.Map<InvoiceLineResponse>(invoiceLine);
+                    SetErrorMessage(invoiceLineResponse, invoiceLine);
+                }
+            }
+            else
+            {
+                result.InvoiceLines = null;
+            }
+
+            return result;
+        }
+
+        private BaseResponse HandleException(Exception ex)
+        {
+            BaseResponse result = new();
+
+            if (ex.InnerException != null)
+                return HandleException(ex.InnerException);
+            else
+            {
+                result.SetErrors(new("none", ex.Message));
+            }
+
+            return result;
+        }
+
+        private ObjectResult CheckIfHeaderBOIsValidAndGiveResponse(BO_InvoiceHeader invoiceHeaderBO)
+        {
+            ObjectResult response;
+
+            if (invoiceHeaderBO.BrokenRules.Count == 0)
+            {
+                AddInvoiceLineToInvoiceHeaderResponse result = MappingDetailedInvoiceHeaderResponse(invoiceHeaderBO);
+
+                response = Ok(result);
+            }
+            else
+            {
+                BaseResponse result = new();
+                SetErrorMessage(result, invoiceHeaderBO);
+
+                response = Ok(result);
+            }
+
+            return response;
+        }
+
+        #endregion Helper Methodes
     }
 }

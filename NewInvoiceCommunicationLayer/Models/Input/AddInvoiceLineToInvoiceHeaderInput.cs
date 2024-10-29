@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NewInvoiceCommunicationLayer.Models.Response;
+using System.ComponentModel.DataAnnotations;
 
 namespace NewInvoiceCommunicationLayer.Models.Input
 {
-    public class AddInvoiceLineToInvoiceHeaderInput
+    public class AddInvoiceLineToInvoiceHeaderInput : BaseResponse
     {
         public Guid InvoiceHeaderId { get; set; }
 
@@ -16,6 +17,6 @@ namespace NewInvoiceCommunicationLayer.Models.Input
         public int Quantity { get; set; }
 
         [MaxLength(100)]
-        public string? Description { get; set; } = "AddAsync description";
+        public string? Description { get; set; }
     }
 }

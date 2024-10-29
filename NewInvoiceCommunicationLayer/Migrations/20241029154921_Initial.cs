@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace NewInvoiceCommunicationLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class Initialize : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -77,6 +78,26 @@ namespace NewInvoiceCommunicationLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JournalEntries",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JournalHeaderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    InvoiceHeaderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JournalEntries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InvoiceLines",
                 columns: table => new
                 {
@@ -125,6 +146,9 @@ namespace NewInvoiceCommunicationLayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "InvoiceNumber");
+
+            migrationBuilder.DropTable(
+                name: "JournalEntries");
 
             migrationBuilder.DropTable(
                 name: "InvoiceHeaders");

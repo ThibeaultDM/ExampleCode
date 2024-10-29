@@ -40,6 +40,7 @@ internal class Program
         builder.Services.AddScoped<IInvoiceDbContext, InvoiceDbContext>();
         builder.Services.AddTransient<IInvoiceExceptionRepository, InvoiceExceptionRepository>();
         builder.Services.AddTransient<IInvoiceHeaderRepository, InvoiceHeaderRepository>();
+        builder.Services.AddTransient<IJournalEntryRepository, JournalEntryRepository>();
         builder.Services.AddScoped<IInvoiceNumberRepository, InvoiceNumberRepository>();
 
         builder.Services.AddTransient<IInvoiceUseCases, InvoiceUseCases>();

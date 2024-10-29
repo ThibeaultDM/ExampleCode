@@ -2,6 +2,8 @@
 {
     public class CreateInvoiceHeaderInput
     {
-        public string VATNumber { get; set; } = "BE0xxxxxxxxx";
+        public string VATNumber { get; set; }
+
+        public string ProxyCompanyId { get; set; }
     }
 }

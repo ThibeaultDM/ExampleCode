@@ -1,8 +1,8 @@
 ﻿namespace NewInvoiceCommunicationLayer.Models.Input
 {
-    public class ArchiveInvoiceJournalEntryInput
+    public class ArchiveInvoiceJournalEntry
     {
-        public Guid proxyCompanyId { get; set; }
+        public Guid JournalHeaderId { get; set; }
         public Guid InvoiceHeaderId { get; set; }
     }
 }

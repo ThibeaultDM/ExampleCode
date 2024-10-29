@@ -10,6 +10,7 @@ namespace NewInvoiceDataLayer.Interfaces
         DbSet<DO_InvoiceHeader> InvoiceHeaders { get; set; }
         DbSet<DO_InvoiceLine> InvoiceLines { get; set; }
         DbSet<DO_InvoiceNumber> InvoiceNumber { get; set; }
+        DbSet<DO_JournalEntry> JournalEntries { get; set; }
 
         Task<int> SaveChangesAsync();
 

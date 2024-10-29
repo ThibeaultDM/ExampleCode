@@ -10,13 +10,16 @@ namespace NewInvoiceServiceLayer.Objects
         public BO_InvoiceHeader()
         { }
 
-        public BO_InvoiceHeader(string vatNumber)
+        public BO_InvoiceHeader(string vatNumber, string proxyCompanyId)
         {
             VatNumber = vatNumber;
+            CompanyProxyId = new(proxyCompanyId);
             IsPaid = false;
         }
 
         public Guid Id { get; set; }
+
+        public Guid CompanyProxyId { get; set; }
 
         /// <summary>
         /// Amount to be paid before taxes
@@ -56,6 +59,7 @@ namespace NewInvoiceServiceLayer.Objects
 
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(VatNumber), VatNumber));
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(InvoiceNumber), InvoiceNumber));
+            BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(CompanyProxyId), CompanyProxyId));
 
             BusinessRules.Add(new InvoiceBusinessRules().MaxLength(nameof(VatNumber), VatNumber, 13));
             BusinessRules.Add(new InvoiceBusinessRules().RangeValue(nameof(InvoiceNumber), InvoiceNumber, 0, int.MaxValue));
