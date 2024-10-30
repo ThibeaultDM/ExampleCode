@@ -197,6 +197,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                     case "Unrecognized Guid format":
                         message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.NotGuid)}";
                         break;
+                    // Unknown Errors
                     default:
                         message = ex.Message;
                         break;
