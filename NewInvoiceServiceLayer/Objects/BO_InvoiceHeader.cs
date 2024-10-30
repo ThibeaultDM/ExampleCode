@@ -41,6 +41,10 @@ namespace NewInvoiceServiceLayer.Objects
         public bool IsPaid { get; set; }
         public List<BO_InvoiceLine> InvoiceLines { get; private set; }
 
+        /// <summary>
+        /// Adds invoiceLine to header, recalculates header properties and checks goes through the business rules.
+        /// </summary>
+        /// <param name="invoiceLine"></param>
         public void AddInvoiceLineToHeader(BO_InvoiceLine invoiceLine)
         {
             if (InvoiceLines == null)
