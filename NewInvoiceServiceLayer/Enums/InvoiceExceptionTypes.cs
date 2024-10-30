@@ -7,6 +7,7 @@
         InvalidVATNumber,
         NonInvoiceHeaderWithThisName,
         BusinessRuleViolation,
+        CompanyNotFound,
         None
     }
 }
