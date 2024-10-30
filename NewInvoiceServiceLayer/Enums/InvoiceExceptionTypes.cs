@@ -1,13 +1,23 @@
-﻿namespace NewInvoiceBusinessLayer.Enums
+﻿using System.ComponentModel;
+using System.Reflection;
+
+namespace NewInvoiceBusinessLayer.Enums
 {
     public enum InvoiceExceptionTypes
     {
-        Error,
+        [Description("Header not Found")]
         HeaderNotFound,
-        InvalidVATNumber,
-        NonInvoiceHeaderWithThisName,
-        BusinessRuleViolation,
+        [Description("Invalid VatNumber, a VATNumber needs to start with BE0")]
+        InvalidVATNumberBE0,
+        [Description("Invalid VatNumber, the VATNumber Failed the modulo 97 check")]
+        InvalidVATNumber97,
+        [Description("Company not found")]
         CompanyNotFound,
-        None
+        [Description("Not A Guid Format")]
+        NotGuid,
+        // For exception Saving to database
+        InvalidVATNumber,
+        BusinessRuleViolation,
+        Error
     }
 }

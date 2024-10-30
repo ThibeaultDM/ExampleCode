@@ -1,4 +1,5 @@
-﻿using NewInvoiceServiceLayer.Objects;
+﻿using NewInvoiceBusinessLayer.Enums;
+using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.BusinessModels.Rules;
 
 namespace NewInvoiceServiceLayer.Rules
@@ -93,12 +94,12 @@ namespace NewInvoiceServiceLayer.Rules
             if (!vatNumber.ToUpper().StartsWith("BE0"))
             {
                 this.Passed = false;
-                SetFailedMessage($"A valid VATNumber needs to start with BE0.");
+                SetFailedMessage($"{EnumDescription.GetDescription(InvoiceExceptionTypes.InvalidVATNumberBE0)}");
             }
             //else if (!CheckValidityVatNumberModulo97(vatNumber))
             //{
             //    this.Passed = false;
-            //    SetFailedMessage($"Not a valid VATNumber.");
+            //SetFailedMessage($"{EnumDescription.GetDescription(InvoiceExceptionTypes.InvalidVATNumber97)}");
             //}
 
             return this;

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NewInvoiceBusinessLayer.Enums;
 using NewInvoiceBusinessLayer.Objects;
 using NewInvoiceCommunicationLayer.Models.Input;
 using NewInvoiceCommunicationLayer.Models.Response;
@@ -190,7 +191,18 @@ namespace NewInvoiceCommunicationLayer.Controllers
                 return HandleException(ex.InnerException);
             else
             {
-                result.SetErrors(new("none", ex.Message));
+                string message;
+                switch (ex.Message)
+                {
+                    case "Unrecognized Guid format":
+                        message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.NotGuid)}";
+                        break;
+                    default:
+                        message = ex.Message;
+                        break;
+                }
+
+                result.SetErrors(new("none", message));
             }
 
             return result;

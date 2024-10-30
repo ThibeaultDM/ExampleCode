@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NewInvoiceBusinessLayer.Enums;
 using NewInvoiceBusinessLayer.Objects;
 using NewInvoiceDataLayer.Interfaces;
 using NewInvoiceDataLayer.Objects;
@@ -6,6 +7,8 @@ using NewInvoiceServiceLayer.Interfaces;
 using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.BusinessModels;
 using QueasoFramework.BusinessModels.Rules;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace NewInvoiceServiceLayer.Service
 {
@@ -46,7 +49,7 @@ namespace NewInvoiceServiceLayer.Service
                 {
                     BO_InvoiceException invoiceExceptionBO = new()
                     {
-                        Type = NewInvoiceBusinessLayer.Enums.InvoiceExceptionTypes.InvalidVATNumber,
+                        Type = InvoiceExceptionTypes.InvalidVATNumber,
                         NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
                         Message = "No Valid invoiceHeader was created",
                         InputParameters = $"{vatNumber}, {proxyCompanyId}"
@@ -59,7 +62,7 @@ namespace NewInvoiceServiceLayer.Service
             catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
             {
                 if (ex.InnerException.Message == "The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_InvoiceHeaders_Company\". The conflict occurred in database \"QueasoTraining\", table \"dbo.Companies\", column 'Id'.\r\nThe statement has been terminated.")
-                    invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = "Company not found" });
+                    invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.CompanyNotFound)}" });
                 else
                 {
                     await SaveErrorException($"{vatNumber}, {proxyCompanyId}", ex);
@@ -218,7 +221,7 @@ namespace NewInvoiceServiceLayer.Service
         {
             BO_InvoiceException invoiceExceptionBO = new()
             {
-                Type = NewInvoiceBusinessLayer.Enums.InvoiceExceptionTypes.Error,
+                Type = InvoiceExceptionTypes.Error,
                 NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
                 Message = ex.Message,
                 InputParameters = inputParameters
@@ -226,6 +229,34 @@ namespace NewInvoiceServiceLayer.Service
 
             DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
             await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
+        }
+
+
+        // Resolves business rule violations; aggregates messages and saves them as exceptions.
+        private async Task ResolveBusinessRulesBroken(BO_InvoiceLine input)
+        {
+            string businessRuleViolationMessage = "";
+            input.BrokenRules.ForEach(br => businessRuleViolationMessage += $"{br.PropertyName}: {br.FailedMessage}\n");
+
+            BO_InvoiceException invoiceExceptionBO = new()
+            {
+                Type = InvoiceExceptionTypes.BusinessRuleViolation,
+                NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
+                Message = businessRuleViolationMessage,
+                InputParameters = input.ToString()
+            };
+
+            DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
+            await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
+        }
+
+        // Resolves the case where an invoice header is not found; logs the error and returns an updated response.
+        private async Task<BO_InvoiceHeader> ResolveInvoiceHeaderNotFound(string input, BO_InvoiceHeader invoiceHeaderBO)
+        {
+            invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.HeaderNotFound)}" });
+
+            await SaveHeaderNotFoundException(input);
+            return invoiceHeaderBO;
         }
 
         // Saves a header not found exception; maps and stores the exception details.
@@ -241,33 +272,6 @@ namespace NewInvoiceServiceLayer.Service
 
             DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
             await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
-        }
-
-        // Resolves business rule violations; aggregates messages and saves them as exceptions.
-        private async Task ResolveBusinessRulesBroken(BO_InvoiceLine input)
-        {
-            string businessRuleViolationMessage = "";
-            input.BrokenRules.ForEach(br => businessRuleViolationMessage += $"{br.PropertyName}: {br.FailedMessage}\n");
-
-            BO_InvoiceException invoiceExceptionBO = new()
-            {
-                Type = NewInvoiceBusinessLayer.Enums.InvoiceExceptionTypes.BusinessRuleViolation,
-                NameSpace = "NewInvoiceServiceLayer.Service.InvoiceUseCases",
-                Message = businessRuleViolationMessage,
-                InputParameters = input.ToString()
-            };
-
-            DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
-            await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
-        }
-
-        // Resolves the case where an invoice header is not found; logs the error and returns an updated response.
-        private async Task<BO_InvoiceHeader> ResolveInvoiceHeaderNotFound(string input, BO_InvoiceHeader invoiceHeaderBO)
-        {
-            invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = "InvoiceHeader not found" });
-
-            await SaveHeaderNotFoundException(input);
-            return invoiceHeaderBO;
         }
 
         #endregion Private Methodes
