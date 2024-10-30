@@ -26,6 +26,7 @@ namespace NewInvoiceServiceLayer.Service
             _mapper = mapper;
         }
 
+        // Creates a new invoice header; checks validity and maps to response, or adds errors and returns response.
         public async Task<BO_InvoiceHeader> UC_301_001_CreateInvoiceHeaderAsync(string vatNumber, string proxyCompanyId)
         {
             BO_InvoiceHeader invoiceHeaderBO = new(vatNumber, proxyCompanyId);
@@ -65,7 +66,7 @@ namespace NewInvoiceServiceLayer.Service
             return invoiceHeaderBO;
         }
 
-        // Normally should all have input and response model and follow UC_301_001_CreateInvoiceHeaderAsync design.
+        // Adds an invoice line to an existing invoice header; checks for validity and updates the header accordingly.
         public async Task<BO_InvoiceHeader> UC_301_002_AddInvoiceLineToHeaderAsync(BO_InvoiceLine input)
         {
             BO_InvoiceHeader invoiceHeaderBO = new();
@@ -104,6 +105,7 @@ namespace NewInvoiceServiceLayer.Service
             return invoiceHeaderBO;
         }
 
+        // Finds an invoice header by its ID; returns the header if found, otherwise resolves the not found case.
         public async Task<BO_InvoiceHeader> UC_301_003_FindInvoiceHeaderAsync(Guid toFind)
         {
             BO_InvoiceHeader invoiceHeaderBO = new();
@@ -131,6 +133,7 @@ namespace NewInvoiceServiceLayer.Service
             return invoiceHeaderBO;
         }
 
+        // Archives a journal entry for an invoice; maps and saves the journal entry, handling errors appropriately.
         public async Task<BO_JournalEntry> UC_301_004_ArchiveJournalEntryForInvoiceAsync(Guid idJournalEntry, Guid idInvoiceHeader)
         {
             BO_JournalEntry journalEntryBO = new(idJournalEntry, idInvoiceHeader);
@@ -152,6 +155,7 @@ namespace NewInvoiceServiceLayer.Service
             return journalEntryBO;
         }
 
+        // Retrieves all invoice headers; returns a list of headers or handles any errors encountered.
         public async Task<List<BO_InvoiceHeader>> UC_301_005_GetAllInvoicesHeadersAsync()
         {
             List<BO_InvoiceHeader> listInvoiceHeaderBO = new();
@@ -180,6 +184,7 @@ namespace NewInvoiceServiceLayer.Service
 
         #region Private Methodes
 
+        // Handles critical errors; adds broken rules to the response and returns it.
         private T HandleCriticalErrorResponse<T>(T problemChild, Exception ex) where T : BusinessObjectBase
         {
             T result;
@@ -197,6 +202,7 @@ namespace NewInvoiceServiceLayer.Service
             return result;
         }
 
+        // Saves error exceptions related to invoice processing; maps and stores exception details.
         private async Task SaveErrorException(string inputParameters, Exception ex)
         {
             BO_InvoiceException invoiceExceptionBO = new()
@@ -211,6 +217,7 @@ namespace NewInvoiceServiceLayer.Service
             await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
         }
 
+        // Saves a header not found exception; maps and stores the exception details.
         private async Task SaveHeaderNotFoundException(string inputParameters)
         {
             BO_InvoiceException invoiceExceptionBO = new()
@@ -225,6 +232,7 @@ namespace NewInvoiceServiceLayer.Service
             await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
         }
 
+        // Resolves business rule violations; aggregates messages and saves them as exceptions.
         private async Task ResolveBusinessRulesBroken(BO_InvoiceLine input)
         {
             string businessRuleViolationMessage = "";
@@ -242,6 +250,7 @@ namespace NewInvoiceServiceLayer.Service
             await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
         }
 
+        // Resolves the case where an invoice header is not found; logs the error and returns an updated response.
         private async Task<BO_InvoiceHeader> ResolveInvoiceHeaderNotFound(string input, BO_InvoiceHeader invoiceHeaderBO)
         {
             invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = "InvoiceHeader not found" });

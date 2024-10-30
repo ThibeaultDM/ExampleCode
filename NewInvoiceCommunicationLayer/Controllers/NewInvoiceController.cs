@@ -30,16 +30,21 @@ namespace NewInvoiceCommunicationLayer.Controllers
             ObjectResult response;
             try
             {
+                // Calls use case to create invoice header using input VAT number and company ID.
                 BO_InvoiceHeader invoiceHeaderBo = await _invoiceUseCases.UC_301_001_CreateInvoiceHeaderAsync(input.VATNumber, input.ProxyCompanyId);
 
+                // Maps business object to response model.
                 CreateInvoiceHeaderResponse result = _mapper.Map<CreateInvoiceHeaderResponse>(invoiceHeaderBo);
 
+                // Adds any business rule errors to the response model.
                 SetErrorMessage(result, invoiceHeaderBo);
 
+                // Returns successful result.
                 response = Ok(result);
             }
             catch (Exception ex)
             {
+                // Returns error response on exception.
                 response = BadRequest(HandleException(ex));
             }
 
@@ -53,9 +58,11 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             try
             {
+                // Maps input data to the invoice line business object and adds it to the invoice header.
                 BO_InvoiceLine invoiceLineBO = _mapper.Map<BO_InvoiceLine>(input);
                 BO_InvoiceHeader invoiceHeaderBO = await _invoiceUseCases.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLineBO);
 
+                // Validates and prepares response based on header.
                 response = CheckIfHeaderBOIsValidAndGiveResponse(invoiceHeaderBO);
             }
             catch (Exception ex)
@@ -73,8 +80,10 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             try
             {
+                // Calls use case to find invoice by ID.
                 BO_InvoiceHeader invoiceHeaderBO = await _invoiceUseCases.UC_301_003_FindInvoiceHeaderAsync(input.InvoiceHeaderId);
 
+                // Validates and prepares response based on header.
                 response = CheckIfHeaderBOIsValidAndGiveResponse(invoiceHeaderBO);
             }
             catch (Exception ex)
@@ -92,19 +101,20 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             try
             {
+                // Retrieves all invoice headers.
                 List<BO_InvoiceHeader> invoiceHeaderBOs = await _invoiceUseCases.UC_301_005_GetAllInvoicesHeadersAsync();
 
                 if (invoiceHeaderBOs.Count > 0)
                 {
+                    // Maps each invoice header to response and returns list.
                     List<AddInvoiceLineToInvoiceHeaderResponse> result = invoiceHeaderBOs.Select(ih => MappingDetailedInvoiceHeaderResponse(ih)).ToList();
-
                     response = Ok(result);
                 }
                 else
                 {
+                    // Creates empty response if no headers found.
                     BaseResponse result = new();
                     result.SetErrors(new(null, "No InvoiceHeaders Available"));
-
                     response = Ok(result);
                 }
             }
@@ -123,6 +133,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             try
             {
+                // Calls use case to archive journal entry associated with invoice.
                 BO_JournalEntry journalEntryBO = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input.JournalHeaderId, input.InvoiceHeaderId);
 
                 ArchiveInvoiceJournalEntry result = _mapper.Map<ArchiveInvoiceJournalEntry>(journalEntryBO);
@@ -138,6 +149,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
         #region Helper Methodes
 
+        // Adds errors from business object to response model if there are any broken rules.
         private static void SetErrorMessage<T>(T result, BusinessObjectBase BusinessObject) where T : BaseResponse
         {
             if (BusinessObject.BrokenRules.Count > 0)
@@ -146,6 +158,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
         }
 
+        // Maps invoice header details to response model, including lines and errors if any.
         private AddInvoiceLineToInvoiceHeaderResponse MappingDetailedInvoiceHeaderResponse(BO_InvoiceHeader invoiceHeaderBO)
         {
             AddInvoiceLineToInvoiceHeaderResponse result = _mapper.Map<AddInvoiceLineToInvoiceHeaderResponse>(invoiceHeaderBO);
@@ -168,6 +181,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             return result;
         }
 
+        // Handles exceptions by recursively logging inner exceptions and adding error messages to response.
         private BaseResponse HandleException(Exception ex)
         {
             BaseResponse result = new();
@@ -182,6 +196,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             return result;
         }
 
+        // Checks if invoice header is valid; if so, maps to response, otherwise adds errors and returns BaseResponse.
         private ObjectResult CheckIfHeaderBOIsValidAndGiveResponse(BO_InvoiceHeader invoiceHeaderBO)
         {
             ObjectResult response;
@@ -189,14 +204,12 @@ namespace NewInvoiceCommunicationLayer.Controllers
             if (invoiceHeaderBO.BrokenRules.Count == 0)
             {
                 AddInvoiceLineToInvoiceHeaderResponse result = MappingDetailedInvoiceHeaderResponse(invoiceHeaderBO);
-
                 response = Ok(result);
             }
             else
             {
                 BaseResponse result = new();
                 SetErrorMessage(result, invoiceHeaderBO);
-
                 response = Ok(result);
             }
 
