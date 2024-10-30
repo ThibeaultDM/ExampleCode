@@ -45,7 +45,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             catch (Exception ex)
             {
                 // Returns error response on exception.
-                response = BadRequest(HandleException(ex));
+                response = Ok(HandleException(ex));
             }
 
             return response;
@@ -67,28 +67,28 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-                response = BadRequest(HandleException(ex));
+                response = Ok(HandleException(ex));
             }
 
             return response;
         }
 
-        [HttpGet("UC_301_003_GetInvoiceByName")]
-        public async Task<IActionResult> UC_301_003_GetInvoiceByName(GetInvoiceByNameInput input)
+        [HttpGet("UC_301_003_GetInvoiceByName/{Id}")]
+        public async Task<IActionResult> UC_301_003_GetInvoiceByName(Guid Id)
         {
             ObjectResult response;
 
             try
             {
                 // Calls use case to find invoice by ID.
-                BO_InvoiceHeader invoiceHeaderBO = await _invoiceUseCases.UC_301_003_FindInvoiceHeaderAsync(input.InvoiceHeaderId);
+                BO_InvoiceHeader invoiceHeaderBO = await _invoiceUseCases.UC_301_003_FindInvoiceHeaderAsync(Id);
 
                 // Validates and prepares response based on header.
                 response = CheckIfHeaderBOIsValidAndGiveResponse(invoiceHeaderBO);
             }
             catch (Exception ex)
             {
-                response = BadRequest(HandleException(ex));
+                response = Ok(HandleException(ex));
             }
 
             return response;
@@ -120,7 +120,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-                response = BadRequest(HandleException(ex));
+                response = Ok(HandleException(ex));
             }
 
             return response;
@@ -141,7 +141,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             }
             catch (Exception ex)
             {
-                response = BadRequest(HandleException(ex));
+                response = Ok(HandleException(ex));
             }
 
             return response;
