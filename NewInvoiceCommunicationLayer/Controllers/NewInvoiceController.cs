@@ -25,7 +25,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
         }
 
         [HttpPost("UC_301_001_CreateInvoiceHeader")]
-        public async Task<IActionResult> CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input)
+        public async Task<IActionResult> UC_301_001_CreateInvoiceHeader(CreateInvoiceHeaderInput input)
         {
             ObjectResult response;
             try
@@ -47,7 +47,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
         }
 
         [HttpPost("UC_301_002_AddInvoiceLineToHeader")]
-        public async Task<IActionResult> AddInvoiceLineToInvoiceHeaderAsync(AddInvoiceLineToInvoiceHeaderInput input)
+        public async Task<IActionResult> UC_301_002_AddInvoiceLineToHeader(AddInvoiceLineToInvoiceHeaderInput input)
         {
             ObjectResult response;
 
@@ -66,8 +66,8 @@ namespace NewInvoiceCommunicationLayer.Controllers
             return response;
         }
 
-        [HttpPost("UC_301_003_FindInvoiceHeader")]
-        public async Task<IActionResult> FindInvoiceByIdAsync(GetInvoiceByNameInput input)
+        [HttpPost("UC_301_003_GetInvoiceByName")]
+        public async Task<IActionResult> UC_301_003_GetInvoiceByName(GetInvoiceByNameInput input)
         {
             ObjectResult response;
 
@@ -85,8 +85,8 @@ namespace NewInvoiceCommunicationLayer.Controllers
             return response;
         }
 
-        [HttpPost("UC_301_005_GetAllInvoicesHeaders")]
-        public async Task<IActionResult> GetAllInvoicesAsync()
+        [HttpPost("UC_301_005_GetAllInvoices")]
+        public async Task<IActionResult> UC_301_005_GetAllInvoices()
         {
             ObjectResult response;
 
@@ -117,7 +117,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
         }
 
         [HttpPost("UC_301_004_ArchiveJournalEntryForInvoice")]
-        public async Task<IActionResult> ArchiveInvoiceJournalEntryAsync(ArchiveInvoiceJournalEntry input)
+        public async Task<IActionResult> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntry input)
         {
             ObjectResult response;
 
