@@ -52,7 +52,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
         }
 
         [HttpPatch("UC_301_002_AddInvoiceLineToHeader")]
-        public async Task<IActionResult> AddInvoiceLineToInvoiceHeaderAsync(AddInvoiceLineToInvoiceHeaderInput input)
+        public async Task<IActionResult> UC_301_002_AddInvoiceLineToHeader(AddInvoiceLineToInvoiceHeaderInput input)
         {
             ObjectResult response;
 
@@ -73,8 +73,8 @@ namespace NewInvoiceCommunicationLayer.Controllers
             return response;
         }
 
-        [HttpGet("UC_301_003_FindInvoiceHeader")]
-        public async Task<IActionResult> FindInvoiceByIdAsync(GetInvoiceByNameInput input)
+        [HttpGet("UC_301_003_GetInvoiceByName")]
+        public async Task<IActionResult> UC_301_003_GetInvoiceByName(GetInvoiceByNameInput input)
         {
             ObjectResult response;
 
@@ -94,8 +94,8 @@ namespace NewInvoiceCommunicationLayer.Controllers
             return response;
         }
 
-        [HttpGet("UC_301_005_GetAllInvoicesHeaders")]
-        public async Task<IActionResult> GetAllInvoicesAsync()
+        [HttpGet("UC_301_005_GetAllInvoices")]
+        public async Task<IActionResult> UC_301_005_GetAllInvoices()
         {
             ObjectResult response;
 
