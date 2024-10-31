@@ -17,13 +17,13 @@ namespace Orchestration.ObjectLayer
             _client = new(url.BaseUrlBuilder(BaseUrlComponent.invoice));
         }
 
-        public async Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(string vatNumber)
+        public async Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input)
         {
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments(invoicePathSeg, "CreateInvoiceHeader")
-                                          .PostJsonAsync(new { VatNumber = vatNumber })
+                                          .AppendPathSegments(invoicePathSeg, "UC_301_001_CreateInvoiceHeader")
+                                          .PostJsonAsync(input)
                                           .ReceiveJson<InvoiceDetailResponse>();
                 return result;
             }
@@ -35,29 +35,21 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments(invoicePathSeg, "AddInvoiceLineToInvoiceHeader")
-                                          .PostJsonAsync(invoiceLineInput)
+                                          .AppendPathSegments(invoicePathSeg, "UC_301_002_AddInvoiceLineToHeader")
+                                          .PatchJsonAsync(invoiceLineInput)
                                           .ReceiveJson<InvoiceResponse>();
-                // TODO remove this
-                if (result.Errors.Count == 0)
-                {
-                    result.Success = true;
-                }
-
                 return result;
             }
             catch { throw; }
         }
 
-        [HttpPost]
         public async Task<InvoiceDetailResponse> UC_301_003_GetInvoiceByNameAsync(Guid getInvoiceByIdInput)
         {
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments(invoicePathSeg, "GetInvoiceById")
-                                          .PostJsonAsync(new { InvoiceHeaderId = getInvoiceByIdInput })
-                                          .ReceiveJson<InvoiceDetailResponse>();
+                                          .AppendPathSegments(invoicePathSeg, $"UC_301_003_GetInvoiceByName/{getInvoiceByIdInput}")
+                                          .GetJsonAsync<InvoiceDetailResponse>();
                 return result;
             }
             catch { throw; }
@@ -81,7 +73,7 @@ namespace Orchestration.ObjectLayer
             try
             {
                 var result = await _client.BaseUrl
-                                          .AppendPathSegments(invoicePathSeg, "GetAllInvoices")
+                                          .AppendPathSegments(invoicePathSeg, "UC_301_005_GetAllInvoices")
                                           .GetJsonAsync<List<InvoiceResponse>>();
                 return result;
             }

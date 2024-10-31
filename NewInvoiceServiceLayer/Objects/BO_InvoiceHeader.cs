@@ -60,6 +60,7 @@ namespace NewInvoiceServiceLayer.Objects
         public override bool AddBusinessRules()
         {
             Console.WriteLine($"{Id} is getting checked");
+            BusinessRules.Clear();
 
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(VatNumber), VatNumber));
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(InvoiceNumber), InvoiceNumber));

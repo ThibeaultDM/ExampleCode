@@ -44,6 +44,8 @@ namespace NewInvoiceServiceLayer.Objects
 
         public override bool AddBusinessRules()
         {
+            BusinessRules.Clear();
+
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(PricePerUnit), PricePerUnit));
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(Quantity), Quantity));
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(VATRate), VATRate));

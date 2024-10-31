@@ -3,6 +3,7 @@
     public class CreateInvoiceHeaderResponse : BaseResponse
     {
         public Guid Id { get; set; }
+        public Guid CompanyProxyId { get; set; }
 
         /// <summary>
         /// Amount to be paid before taxes

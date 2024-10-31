@@ -59,17 +59,6 @@ namespace NewInvoiceServiceLayer.Service
                     await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
                 }
             }
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
-            {
-                if (ex.InnerException.Message == "The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_InvoiceHeaders_Company\". The conflict occurred in database \"QueasoTraining\", table \"dbo.Companies\", column 'Id'.\r\nThe statement has been terminated.")
-                    invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.CompanyNotFound)}" });
-                else
-                {
-                    await SaveErrorException($"{vatNumber}, {proxyCompanyId}", ex);
-
-                    invoiceHeaderBO = HandleCriticalErrorResponse(invoiceHeaderBO, ex);
-                }
-            }
             catch (Exception ex)
             {
                 await SaveErrorException($"{vatNumber}, {proxyCompanyId}", ex);

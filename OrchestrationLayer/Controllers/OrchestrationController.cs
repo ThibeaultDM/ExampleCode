@@ -22,8 +22,8 @@ namespace Orchestration.Controllers
 
         #region Invoice
 
-        [HttpGet("UC_301_006_GetAllInvoices")]
-        public async Task<IActionResult> GetAllInvoices()
+        [HttpGet("UC_301_005_GetAllInvoices")]
+        public async Task<IActionResult> UC_301_005_GetAllInvoices()
         {
             ObjectResult response;
 
@@ -42,7 +42,7 @@ namespace Orchestration.Controllers
         }
 
         [HttpPost("UC_301_003_GetInvoiceByName")]
-        public async Task<IActionResult> GetInvoiceById(Guid invoiceId)
+        public async Task<IActionResult> UC_301_003_GetInvoiceByName(Guid invoiceId)
         {
             ObjectResult response;
 
@@ -61,13 +61,13 @@ namespace Orchestration.Controllers
         }
 
         [HttpPost("UC_301_001_CreateInvoiceHeaderAsync")]
-        public async Task<IActionResult> UC_301_001_CreateInvoiceHeaderAsync(string vatNumber)
+        public async Task<IActionResult> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input)
         {
             ObjectResult response;
 
             try
             {
-                var result = await service.UC_301_001_CreateInvoiceHeaderAsync(vatNumber);
+                var result = await service.UC_301_001_CreateInvoiceHeaderAsync(input);
 
                 response = Ok(result);
             }
@@ -134,11 +134,11 @@ namespace Orchestration.Controllers
         #region Combined
 
         // TODO
-        //[HttpPost("UC_301_009_GetJournalForEntry")]
-        //public Task<List<InvoiceResponse>> GetJournalForEntry(Guid customerId)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [HttpPost("UC_301_009_GetJournalForEntry")]
+        public Task<List<InvoiceResponse>> GetJournalForEntry(Guid customerId)
+        {
+            throw new NotImplementedException();
+        }
 
         [HttpPost("UC_300_004_ArchiveCustomerInvoice")]
         public async Task<IActionResult> ArchiveCustomerInvoice(CreateInvoiceInput _invoice)
@@ -158,7 +158,6 @@ namespace Orchestration.Controllers
 
             return response;
         }
-
         #endregion Combined
     }
 }

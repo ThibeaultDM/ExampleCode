@@ -9,7 +9,7 @@ namespace Orchestration.Interfaces
 
         Task<List<InvoiceResponse>> GetAllInvoicesAsync();
 
-        Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(string vatNumber);
+        Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input);
 
         Task<InvoiceResponse> UC_301_002_AddInvoiceLineToHeaderAsync(CreateInvoiceLine invoiceLineInput);
 

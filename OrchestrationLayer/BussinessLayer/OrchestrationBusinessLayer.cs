@@ -26,9 +26,9 @@ namespace Orchestration.BusinessLayer
             return result;
         }
 
-        public async Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(string vatNumber)
+        public async Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input)
         {
-            InvoiceDetailResponse result = await _invoiceService.UC_301_001_CreateInvoiceHeaderAsync(vatNumber);
+            InvoiceDetailResponse result = await _invoiceService.UC_301_001_CreateInvoiceHeaderAsync(input);
             return result;
         }
 
@@ -83,7 +83,7 @@ namespace Orchestration.BusinessLayer
 
                 if (customer.Company != null)
                 {
-                    InvoiceDetailResponse toCreate = await _invoiceService.UC_301_001_CreateInvoiceHeaderAsync(invoice.VatNumber);
+                    InvoiceDetailResponse toCreate = await _invoiceService.UC_301_001_CreateInvoiceHeaderAsync(new(invoice.VatNumber, customer.Company.Id));
 
                     if (toCreate != null && toCreate.Success == true)
                     {
@@ -91,7 +91,7 @@ namespace Orchestration.BusinessLayer
                         {
                             invoiceLine.InvoiceHeaderId = toCreate.Id;
 
-                            var res = await _invoiceService.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLine);
+                            InvoiceResponse res = await _invoiceService.UC_301_002_AddInvoiceLineToHeaderAsync(invoiceLine);
 
                             if (res.Success == false)
                             {
@@ -100,10 +100,6 @@ namespace Orchestration.BusinessLayer
                                 break;
                             }
                         }
-
-                        // link company to invoice id
-                        ArchiveInvoiceJournalEntryInput archiveInvoice = new(customer.Company.Id, toCreate.Id);
-                        await _invoiceService.UC_301_004_ArchiveJournalEntryForInvoiceAsync(archiveInvoice);
                     }
                     else
                     {

@@ -16,6 +16,6 @@ namespace Orchestration.Models.Input
         public int Quantity { get; set; } = 0;
 
         [MaxLength(100)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }
