@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Flurl.Http" Version="4.0.2" />
     <PackageReference Include="Prism.Wpf" Version="9.0.537" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WPF UI\WPF UI.csproj" />
   </ItemGroup>
 
 </Project>

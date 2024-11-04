@@ -13,7 +13,7 @@ namespace ModuleCustomer
         {
             Console.WriteLine("CustomerViewModel constructor working");
             this.customerModel = customerModel;
-            GetCustomersAsync();
+            //GetCustomersAsync();
         }
 
         public string Title

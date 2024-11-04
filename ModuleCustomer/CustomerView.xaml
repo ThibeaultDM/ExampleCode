@@ -5,14 +5,6 @@
              xmlns:local="clr-namespace:ModuleCustomer" x:Class="ModuleCustomer.CustomerView"
              prism:ViewModelLocator.AutoWireViewModel="True" Height="350" Width="400">
     <Grid>
-
-        <local:CustomerView Foreground="Black" Background="White" Loaded="CustomerView_Loaded">
-            <local:CustomerView.OpacityMask>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" />
-                    <GradientStop Color="#FFF3ECEC" Offset="1" />
-                </LinearGradientBrush>
-            </local:CustomerView.OpacityMask>
-        </local:CustomerView>
+        <Button Content="Customer" HorizontalAlignment="Left" Height="36" Margin="113,68,0,0" VerticalAlignment="Top" Width="113"/>
     </Grid>
 </UserControl>

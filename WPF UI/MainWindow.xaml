@@ -7,6 +7,7 @@
     <DockPanel LastChildFill="True">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="5">
             <Button Command="{Binding NavigateCommand}" CommandParameter="CustomerView" Margin="5">Customer View</Button>
+            <Button Command="{Binding NavigateCommand}" CommandParameter="InvoiceView" Margin="5">Invoice View</Button>
         </StackPanel>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5" />
     </DockPanel>

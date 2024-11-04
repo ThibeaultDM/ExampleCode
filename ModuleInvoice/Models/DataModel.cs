@@ -1,11 +1,12 @@
 ﻿using Flurl;
 using Flurl.Http;
+using ModuleInvoice.Interfaces;
 using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
 
 namespace ModuleInvoice.Models
 {
-    public class DataModel
+    public class DataModel : IDataModel
     {
         private FlurlClient _client;
 

@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ModuleCustomer\ModuleCustomer.csproj" />
+    <ProjectReference Include="..\ModuleInvoice\ModuleInvoice.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using ModuleCustomer.Interfaces;
+﻿using ModuleInvoice.Interfaces;
 
 namespace ModuleInvoice
 {

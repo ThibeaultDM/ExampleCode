@@ -19,6 +19,7 @@ namespace WPF_UI
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<ModuleCustomer.ModuleCustomerModule>();
+            moduleCatalog.AddModule<ModuleInvoice.ModuleInvoiceModule>();
         }
     }
 }
