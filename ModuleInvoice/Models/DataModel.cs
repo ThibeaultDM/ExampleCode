@@ -2,11 +2,6 @@
 using Flurl.Http;
 using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuleInvoice.Models
 {
@@ -16,8 +11,9 @@ namespace ModuleInvoice.Models
 
         public DataModel(FlurlClient client)
         {
-            Console.WriteLine("InvoiceDataModel constructor working");
+            Console.WriteLine("DataModel constructor working");
             _client = client;
+            _client.BaseUrl = "https://localhost:7089/Orchestration/";
         }
 
         public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice)

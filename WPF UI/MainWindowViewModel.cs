@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPF_UI
+﻿namespace WPF_UI
 {
     public class MainWindowViewModel : BindableBase
     {
         private readonly IRegionManager _regionManager;
 
         private string _title = "Queaso WPF UI";
+
         public string Title
         {
             get { return _title; }

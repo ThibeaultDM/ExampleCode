@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{Binding Title}" Height="350" Width="525">
     <DockPanel LastChildFill="True">
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="5" >
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="5">
             <Button Command="{Binding NavigateCommand}" CommandParameter="CustomerView" Margin="5">Customer View</Button>
         </StackPanel>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5"  />
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5" />
     </DockPanel>
 </Window>

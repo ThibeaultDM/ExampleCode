@@ -1,6 +1,6 @@
 ﻿using ModuleCustomer.Models.Response;
 
-namespace ModuleCustomer.Interfaces
+namespace ModuleInvoice.Interfaces
 {
     public interface IDataModel
     {

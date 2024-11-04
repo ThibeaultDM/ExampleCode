@@ -1,21 +1,21 @@
-﻿using ModuleCustomer.Interfaces;
-using ModuleCustomer.Models;
+﻿using ModuleInvoice.Interfaces;
+using ModuleInvoice.Models;
 
-namespace ModuleCustomer
+namespace ModuleInvoice
 {
-    public class ModuleCustomerModule : IModule
+    public class ModuleInvoiceModule : IModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion("ContentRegion", typeof(CustomerView));
+            regionManager.RegisterViewWithRegion("ContentRegion", typeof(InvoiceView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IDataModel, DataModel>();
 
-            containerRegistry.RegisterForNavigation<CustomerView>();
+            containerRegistry.RegisterForNavigation<InvoiceView>();
         }
     }
 }

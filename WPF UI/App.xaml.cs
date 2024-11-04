@@ -1,8 +1,4 @@
 ﻿using System.Windows;
-using ModuleCustomer;
-using Prism.Ioc;
-using Prism.Modularity;
-using Prism.Unity;
 
 namespace WPF_UI
 {
@@ -18,14 +14,11 @@ namespace WPF_UI
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<ModuleCustomerModule>();
+            moduleCatalog.AddModule<ModuleCustomer.ModuleCustomerModule>();
         }
-
     }
-
 }

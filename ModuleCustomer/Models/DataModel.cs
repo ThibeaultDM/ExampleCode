@@ -13,6 +13,9 @@ namespace ModuleCustomer.Models
     public class DataModel : IDataModel
     {
         private FlurlClient _client;
+        public DataModel()
+        {
+        }
 
         public DataModel(FlurlClient client)
         {
@@ -44,7 +47,6 @@ namespace ModuleCustomer.Models
                                                                    .SetQueryParam("customerId", customerId)
                                                                    .PostJsonAsync(customerId)
                                                                    .ReceiveJson<CustomerDetailResponse>();
-
             return customer;
         }
 
