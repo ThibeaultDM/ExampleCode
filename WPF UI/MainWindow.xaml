@@ -4,7 +4,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="350" Width="525">
-    <DockPanel LastChildFill="True">
+    <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="5">
             <Button Command="{Binding NavigateCommand}" CommandParameter="CustomerView" Margin="5">Customer View</Button>
             <Button Command="{Binding NavigateCommand}" CommandParameter="InvoiceView" Margin="5">Invoice View</Button>

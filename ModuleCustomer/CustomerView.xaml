@@ -2,9 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:local="clr-namespace:ModuleCustomer" x:Class="ModuleCustomer.CustomerView"
+             xmlns:local="clr-namespace:ModuleCustomer" xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="ModuleCustomer.CustomerView"
              prism:ViewModelLocator.AutoWireViewModel="True" Height="350" Width="400">
-    <Grid>
-        <Button Content="Customer" HorizontalAlignment="Left" Height="36" Margin="113,68,0,0" VerticalAlignment="Top" Width="113"/>
+    <Grid x:Name="LayoutRoot" Background="White">
+        <ListBox x:Name="_listCustomers" ItemsSource="{Binding ListCustomers}"/>
+        <ContentControl Grid.Row="1" Margin="10"
+                        prism:RegionManager.RegionName="CustomerRegion"
+                        prism:RegionManager.RegionContext="{Binding SelectedItem, ElementName=_listCustomers}"/>
     </Grid>
 </UserControl>

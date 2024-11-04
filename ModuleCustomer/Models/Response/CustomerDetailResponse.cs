@@ -9,5 +9,10 @@
         public CompanyResponse Company { get; set; }
         public List<CustomerAddressResponse> Addresses { get; set; }
         public CreditResponse CreditInfo { get; set; }
+
+        public override string ToString()
+        {
+            return $"{FirstName}, {FamilyName}";
+        }
     }
 }
