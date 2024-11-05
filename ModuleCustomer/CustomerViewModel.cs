@@ -1,9 +1,11 @@
 ﻿using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ModuleCustomer
 {
-    public class CustomerViewModel : BindableBase
+    public class CustomerViewModel : BindableBase, INotifyPropertyChanged
     {
         private IDataModel customerModel;
         private List<CustomerResponse> listCustomers;
@@ -19,10 +21,20 @@ namespace ModuleCustomer
         public string Title
         {
             get { return _title; }
-            set { SetProperty(ref _title, value); }
+            set 
+            {
+                SetProperty(ref _title, value);
+                OnPropertyChanged();
+            }
         }
 
-        public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
+        public List<CustomerResponse> ListCustomers { get => listCustomers; 
+            set
+            {
+                listCustomers = value;
+                OnPropertyChanged();
+            }
+        }
 
         public async void GetCustomersAsync()
         {
@@ -33,5 +45,15 @@ namespace ModuleCustomer
             Console.WriteLine("FetchDataViewModel Customer ");
 
         }
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyname = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
+        }
+
+        #endregion //INotifyPropertyChanged
+
     }
 }
