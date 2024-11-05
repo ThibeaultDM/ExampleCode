@@ -21,7 +21,7 @@ namespace ModuleCustomer.Models
         {
             Console.WriteLine("DataModel constructor working");
             _client = client;
-            _client.BaseUrl = "https://localhost:7089/Orchestration/";
+            _client.BaseUrl = "http://localhost:7089/Orchestration/";
         }
 
         private List<CustomerResponse> customers;
