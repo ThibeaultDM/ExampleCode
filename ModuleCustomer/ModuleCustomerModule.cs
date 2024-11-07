@@ -8,14 +8,14 @@ namespace ModuleCustomer
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion("ContentRegion", typeof(CustomerView));
+            regionManager.RegisterViewWithRegion("CustomerRegion", typeof(CustomerView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IDataModel, DataModel>();
 
-            containerRegistry.RegisterForNavigation<CustomerView>();
+            containerRegistry.RegisterForNavigation<CustomerDetailsView>();
         }
     }
 }

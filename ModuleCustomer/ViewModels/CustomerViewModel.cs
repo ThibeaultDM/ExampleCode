@@ -1,6 +1,5 @@
 ﻿using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -11,16 +10,15 @@ namespace ModuleCustomer
         private IDataModel customerModel;
         private readonly IRegionManager regionManager;
 
-
         private List<CustomerResponse> listCustomers;
 
         public CustomerViewModel(IDataModel customerModel, IRegionManager regionManager)
         {
             Console.WriteLine("CustomerViewModel constructor working");
+
             this.customerModel = customerModel;
             this.regionManager = regionManager;
             CustomerSelectedCommand = new DelegateCommand<CustomerResponse>(CustomerSelected);
-
             GetCustomersAsync();
         }
 
@@ -51,18 +49,19 @@ namespace ModuleCustomer
             parameters.Add("customer", customer);
 
             if (customer != null)
-                regionManager.RequestNavigate("CustomerDetailsRegion", "CustomerDetailView", parameters);
+                regionManager.RequestNavigate("CustomerDetailsRegion", "CustomerDetailsView", parameters);
         }
 
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion 
+        #endregion INotifyPropertyChanged
 
     }
 }

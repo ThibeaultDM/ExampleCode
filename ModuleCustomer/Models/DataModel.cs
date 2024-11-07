@@ -2,17 +2,13 @@
 using Flurl.Http;
 using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModuleCustomer.Models
 {
     public class DataModel : IDataModel
     {
         private FlurlClient _client;
+
         public DataModel()
         {
         }
@@ -49,6 +45,5 @@ namespace ModuleCustomer.Models
                                                                    .ReceiveJson<CustomerDetailResponse>();
             return customer;
         }
-
     }
 }

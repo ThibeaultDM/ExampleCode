@@ -25,7 +25,7 @@
         {
             if (navigatePath != null)
             {
-                _regionManager.RequestNavigate("ContentRegion", navigatePath);
+                _regionManager.RequestNavigate("CustomerRegion", navigatePath);
             }
         }
     }

@@ -9,6 +9,6 @@
             <Button Command="{Binding NavigateCommand}" CommandParameter="CustomerView" Margin="5">Customer View</Button>
             <Button Command="{Binding NavigateCommand}" CommandParameter="InvoiceView" Margin="5">Invoice View</Button>
         </StackPanel>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" Margin="5" />
+        <ContentControl prism:RegionManager.RegionName="CustomerRegion" Margin="5" />
     </DockPanel>
 </Window>

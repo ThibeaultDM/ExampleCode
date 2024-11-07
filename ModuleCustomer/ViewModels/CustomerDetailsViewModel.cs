@@ -1,17 +1,21 @@
-﻿using ModuleCustomer.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ModuleCustomer.Interfaces;
+using ModuleCustomer.Models.Response;
 
 namespace ModuleCustomer
 {
     public class CustomerDetailsViewModel : BindableBase, INavigationAware
     {
         private CustomerResponse customer;
+        private readonly IDataModel customerModel;
+        private readonly IRegionManager regionManager;
 
-        public CustomerResponse Customer { get => customer; set => customer = value; }
+        public CustomerResponse Customer { get => customer; set => SetProperty(ref customer, value); }
+
+        public CustomerDetailsViewModel(IDataModel customerModel, IRegionManager regionManager)
+        {
+            this.customerModel = customerModel;
+            this.regionManager = regionManager;
+        }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
@@ -31,7 +35,17 @@ namespace ModuleCustomer
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+        }
 
+        private async void AddInvoice(CustomerResponse customer)
+        {
+            CustomerDetailResponse detailResponse = await customerModel.GetCustomerAsync(customer.Id.ToString());
+
+            NavigationParameters parameters = new();
+            parameters.Add("detailResponse", detailResponse);
+
+            if (detailResponse != null)
+                regionManager.RequestNavigate("InvoiceRegion", "AddInvoiceView", parameters);
         }
     }
 }
