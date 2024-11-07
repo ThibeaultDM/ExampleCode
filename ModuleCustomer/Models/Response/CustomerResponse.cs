@@ -6,5 +6,10 @@
         public string FirstName { get; set; }
         public string FamilyName { get; set; }
         public string Gender { get; set; }
+
+        public override string ToString()
+        {
+            return $"{FirstName}, {FamilyName}";
+        }
     }
 }

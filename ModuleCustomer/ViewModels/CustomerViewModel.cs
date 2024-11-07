@@ -1,5 +1,6 @@
 ﻿using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -8,27 +9,24 @@ namespace ModuleCustomer
     public class CustomerViewModel : BindableBase, INotifyPropertyChanged
     {
         private IDataModel customerModel;
-        private List<CustomerResponse> listCustomers;
-        private string _title = "Customers";
+        private readonly IRegionManager regionManager;
 
-        public CustomerViewModel(IDataModel customerModel)
+
+        private List<CustomerResponse> listCustomers;
+
+        public CustomerViewModel(IDataModel customerModel, IRegionManager regionManager)
         {
             Console.WriteLine("CustomerViewModel constructor working");
             this.customerModel = customerModel;
+            this.regionManager = regionManager;
+            CustomerSelectedCommand = new DelegateCommand<CustomerResponse>(CustomerSelected);
+
             GetCustomersAsync();
         }
 
-        public string Title
+        public List<CustomerResponse> ListCustomers
         {
-            get { return _title; }
-            set 
-            {
-                SetProperty(ref _title, value);
-                OnPropertyChanged();
-            }
-        }
-
-        public List<CustomerResponse> ListCustomers { get => listCustomers; 
+            get => listCustomers;
             set
             {
                 listCustomers = value;
@@ -43,17 +41,28 @@ namespace ModuleCustomer
             ListCustomers = customerModel.Customers;
 
             Console.WriteLine("FetchDataViewModel Customer ");
-
         }
+
+        public DelegateCommand<CustomerResponse> CustomerSelectedCommand { get; private set; }
+
+        private void CustomerSelected(CustomerResponse customer)
+        {
+            NavigationParameters parameters = new();
+            parameters.Add("customer", customer);
+
+            if (customer != null)
+                regionManager.RequestNavigate("CustomerDetailsRegion", "CustomerDetailView", parameters);
+        }
+
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyname = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #endregion //INotifyPropertyChanged
+        #endregion 
 
     }
 }
