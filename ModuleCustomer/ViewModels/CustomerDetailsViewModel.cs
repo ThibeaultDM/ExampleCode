@@ -9,12 +9,15 @@ namespace ModuleCustomer
         private readonly IDataModel customerModel;
         private readonly IRegionManager regionManager;
 
+        public DelegateCommand AddInvoiceCommand { get; private set; }
         public CustomerResponse Customer { get => customer; set => SetProperty(ref customer, value); }
 
         public CustomerDetailsViewModel(IDataModel customerModel, IRegionManager regionManager)
         {
             this.customerModel = customerModel;
             this.regionManager = regionManager;
+
+            AddInvoiceCommand = new DelegateCommand(AddInvoice);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
