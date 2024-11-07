@@ -37,15 +37,19 @@ namespace ModuleCustomer
         {
         }
 
-        private async void AddInvoice(CustomerResponse customer)
+        private async void AddInvoice()
         {
-            CustomerDetailResponse detailResponse = await customerModel.GetCustomerAsync(customer.Id.ToString());
+            if (Customer != null)
+            {
+                CustomerDetailResponse detailResponse = await customerModel.GetCustomerAsync(Customer.Id.ToString());
 
-            NavigationParameters parameters = new();
-            parameters.Add("detailResponse", detailResponse);
+                NavigationParameters parameters = new();
+                parameters.Add("detailResponse", detailResponse);
 
-            if (detailResponse != null)
-                regionManager.RequestNavigate("InvoiceRegion", "AddInvoiceView", parameters);
+                if (detailResponse != null)
+                    regionManager.RequestNavigate("InvoiceRegion", "AddInvoiceView", parameters);
+
+            }
         }
     }
 }

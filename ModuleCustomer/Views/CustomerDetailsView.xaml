@@ -22,6 +22,6 @@
 
         <TextBlock Grid.Row="2" Text="Gender:" Margin="5" />
         <TextBlock Grid.Row="2" Grid.Column="1"  Margin="5" Text="{Binding Customer.Gender}" />
-        <Button Command="{Binding AddInvoiceCommand}" CommandParameter="Customer" Margin="5,34,5,-28" Grid.Row="2">Add Invoice</Button>
+        <Button Command="{Binding AddInvoiceCommand}" Margin="5,34,5,-28" Grid.Row="2">Add Invoice</Button>
     </Grid>
 </UserControl>
