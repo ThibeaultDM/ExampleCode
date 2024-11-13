@@ -44,12 +44,12 @@ namespace ModuleInvoice
             get => invoiceLines;
             private set
             {
-                invoiceLines = value;
+                SetProperty(ref invoiceLines, value);
                 OnPropertyChanged();
             }
         }
 
-        public List<ErrorResponse> Errors { get => errors; set { SetProperty(ref errors, value); } }
+        public List<ErrorResponse> Errors { get => errors; set { SetProperty(ref errors, value); OnPropertyChanged(); } }
         public CreateInvoiceInput InvoiceHeader { get => invoiceHeader; private set { SetProperty(ref invoiceHeader, value); } }
         public CreateInvoiceLineInput InvoiceToAdd { get => invoiceToAdd; set => SetProperty(ref invoiceToAdd, value); }
         public DelegateCommand SaveInvoiceCommand { get; private set; }
