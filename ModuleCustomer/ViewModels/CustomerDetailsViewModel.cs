@@ -20,6 +20,8 @@ namespace ModuleCustomer
             AddInvoiceCommand = new DelegateCommand(AddInvoice);
         }
 
+        #region Navigation
+
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             var customer = navigationContext.Parameters["customer"] as CustomerResponse;
@@ -31,7 +33,7 @@ namespace ModuleCustomer
         {
             var customer = navigationContext.Parameters["customer"] as CustomerResponse;
             if (customer != null)
-                return Customer != null && Customer.FamilyName == customer.FamilyName;
+                return false;
             else
                 return true;
         }
@@ -40,18 +42,15 @@ namespace ModuleCustomer
         {
         }
 
+        #endregion Navigation
+
         private async void AddInvoice()
         {
             if (Customer != null)
             {
-                CustomerDetailResponse detailResponse = await customerModel.GetCustomerAsync(Customer.Id.ToString());
-
                 NavigationParameters parameters = new();
-                parameters.Add("detailResponse", detailResponse);
-
-                if (detailResponse != null)
-                    regionManager.RequestNavigate("InvoiceRegion", "AddInvoiceView", parameters);
-
+                parameters.Add("CustomerId", Customer.Id.ToString());
+                regionManager.RequestNavigate("CustomerRegion", "InvoiceView", parameters);
             }
         }
     }

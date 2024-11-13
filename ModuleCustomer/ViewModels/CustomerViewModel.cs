@@ -62,6 +62,5 @@ namespace ModuleCustomer
         }
 
         #endregion INotifyPropertyChanged
-
     }
 }

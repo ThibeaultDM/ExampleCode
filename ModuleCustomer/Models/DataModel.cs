@@ -34,16 +34,5 @@ namespace ModuleCustomer.Models
 
             customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
         }
-
-        public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
-        {
-            Console.WriteLine("GetCustomerAsync");
-
-            CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments("UC_300_003_GetCustomerByName")
-                                                                   .SetQueryParam("customerId", customerId)
-                                                                   .PostJsonAsync(customerId)
-                                                                   .ReceiveJson<CustomerDetailResponse>();
-            return customer;
-        }
     }
 }

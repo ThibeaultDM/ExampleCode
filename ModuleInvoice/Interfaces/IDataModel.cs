@@ -6,5 +6,7 @@ namespace ModuleInvoice.Interfaces
     public interface IDataModel
     {
         Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
+
+        Task<CustomerDetailResponse> GetCustomerAsync(string customerId);
     }
 }

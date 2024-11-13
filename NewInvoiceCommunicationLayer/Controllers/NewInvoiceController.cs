@@ -40,7 +40,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
                 // Adds any business rule errors to the response model.
                 SetErrorMessage(result, invoiceHeaderBo);
-
             }
             catch (Exception ex)
             {
@@ -199,7 +198,6 @@ namespace NewInvoiceCommunicationLayer.Controllers
         // Handles exceptions by recursively logging inner exceptions and adding error messages to response.
         private T HandleException<T>(T result, Exception ex) where T : BaseResponse
         {
-
             if (ex.InnerException != null)
                 return HandleException(result, ex.InnerException);
             else
@@ -210,6 +208,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
                     case "Unrecognized Guid format":
                         message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.NotGuid)}";
                         break;
+
                     case "The UPDATE statement conflicted with the FOREIGN KEY constraint \"FK_InvoiceHeaders_Company\". The conflict occurred in database \"QueasoTraining\", table \"dbo.Companies\", column 'Id'.":
                     case "The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_InvoiceHeaders_Company\". The conflict occurred in database \"QueasoTraining\", table \"dbo.Companies\", column 'Id'.\r\nThe statement has been terminated.":
                         message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.CompanyNotFound)}";
@@ -225,6 +224,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
 
             return result;
         }
+
         #endregion Helper Methodes
     }
 }

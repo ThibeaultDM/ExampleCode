@@ -14,7 +14,7 @@ namespace ModuleInvoice.Models
         {
             Console.WriteLine("DataModel constructor working");
             _client = client;
-            _client.BaseUrl = "https://localhost:7089/Orchestration/";
+            _client.BaseUrl = "http://localhost:7089/Orchestration/";
         }
 
         public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice)
@@ -27,6 +27,17 @@ namespace ModuleInvoice.Models
                                            .ReceiveJson<CustomerDetailResponse>();
 
             return customerDetailResponse;
+        }
+
+        public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
+        {
+            Console.WriteLine("GetCustomerAsync");
+
+            CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments("UC_300_003_GetCustomerByName")
+                                                                   .SetQueryParam("customerId", customerId)
+                                                                   .PostJsonAsync(customerId)
+                                                                   .ReceiveJson<CustomerDetailResponse>();
+            return customer;
         }
     }
 }
