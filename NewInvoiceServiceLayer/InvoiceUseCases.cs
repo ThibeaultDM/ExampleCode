@@ -7,8 +7,6 @@ using NewInvoiceServiceLayer.Interfaces;
 using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.BusinessModels;
 using QueasoFramework.BusinessModels.Rules;
-using System.ComponentModel;
-using System.Reflection;
 
 namespace NewInvoiceServiceLayer.Service
 {
@@ -219,7 +217,6 @@ namespace NewInvoiceServiceLayer.Service
             DO_InvoiceException invoiceExceptionDO = _mapper.Map<DO_InvoiceException>(invoiceExceptionBO);
             await _exceptionRepository.SaveInvoiceExceptionAsync(invoiceExceptionDO);
         }
-
 
         // Resolves business rule violations; aggregates messages and saves them as exceptions.
         private async Task ResolveBusinessRulesBroken(BO_InvoiceLine input)

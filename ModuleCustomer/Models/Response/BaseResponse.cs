@@ -11,12 +11,14 @@ namespace ModuleCustomer.Models.Response
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string propertyname = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
         }
 
-        #endregion //INotifyPropertyChanged
+        #endregion INotifyPropertyChanged
+
         public BaseResponse()
         {
             success = true;
@@ -32,6 +34,7 @@ namespace ModuleCustomer.Models.Response
                 OnPropertyChanged();
             }
         }
+
         public List<ErrorResponse> Errors
         {
             get => errors;
