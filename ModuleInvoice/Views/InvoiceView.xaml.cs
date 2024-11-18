@@ -19,10 +19,15 @@ namespace ModuleInvoice
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
         private void TextValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^a-zA-Z]");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
     }
 }

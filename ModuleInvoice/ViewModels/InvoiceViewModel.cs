@@ -3,8 +3,6 @@ using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Windows.Input;
 
 namespace ModuleInvoice
 {
@@ -47,14 +45,16 @@ namespace ModuleInvoice
             private set
             {
                 SetProperty(ref invoiceLines, value);
-                OnPropertyChanged();
+                OnPropertyChanged("InvoiceLines");
             }
         }
 
         public List<ErrorResponse> Errors
         { get => errors; set { errors = value; OnPropertyChanged(); } }
+
         public CreateInvoiceInput InvoiceHeader
         { get => invoiceHeader; private set { SetProperty(ref invoiceHeader, value); } }
+
         public CreateInvoiceLineInput InvoiceToAdd { get => invoiceToAdd; set => SetProperty(ref invoiceToAdd, value); }
         public DelegateCommand SaveInvoiceCommand { get; private set; }
         public DelegateCommand AddInvoiceLineCommand { get; private set; }
@@ -108,6 +108,7 @@ namespace ModuleInvoice
         }
 
         #region Helper methodes
+
         private void HandleException(Exception ex)
         {
             if (ex.InnerException != null)
@@ -118,7 +119,7 @@ namespace ModuleInvoice
             }
         }
 
-        #endregion
+        #endregion Helper methodes
 
         #region INotifyPropertyChanged
 
