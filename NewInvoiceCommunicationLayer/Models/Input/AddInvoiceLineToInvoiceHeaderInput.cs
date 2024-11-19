@@ -7,13 +7,13 @@ namespace NewInvoiceCommunicationLayer.Models.Input
     {
         public Guid InvoiceHeaderId { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(int.MaxValue, 0)]
         public decimal VATRate { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(int.MaxValue, 0)]
         public decimal PricePerUnit { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(int.MaxValue, 0)]
         public int Quantity { get; set; }
 
         [MaxLength(100)]

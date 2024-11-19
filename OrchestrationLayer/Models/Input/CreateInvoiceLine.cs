@@ -6,13 +6,13 @@ namespace Orchestration.Models.Input
     {
         public Guid InvoiceHeaderId { get; set; }
 
-        [Range(0, 79228162514264337593543950335d)]
+        [Range(int.MaxValue, 0)]
         public decimal VATRate { get; set; }
 
-        [Range(0, 79228162514264337593543950335d)]
+        [Range(int.MaxValue, 0)]
         public decimal PricePerUnit { get; set; }
 
-        [Range(0, int.MaxValue)]
+        [Range(int.MaxValue, 0)]
         public int Quantity { get; set; } = 0;
 
         [MaxLength(100)]
