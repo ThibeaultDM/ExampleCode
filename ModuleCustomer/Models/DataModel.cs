@@ -44,10 +44,10 @@ namespace ModuleCustomer.Models
                 }
                 catch (Exception ex)
                 {
-                    if (ex.InnerException == )
-                    {
+                    //if (ex.InnerException == )
+                    //{
 
-                    }
+                    //}
                 }
 
             }

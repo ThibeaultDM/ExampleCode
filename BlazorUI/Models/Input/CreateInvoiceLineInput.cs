@@ -1,6 +1,8 @@
-﻿namespace BlazorUI.Models.Input
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BlazorUI.Models.Input
 {
-    public class CreateInvoiceLineInput
+    public class CreateInvoiceLine
     {
         public Guid InvoiceHeaderId { get; set; }
 
@@ -10,6 +12,6 @@
 
         public int Quantity { get; set; } = 0;
 
-        public string Description { get; set; } = "Description";
+        public string? Description { get; set; } = "Description";
     }
 }
