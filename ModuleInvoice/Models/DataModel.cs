@@ -14,7 +14,7 @@ namespace ModuleInvoice.Models
         {
             Console.WriteLine("DataModel constructor working");
             _client = client;
-            _client.BaseUrl = "http://localhost:7089/Orchestration/";
+            _client.BaseUrl = System.Configuration.ConfigurationManager.AppSettings["OrchestrationUrl"];
         }
 
         public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice)
