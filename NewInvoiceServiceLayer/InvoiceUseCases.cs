@@ -141,10 +141,23 @@ namespace NewInvoiceServiceLayer.Service
 
             try
             {
-                DO_JournalEntry journalEntryDO = _mapper.Map<DO_JournalEntry>(journalEntryBO);
-                journalEntryDO = await _journalEntryRepository.SaveJournalEntryAsync(journalEntryDO);
+                DO_InvoiceHeader invoiceHeaderDo = await _headerRepository.FindInvoiceHeaderAsync(idInvoiceHeader);
+                
+                if (invoiceHeaderDo != null)
+                {
+                    invoiceHeaderDo.IsPaid = true;
+                    invoiceHeaderDo = await _headerRepository.UpdateInvoiceHeaderAsync(invoiceHeaderDo);
 
-                journalEntryBO = _mapper.Map<BO_JournalEntry>(journalEntryDO);
+                    DO_JournalEntry journalEntryDO = _mapper.Map<DO_JournalEntry>(journalEntryBO);
+                    journalEntryDO = await _journalEntryRepository.SaveJournalEntryAsync(journalEntryDO);
+
+                    journalEntryBO = _mapper.Map<BO_JournalEntry>(journalEntryDO);
+                }
+                else
+                {
+                    journalEntryBO = await ResolveInvoiceHeaderNotFound(idInvoiceHeader.ToString(), journalEntryBO);
+                }
+
             }
             catch (Exception ex)
             {
@@ -237,12 +250,12 @@ namespace NewInvoiceServiceLayer.Service
         }
 
         // Resolves the case where an invoice header is not found; logs the error and returns an updated response.
-        private async Task<BO_InvoiceHeader> ResolveInvoiceHeaderNotFound(string input, BO_InvoiceHeader invoiceHeaderBO)
+        private async Task<T> ResolveInvoiceHeaderNotFound<T>(string input, T Bo) where T : BusinessObjectBase
         {
-            invoiceHeaderBO.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.HeaderNotFound)}" });
+            Bo.BrokenRules.Add(new() { PropertyName = "none", FailedMessage = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.HeaderNotFound)}" });
 
             await SaveHeaderNotFoundException(input);
-            return invoiceHeaderBO;
+            return Bo;
         }
 
         // Saves a header not found exception; maps and stores the exception details.

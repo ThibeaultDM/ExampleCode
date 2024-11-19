@@ -148,8 +148,10 @@ namespace NewInvoiceCommunicationLayer.Controllers
             {
                 // Calls use case to archive journal entry associated with invoice.
                 BO_JournalEntry journalEntryBO = await _invoiceUseCases.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input.JournalHeaderId, input.InvoiceHeaderId);
-
                 ArchiveInvoiceJournalEntry result = _mapper.Map<ArchiveInvoiceJournalEntry>(journalEntryBO);
+
+                SetErrorMessage(result, journalEntryBO);
+
                 response = Ok(result);
             }
             catch (Exception ex)
