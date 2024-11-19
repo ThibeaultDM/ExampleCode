@@ -32,7 +32,25 @@ namespace ModuleCustomer.Models
         {
             Console.WriteLine("GetAllCustomersAsync");
 
-            customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
+            bool tryAgain = true;
+
+            while (tryAgain)
+            {
+
+                try
+                {
+                    customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
+
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException == )
+                    {
+
+                    }
+                }
+
+            }
         }
     }
 }

@@ -82,6 +82,7 @@ namespace CustomerCommunicationLayer.Controllers
 
             if (response == null)
             {
+                response = new GetCustomerByIdResponse();
                 response = HandleException(response, new Exception("UC_300_003_GetCustomerByIdAsync,noCustomerWithThisName"));
             }
 
@@ -97,6 +98,7 @@ namespace CustomerCommunicationLayer.Controllers
             else
             {
                 string[] errorMessage = ex.Message.Split(",");
+
 
                 response.Errors.Add(new ErrorResponse()
                 {

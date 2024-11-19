@@ -77,9 +77,6 @@ namespace NewInvoiceServiceLayer.Objects
             }
             BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(this.TotalAmount), new List<decimal> { this.Amount, this.VatAmount }, out this._totalAmount));
 
-            BusinessRules.Add(new InvoiceBusinessRules().RangeValue(nameof(Amount), Amount, 0, int.MaxValue));
-            BusinessRules.Add(new InvoiceBusinessRules().RangeValue(nameof(TotalAmount), TotalAmount, 0, int.MaxValue));
-            BusinessRules.Add(new InvoiceBusinessRules().RangeValue(nameof(VatAmount), VatAmount, 0, int.MaxValue));
 
             return base.AddBusinessRules();
         }
