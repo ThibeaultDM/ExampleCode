@@ -1,6 +1,7 @@
 ﻿using ModuleInvoice.Interfaces;
 using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -17,7 +18,7 @@ namespace ModuleInvoice
         private List<ErrorResponse> errors;
         private CreateInvoiceInput invoiceHeader;
         private CreateInvoiceLineInput invoiceToAdd;
-        private List<CreateInvoiceLineInput> invoiceLines;
+        private ObservableCollection<CreateInvoiceLineInput> invoiceLines;
 
         public InvoiceViewModel(IDataModel InvoiceModel, IRegionManager regionManager)
         {
@@ -39,7 +40,7 @@ namespace ModuleInvoice
         public string StreetName { get => streetName; set => SetProperty(ref streetName, value); }
         public string HouseNumber { get => houseNumber; set => SetProperty(ref houseNumber, value); }
 
-        public List<CreateInvoiceLineInput> InvoiceLines
+        public ObservableCollection<CreateInvoiceLineInput> InvoiceLines
         {
             get => invoiceLines;
             private set
@@ -92,7 +93,7 @@ namespace ModuleInvoice
                     }
                     else
                     {
-                        // could add more func here
+                        // TODO also doesn't work
                         Errors.Add(new() { ErrorMessage = "Success" });
                     }
                 }
