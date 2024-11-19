@@ -2,6 +2,7 @@
 using Flurl.Http;
 using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
+using System.Windows;
 
 namespace ModuleCustomer.Models
 {
@@ -36,20 +37,19 @@ namespace ModuleCustomer.Models
 
             while (tryAgain)
             {
-
                 try
                 {
                     customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
-
+                    tryAgain = false;
                 }
                 catch (Exception ex)
                 {
-                    //if (ex.InnerException == )
-                    //{
 
-                    //}
+                    if (ex.InnerException.Message != "No connection could be made because the target machine actively refused it. (localhost:7089)")
+                    {
+                        MessageBox.Show("An error occurred");
+                    }
                 }
-
             }
         }
     }
