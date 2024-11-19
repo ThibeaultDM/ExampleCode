@@ -22,7 +22,7 @@ namespace ModuleInvoice.Models
             Console.WriteLine("GetAllCustomersAsync");
 
             CustomerDetailResponse customerDetailResponse = new();
-            customerDetailResponse = await _client.BaseUrl.AppendPathSegments("UC_300_004_ArchiveCustomerInvoice")
+            customerDetailResponse = await _client.BaseUrl.AppendPathSegments("UC_200_002_SaveInvoiceForCustomer")
                                            .PostJsonAsync(createInvoice)
                                            .ReceiveJson<CustomerDetailResponse>();
 

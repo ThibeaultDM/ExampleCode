@@ -75,7 +75,7 @@ namespace Orchestration.BusinessLayer
             throw new NotImplementedException();
         }
 
-        public async Task<CustomerDetailResponse> UC_300_004_ArchiveCustomerInvoiceAsync(CreateInvoiceInput invoice)
+        public async Task<CustomerDetailResponse> UC_200_002_SaveInvoiceForCustomer(CreateInvoiceInput invoice)
         {
             try
             {

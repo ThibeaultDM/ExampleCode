@@ -140,14 +140,14 @@ namespace Orchestration.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpPost("UC_300_004_ArchiveCustomerInvoice")]
-        public async Task<IActionResult> ArchiveCustomerInvoice(CreateInvoiceInput _invoice)
+        [HttpPost("UC_200_002_SaveInvoiceForCustomer")]
+        public async Task<IActionResult> UC_200_002_SaveInvoiceForCustomer(CreateInvoiceInput _invoice)
         {
             ObjectResult response;
 
             try
             {
-                CustomerDetailResponse result = await service.UC_300_004_ArchiveCustomerInvoiceAsync(_invoice);
+                CustomerDetailResponse result = await service.UC_200_002_SaveInvoiceForCustomer(_invoice);
 
                 response = Ok(result);
             }
