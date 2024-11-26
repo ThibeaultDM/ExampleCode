@@ -17,7 +17,6 @@ namespace ModuleInvoice
         private string houseNumber;
         private List<ErrorResponse> errors;
         private CreateInvoiceInput invoiceHeader;
-        //private CreateInvoiceLineInput invoiceToAdd;
         private ObservableCollection<CreateInvoiceLineInput> invoiceLines;
 
         public InvoiceViewModel(IDataModel InvoiceModel, IRegionManager regionManager)
@@ -26,11 +25,9 @@ namespace ModuleInvoice
             _invoiceModel = InvoiceModel;
             this.regionManager = regionManager;
             SaveInvoiceCommand = new DelegateCommand(SaveInvoice);
-            //AddInvoiceLineCommand = new DelegateCommand(AddInvoiceLine);
 
             InvoiceHeader = new();
             InvoiceLines = new();
-            //InvoiceToAdd = new();
         }
 
         #region Properties
@@ -56,26 +53,10 @@ namespace ModuleInvoice
         public CreateInvoiceInput InvoiceHeader
         { get => invoiceHeader; private set { SetProperty(ref invoiceHeader, value); } }
 
-        //public CreateInvoiceLineInput InvoiceToAdd { get => invoiceToAdd; set => SetProperty(ref invoiceToAdd, value); }
         public DelegateCommand SaveInvoiceCommand { get; private set; }
         public DelegateCommand AddInvoiceLineCommand { get; private set; }
 
         #endregion Properties
-
-        //private void AddInvoiceLine()
-        //{
-        //    Errors = new();
-        //    try
-        //    {
-        //        InvoiceHeader.InvoiceLines.Add(InvoiceToAdd);
-
-        //        InvoiceLines.Add(InvoiceToAdd);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HandleException(ex);
-        //    }
-        //}
 
         private async void SaveInvoice()
         {
