@@ -77,7 +77,6 @@ namespace NewInvoiceServiceLayer.Objects
             }
             BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(this.TotalAmount), new List<decimal> { this.Amount, this.VatAmount }, out this._totalAmount));
 
-
             return base.AddBusinessRules();
         }
     }

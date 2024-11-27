@@ -142,7 +142,7 @@ namespace NewInvoiceServiceLayer.Service
             try
             {
                 DO_InvoiceHeader invoiceHeaderDo = await _headerRepository.FindInvoiceHeaderAsync(idInvoiceHeader);
-                
+
                 if (invoiceHeaderDo != null)
                 {
                     invoiceHeaderDo.IsPaid = true;
@@ -157,7 +157,6 @@ namespace NewInvoiceServiceLayer.Service
                 {
                     journalEntryBO = await ResolveInvoiceHeaderNotFound(idInvoiceHeader.ToString(), journalEntryBO);
                 }
-
             }
             catch (Exception ex)
             {

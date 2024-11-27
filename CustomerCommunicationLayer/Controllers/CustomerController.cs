@@ -99,7 +99,6 @@ namespace CustomerCommunicationLayer.Controllers
             {
                 string[] errorMessage = ex.Message.Split(",");
 
-
                 response.Errors.Add(new ErrorResponse()
                 {
                     ErrorMessage = errorMessage[0],

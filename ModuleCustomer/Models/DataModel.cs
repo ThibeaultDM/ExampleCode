@@ -1,5 +1,4 @@
 ﻿using CustomerCommunicationLayer.Controllers;
-using Flurl;
 using Flurl.Http;
 using Microsoft.AspNetCore.Mvc;
 using ModuleCustomer.Interfaces;
@@ -50,12 +49,10 @@ namespace ModuleCustomer.Models
 
                         customers = (List<CustomerResponse>)test.Value;
                         tryAgain = false;
-
                     }
                 }
                 catch (Exception ex)
                 {
-
                     if (ex.InnerException.Message != "No connection could be made because the target machine actively refused it. (localhost:7089)")
                     {
                         MessageBox.Show("An error occurred");
@@ -65,4 +62,3 @@ namespace ModuleCustomer.Models
         }
     }
 }
-
