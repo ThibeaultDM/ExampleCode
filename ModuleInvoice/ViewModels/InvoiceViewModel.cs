@@ -81,7 +81,6 @@ namespace ModuleInvoice
                     {
                         // TODO also doesn't work
                         Errors.Add(new() { ErrorMessage = "Success" });
-                        InvoiceLines.Clear();
                     }
                 }
                 else
