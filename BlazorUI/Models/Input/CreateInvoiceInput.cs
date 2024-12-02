@@ -7,5 +7,7 @@
 
         public List<CreateInvoiceLine> InvoiceLines { get; set; } = new();
         public bool IsPaid { get; set; } = false;
+
+
     }
 }

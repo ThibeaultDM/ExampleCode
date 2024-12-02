@@ -5,7 +5,7 @@
              xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="ModuleInvoice.InvoiceView"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
-        <src:InvoiceLineConverter x:Key="invoiceLineConverter" />
+        <src:InvoiceLineConverter x:Key="invoiceLineConverter"/>
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot" Background="White" Height="355" Width="750">
         <Grid.ColumnDefinitions>
@@ -34,16 +34,17 @@
 
         <DataGrid Grid.Row="2" Grid.ColumnSpan="4" Margin="110,10,14,30"
                   ItemsSource="{Binding InvoiceLines, Mode=TwoWay}"
-                  CanUserAddRows="True"
+                  CanUserAddRows="True" 
                   CanUserDeleteRows="True"
                   AutoGenerateColumns="False">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="1*" />
-                <DataGridTextColumn Header="PricePerUnit" Binding="{Binding PricePerUnit}" Width="1*" />
-                <DataGridTextColumn Header="VAT" Binding="{Binding VATRate}" Width="1*" />
-                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="3*" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="1*"/>
+                <DataGridTextColumn Header="PricePerUnit" Binding="{Binding PricePerUnit}" Width="1*"/>
+                <DataGridTextColumn Header="VAT" Binding="{Binding VATRate}" Width="1*"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="3*"/>
             </DataGrid.Columns>
+
         </DataGrid>
 
         <Button Command="{Binding SaveInvoiceCommand}" Grid.Column="3" Content="Save Invoice" HorizontalAlignment="Left" Height="23" Margin="119,158,0,0" Grid.Row="3" VerticalAlignment="Top" Width="98" />

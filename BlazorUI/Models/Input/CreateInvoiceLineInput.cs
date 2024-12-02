@@ -1,4 +1,6 @@
-﻿namespace BlazorUI.Models.Input
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BlazorUI.Models.Input
 {
     public class CreateInvoiceLine
     {
