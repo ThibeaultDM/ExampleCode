@@ -11,7 +11,7 @@ namespace Orchestration.Interfaces
 
         Task<InvoiceDetailResponse> UC_301_003_GetInvoiceByNameAsync(Guid getInvoiceByIdInput);
 
-        Task<ArchiveInvoiceJournalEntryInput> UC_301_004_ArchiveJournalEntryForInvoiceAsync(ArchiveInvoiceJournalEntryInput archiveInvoiceJournal);
+        Task<ArchiveInvoiceJournalEntryResponse> UC_301_004_ArchiveJournalEntryForInvoiceAsync(ArchiveInvoiceJournalEntry archiveInvoiceJournal);
 
         Task<List<InvoiceResponse>> UC_301_005_GetAllInvoicesAsync();
     }

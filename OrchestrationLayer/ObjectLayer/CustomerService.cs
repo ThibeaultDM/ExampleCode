@@ -55,20 +55,5 @@ namespace Orchestration.ObjectLayer
             catch { throw; }
         }
 
-        public async Task<List<CustomerResponse>> UC_300_004_ArchiveCustomerInvoice(ArchiveCustomerInvoiceInput customerInput)
-        {
-            try
-            {
-                var result = await _client.BaseUrl
-                                          .AppendPathSegments(customerPathSeg, "UC_300_004_ArchiveCustomerInvoice")
-                                          .PostJsonAsync(customerInput)
-                                          .ReceiveJson<List<CustomerResponse>>();
-                return result;
-            }
-            catch
-            {
-                throw;
-            }
-        }
     }
 }

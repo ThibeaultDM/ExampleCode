@@ -79,7 +79,7 @@ namespace Orchestration.Controllers
         }
 
         [HttpPost("UC_301_004_ArchiveJournalEntryForInvoice")]
-        public async Task<IActionResult> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntryInput archiveInvoiceJournal)
+        public async Task<IActionResult> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntry archiveInvoiceJournal)
         {
             ObjectResult response;
 

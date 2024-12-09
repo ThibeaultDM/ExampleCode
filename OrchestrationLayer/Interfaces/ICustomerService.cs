@@ -10,7 +10,5 @@ namespace Orchestration.Interfaces
         Task<List<CustomerResponse>> UC_300_002_GetAllCustomerAsync();
 
         Task<CustomerDetailResponse> UC_300_003_GetCustomerByIdAsync(Guid id);
-
-        Task<List<CustomerResponse>> UC_300_004_ArchiveCustomerInvoice(ArchiveCustomerInvoiceInput customerInput);
     }
 }

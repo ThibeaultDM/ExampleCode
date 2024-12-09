@@ -43,6 +43,10 @@ namespace Orchestration.BusinessLayer
             InvoiceDetailResponse result = await _invoiceService.UC_301_003_GetInvoiceByNameAsync(invoiceId);
             return result;
         }
+        public async Task<ArchiveInvoiceJournalEntryResponse> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntry input)
+        {
+            return await _invoiceService.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input);
+        }
 
         #endregion Invoice
 
@@ -69,12 +73,6 @@ namespace Orchestration.BusinessLayer
         #endregion Customer
 
         #region Combined
-
-        public async Task<ArchiveInvoiceJournalEntryInput> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntryInput input)
-        {
-            return await _invoiceService.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input);
-        }
-
         public async Task<CustomerDetailResponse> UC_200_002_SaveInvoiceForCustomer(CreateInvoiceInput invoice)
         {
             try

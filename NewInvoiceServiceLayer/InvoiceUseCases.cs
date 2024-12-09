@@ -146,6 +146,7 @@ namespace NewInvoiceServiceLayer.Service
                 if (invoiceHeaderDo != null)
                 {
                     invoiceHeaderDo.IsPaid = true;
+                    invoiceHeaderDo.InvoiceLines.Clear();
                     invoiceHeaderDo = await _headerRepository.UpdateInvoiceHeaderAsync(invoiceHeaderDo);
 
                     DO_JournalEntry journalEntryDO = _mapper.Map<DO_JournalEntry>(journalEntryBO);

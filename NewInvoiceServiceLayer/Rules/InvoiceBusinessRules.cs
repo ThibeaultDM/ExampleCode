@@ -96,11 +96,11 @@ namespace NewInvoiceServiceLayer.Rules
                 this.Passed = false;
                 SetFailedMessage($"{EnumDescription.GetDescription(InvoiceExceptionTypes.InvalidVATNumberBE0)}");
             }
-            //else if (!CheckValidityVatNumberModulo97(vatNumber))
-            //{
-            //    this.Passed = false;
-            //SetFailedMessage($"{EnumDescription.GetDescription(InvoiceExceptionTypes.InvalidVATNumber97)}");
-            //}
+            else if (!CheckValidityVatNumberModulo97(vatNumber))
+            {
+                this.Passed = false;
+                SetFailedMessage($"{EnumDescription.GetDescription(InvoiceExceptionTypes.InvalidVATNumber97)}");
+            }
 
             return this;
         }
@@ -117,9 +117,9 @@ namespace NewInvoiceServiceLayer.Rules
             try
             {
                 int lastTwoNumbers = Convert.ToInt32(vatNumber.Substring((vatNumber.Length - 2)));
-                int otherNumbers = Convert.ToInt32(vatNumber.Substring(1));
+                int otherNumbers = Convert.ToInt32(vatNumber.Substring(2, vatNumber.Length - 4)); // Start after "BE0"
 
-                if (97 - (otherNumbers - (otherNumbers / 97 * 97)) == lastTwoNumbers)
+                if (97 - (otherNumbers % 97) == lastTwoNumbers)
                 {
                     isValid = true;
                 }
