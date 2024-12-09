@@ -4,7 +4,6 @@ using QueasoFramework.BusinessModels.Rules;
 
 namespace CustomerBusinessLayer.BusinessModels
 {
-    // TODO See how this maps
     public class BO_Customer : BusinessObjectBase
     {
         public BO_Customer()
@@ -34,7 +33,7 @@ namespace CustomerBusinessLayer.BusinessModels
 
         public BO_Company Company { get; set; }
 
-        public BO_CreditInfo CreditInfo { get; set; }
+        public BO_CreditInfo CreditInfo { get; set; } = new();
 
         #endregion Properties
 
@@ -46,7 +45,7 @@ namespace CustomerBusinessLayer.BusinessModels
             BusinessRules.Add(new BusinessRule().MaxLength(nameof(FirstName), FirstName, 50));
             BusinessRules.Add(new BusinessRule().IsRequired(nameof(Gender), Gender));
             BusinessRules.Add(new BusinessRule().IsRequired(nameof(Addresses), Addresses));
-            //BusinessRules.Add(new BusinessRule().IsRequired(nameof(CreditInfo), CreditInfo));
+            BusinessRules.Add(new BusinessRule().IsRequired(nameof(CreditInfo), CreditInfo));
 
             return base.AddBusinessRules();
         }

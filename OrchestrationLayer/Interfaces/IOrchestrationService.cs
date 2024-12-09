@@ -15,6 +15,8 @@ namespace Orchestration.Interfaces
 
         Task<InvoiceDetailResponse> UC_301_003_GetInvoiceByNameAsync(Guid invoiceId);
 
+        Task<ArchiveInvoiceJournalEntryInput> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntryInput input);
+
         #endregion Invoice
 
         #region Customer
@@ -30,8 +32,6 @@ namespace Orchestration.Interfaces
         #region Combined
 
         Task<CustomerDetailResponse> UC_200_002_SaveInvoiceForCustomer(CreateInvoiceInput invoice);
-
-        Task<InvoiceDetailResponse> UC_200_002_SaveInvoiceForCustomerAsync(CreateCustomerInput customerToCreate, CreateInvoiceInput invoiceHeaderInput);
 
         #endregion Combined
     }

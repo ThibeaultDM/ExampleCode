@@ -1,7 +1,5 @@
-﻿using CustomerCommunicationLayer.Controllers;
-using Flurl;
+﻿using Flurl;
 using Flurl.Http;
-using Microsoft.AspNetCore.Mvc;
 using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
 using System.Windows;
@@ -19,6 +17,8 @@ namespace ModuleCustomer.Models
         public DataModel(FlurlClient client)
         {
             Console.WriteLine("DataModel constructor working");
+            _client = client;
+            _client.BaseUrl = System.Configuration.ConfigurationManager.AppSettings["OrchestrationUrl"];
         }
 
         private List<CustomerResponse> customers;
@@ -39,19 +39,8 @@ namespace ModuleCustomer.Models
             {
                 try
                 {
-                    //TODO fix this
-                    // I'm trying to startup the entire Customer component so I just need to do the call
-                    using (var context = CustomerCommunicationLayer.Program)
-                    {
-                        CustomerController customerController = new CustomerController(context);
-
-                        await customerController.GetAllCustomersAsync();
-                        var test = await customerController.GetAllCustomersAsync() as OkObjectResult;
-
-                        customers = (List<CustomerResponse>)test.Value;
-                        tryAgain = false;
-
-                    }
+                    customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
+                    tryAgain = false;
                 }
                 catch (Exception ex)
                 {
@@ -65,4 +54,3 @@ namespace ModuleCustomer.Models
         }
     }
 }
-

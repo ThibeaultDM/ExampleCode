@@ -54,14 +54,14 @@ namespace Orchestration.ObjectLayer
             catch { throw; }
         }
 
-        public async Task<InvoiceDetailResponse> UC_301_004_ArchiveJournalEntryForInvoiceAsync(ArchiveInvoiceJournalEntryInput archiveInvoiceJournal)
+        public async Task<ArchiveInvoiceJournalEntryInput> UC_301_004_ArchiveJournalEntryForInvoiceAsync(ArchiveInvoiceJournalEntryInput archiveInvoiceJournal)
         {
             try
             {
                 var result = await _client.BaseUrl
                                           .AppendPathSegments(invoicePathSeg, "ArchiveInvoiceJournalEntry")
                                           .PostJsonAsync(archiveInvoiceJournal)
-                                          .ReceiveJson<InvoiceDetailResponse>();
+                                          .ReceiveJson<ArchiveInvoiceJournalEntryInput>();
                 return result;
             }
             catch { throw; }

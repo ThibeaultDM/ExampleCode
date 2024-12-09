@@ -70,9 +70,9 @@ namespace Orchestration.BusinessLayer
 
         #region Combined
 
-        public Task<InvoiceDetailResponse> UC_200_002_SaveInvoiceForCustomerAsync(CreateCustomerInput customerToCreate, CreateInvoiceInput invoiceHeaderInput)
+        public async Task<ArchiveInvoiceJournalEntryInput> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntryInput input)
         {
-            throw new NotImplementedException();
+            return await _invoiceService.UC_301_004_ArchiveJournalEntryForInvoiceAsync(input);
         }
 
         public async Task<CustomerDetailResponse> UC_200_002_SaveInvoiceForCustomer(CreateInvoiceInput invoice)

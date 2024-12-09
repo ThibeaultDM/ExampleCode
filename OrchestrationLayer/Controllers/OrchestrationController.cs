@@ -29,7 +29,7 @@ namespace Orchestration.Controllers
 
             try
             {
-                var result = await service.GetAllInvoicesAsync();
+                List<InvoiceResponse> result = await service.GetAllInvoicesAsync();
 
                 response = Ok(result);
             }
@@ -48,7 +48,7 @@ namespace Orchestration.Controllers
 
             try
             {
-                var result = await service.UC_301_003_GetInvoiceByNameAsync(invoiceId);
+                InvoiceDetailResponse result = await service.UC_301_003_GetInvoiceByNameAsync(invoiceId);
 
                 response = Ok(result);
             }
@@ -67,7 +67,7 @@ namespace Orchestration.Controllers
 
             try
             {
-                var result = await service.UC_301_001_CreateInvoiceHeaderAsync(input);
+                InvoiceDetailResponse result = await service.UC_301_001_CreateInvoiceHeaderAsync(input);
 
                 response = Ok(result);
             }
@@ -75,6 +75,24 @@ namespace Orchestration.Controllers
             {
                 response = BadRequest(ex.Message);
             }
+            return response;
+        }
+
+        [HttpPost("UC_301_004_ArchiveJournalEntryForInvoice")]
+        public async Task<IActionResult> UC_301_004_ArchiveJournalEntryForInvoice(ArchiveInvoiceJournalEntryInput archiveInvoiceJournal)
+        {
+            ObjectResult response;
+
+            try
+            {
+                var result = await service.UC_301_004_ArchiveJournalEntryForInvoice(archiveInvoiceJournal);
+                response = Ok(result);
+            }
+            catch (Exception ex)
+            {
+                response = BadRequest(ex.Message);
+            }
+
             return response;
         }
 
@@ -88,7 +106,7 @@ namespace Orchestration.Controllers
             ObjectResult response;
             try
             {
-                var result = await service.UC_300_001_CreateCustomerAsync(customerToCreate);
+                CustomerDetailResponse result = await service.UC_300_001_CreateCustomerAsync(customerToCreate);
 
                 response = Ok(result);
             }
@@ -104,7 +122,7 @@ namespace Orchestration.Controllers
         {
             try
             {
-                var result = await service.UC_300_003_GetAllCustomersAsync();
+                List<CustomerResponse> result = await service.UC_300_003_GetAllCustomersAsync();
 
                 return Ok(result);
             }
@@ -119,7 +137,7 @@ namespace Orchestration.Controllers
         {
             try
             {
-                var result = await service.UC_300_002_GetCustomerByIdAsync(customerId);
+                CustomerDetailResponse result = await service.UC_300_002_GetCustomerByIdAsync(customerId);
 
                 return Ok(result);
             }
@@ -132,13 +150,6 @@ namespace Orchestration.Controllers
         #endregion Customer
 
         #region Combined
-
-        // TODO
-        [HttpPost("UC_301_009_GetJournalForEntry")]
-        public Task<List<InvoiceResponse>> GetJournalForEntry(Guid customerId)
-        {
-            throw new NotImplementedException();
-        }
 
         [HttpPost("UC_200_002_SaveInvoiceForCustomer")]
         public async Task<IActionResult> UC_200_002_SaveInvoiceForCustomer(CreateInvoiceInput _invoice)

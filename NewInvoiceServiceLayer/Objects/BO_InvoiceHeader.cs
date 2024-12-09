@@ -63,11 +63,9 @@ namespace NewInvoiceServiceLayer.Objects
             BusinessRules.Clear();
 
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(VatNumber), VatNumber));
-            BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(InvoiceNumber), InvoiceNumber));
             BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(CompanyProxyId), CompanyProxyId));
 
             BusinessRules.Add(new InvoiceBusinessRules().MaxLength(nameof(VatNumber), VatNumber, 13));
-            BusinessRules.Add(new InvoiceBusinessRules().RangeValue(nameof(InvoiceNumber), InvoiceNumber, 0, int.MaxValue));
 
             BusinessRules.Add(new InvoiceBusinessRules().CheckValidityVatNumber(nameof(this.VatNumber), this.VatNumber));
             if (InvoiceLines != null)

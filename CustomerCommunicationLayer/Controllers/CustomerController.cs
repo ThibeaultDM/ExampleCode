@@ -66,7 +66,10 @@ namespace CustomerCommunicationLayer.Controllers
 
             if (result.Count < 1)
             {
-                return Ok("There are no customers");
+                BO_Customer customer = new();
+                customer.BrokenRules.Add(new() { FailedMessage = "No Customers Found" });
+
+                result.Add(customer);
             }
 
             List<CustomerResponse> response = _mapper.Map<List<CustomerResponse>>(result);
