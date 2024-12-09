@@ -7,6 +7,5 @@ namespace ModuleInvoice.Interfaces
     {
         Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
 
-        Task<CustomerDetailResponse> GetCustomerAsync(string customerId);
     }
 }

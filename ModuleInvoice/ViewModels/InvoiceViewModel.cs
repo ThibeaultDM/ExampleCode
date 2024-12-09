@@ -1,9 +1,13 @@
-﻿using ModuleInvoice.Interfaces;
+﻿using Flurl.Util;
+using ModuleInvoice.Interfaces;
 using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace ModuleInvoice
 {
@@ -123,7 +127,7 @@ namespace ModuleInvoice
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            string customer = navigationContext.Parameters["CustomerId"] as string;
+            CustomerDetailResponse customer = navigationContext.Parameters["CustomerId"] as CustomerDetailResponse;
             if (customer != null)
                 return false;
             else
@@ -132,12 +136,24 @@ namespace ModuleInvoice
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            string customerId = navigationContext.Parameters["CustomerId"] as string;
 
-            if (customerId != null)
+            var data = navigationContext.Parameters["Customer"].ToInvariantString();
+            CustomerDetailResponse customer= new();
+
+            foreach (PropertyInfo property in data.GetType().GetProperties())
             {
-                CustomerDetailResponse customer = await _invoiceModel.GetCustomerAsync(customerId);
+                var destinationProperty = customer.GetType().GetProperty(property.Name);
 
+                // Check if the property exists and can be written to
+                if (destinationProperty != null && destinationProperty.CanWrite)
+                {
+                    // Set the value of the destination object's property to the value of the source object's property
+                    destinationProperty.SetValue(customer, property.GetValue(data));
+                }
+            }
+
+            if (customer != null)
+            {
                 Customer = customer;
                 InvoiceHeader.ProxyId = Customer.Company.Id;
                 CompanyName = Customer.Company.PublicName;
@@ -146,7 +162,6 @@ namespace ModuleInvoice
                 Errors = Customer.Errors;
             }
         }
-
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             Customer = null;

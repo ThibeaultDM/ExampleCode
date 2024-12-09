@@ -48,8 +48,10 @@ namespace ModuleCustomer
         {
             if (Customer != null)
             {
+                CustomerDetailResponse customer = await customerModel.GetDetailResponseAsync(Customer.Id);
+
                 NavigationParameters parameters = new();
-                parameters.Add("CustomerId", Customer.Id.ToString());
+                parameters.Add("Customer", customer);
                 regionManager.RequestNavigate("CustomerRegion", "InvoiceView", parameters);
             }
         }

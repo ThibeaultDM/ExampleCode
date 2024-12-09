@@ -106,7 +106,7 @@ namespace CustomerCommunicationLayer.Controllers
                     PropertyName = errorMessage[1]
                 });
 
-                response.Succes = false;
+                response.Success = false;
                 return response;
             }
         }

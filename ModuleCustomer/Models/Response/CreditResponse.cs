@@ -4,5 +4,6 @@
     {
         public Guid Id { get; set; }
         public decimal ToSpend { get; set; }
+
     }
 }

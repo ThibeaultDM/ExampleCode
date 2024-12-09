@@ -28,16 +28,5 @@ namespace ModuleInvoice.Models
 
             return customerDetailResponse;
         }
-
-        public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
-        {
-            Console.WriteLine("GetCustomerAsync");
-
-            CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments("UC_300_003_GetCustomerByName")
-                                                                   .SetQueryParam("customerId", customerId)
-                                                                   .PostJsonAsync(customerId)
-                                                                   .ReceiveJson<CustomerDetailResponse>();
-            return customer;
-        }
     }
 }
