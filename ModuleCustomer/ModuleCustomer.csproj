@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CustomerCommunicationLayer\CustomerCommunicationLayer.csproj" />
+    <ProjectReference Include="..\CustomerBusinessLayer\CustomerBusinessLayer.csproj" />
   </ItemGroup>
 
 </Project>

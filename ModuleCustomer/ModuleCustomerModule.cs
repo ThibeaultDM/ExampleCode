@@ -1,4 +1,8 @@
-﻿using ModuleCustomer.Interfaces;
+﻿using CustomerBusinessLayer.Interfaces;
+using CustomerBusinessLayer.UseCases;
+using CustomerDataLayer;
+using CustomerDataLayer.Interfaces;
+using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models;
 
 namespace ModuleCustomer
@@ -16,6 +20,9 @@ namespace ModuleCustomer
             containerRegistry.Register<IDataModel, DataModel>();
 
             containerRegistry.RegisterForNavigation<CustomerDetailsView>();
+            containerRegistry.Register<ICustomerRepository, CustomerRepository>();
+            containerRegistry.Register<ICustomerExceptionRepository, CustomerExceptionRepository>();
+            containerRegistry.Register<ICustomerUseCases, CustomerUseCases>();
         }
     }
 }
