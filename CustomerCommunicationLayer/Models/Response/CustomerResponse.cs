@@ -1,6 +1,6 @@
 ﻿namespace CustomerCommunicationLayer.Models.Response
 {
-    public class CustomerResponse
+    public class CustomerResponse : BaseResponse
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

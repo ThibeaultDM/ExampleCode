@@ -112,20 +112,23 @@ namespace NewInvoiceCommunicationLayer.Controllers
             {
                 // Retrieves all invoice headers.
                 List<BO_InvoiceHeader> invoiceHeaderBOs = await _invoiceUseCases.UC_301_005_GetAllInvoicesHeadersAsync();
-
+                List<AddInvoiceLineToInvoiceHeaderResponse> result = new();
+               
                 if (invoiceHeaderBOs.Count > 0)
                 {
                     // Maps each invoice header to response and returns list.
-                    List<AddInvoiceLineToInvoiceHeaderResponse> result = invoiceHeaderBOs.Select(ih => MappingDetailedInvoiceHeaderResponse(ih)).ToList();
-                    response = Ok(result);
+                    result = invoiceHeaderBOs.Select(ih => MappingDetailedInvoiceHeaderResponse(ih)).ToList();
                 }
                 else
                 {
                     // Creates empty response if no headers found.
-                    AddInvoiceLineToInvoiceHeaderResponse result = new();
-                    result.SetErrors(new(null, "No InvoiceHeaders Available"));
-                    response = Ok(result);
+                    AddInvoiceLineToInvoiceHeaderResponse toAdd = new();
+                    toAdd.SetErrors(new(null, "No InvoiceHeaders Available"));
+
+                    result.Add(toAdd);
                 }
+                response = Ok(result);
+
             }
             catch (Exception ex)
             {

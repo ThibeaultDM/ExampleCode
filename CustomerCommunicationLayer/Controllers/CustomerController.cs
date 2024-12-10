@@ -63,16 +63,19 @@ namespace CustomerCommunicationLayer.Controllers
         public async Task<IActionResult> GetAllCustomersAsync()
         {
             List<BO_Customer> result = await _customerUseCases.UC_300_002_GetAllCustomerAsync();
+            List<CustomerResponse> response = new();
 
             if (result.Count < 1)
             {
-                BO_Customer customer = new();
-                customer.BrokenRules.Add(new() { FailedMessage = "No Customers Found" });
+                CustomerResponse toAdd = new();
+                toAdd.Errors.Add(new() { ErrorMessage = "No Customers Found" });
 
-                result.Add(customer);
+                response.Add(toAdd);
             }
-
-            List<CustomerResponse> response = _mapper.Map<List<CustomerResponse>>(result);
+            else
+            {
+                response = _mapper.Map<List<CustomerResponse>>(result);
+            }
 
             return Ok(response);
         }
@@ -109,7 +112,7 @@ namespace CustomerCommunicationLayer.Controllers
                     PropertyName = errorMessage[1]
                 });
 
-                response.Succes = false;
+                response.Success = false;
                 return response;
             }
         }
