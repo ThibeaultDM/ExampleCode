@@ -50,13 +50,18 @@ namespace CustomerCommunicationLayer.Controllers
                     }
                 }
 
-                return Ok(response);
+            }
+            catch (Exception ex) when (ex.InnerException.Message == "Requested value 'string' was not found.")
+            {
+                response.Errors.Add(new() { ErrorMessage = "Gender needs to be Female, Male or Unknown" });
             }
             catch (Exception ex)
             {
                 response = HandleException(response, ex);
                 throw;
             }
+
+            return Ok(response);
         }
 
         [HttpGet("UC_300_002_GetAllCustomers")]
