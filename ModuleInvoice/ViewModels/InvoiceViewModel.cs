@@ -1,9 +1,15 @@
-﻿using ModuleInvoice.Interfaces;
+﻿using Flurl.Util;
+using ModuleInvoice.Interfaces;
 using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Windows;
 
 namespace ModuleInvoice
 {
@@ -31,11 +37,11 @@ namespace ModuleInvoice
         }
 
         #region Properties
-
-        public CustomerDetailResponse Customer { get => customer; set => SetProperty(ref customer, value); }
-        public string CompanyName { get => companyName; set => SetProperty(ref companyName, value); }
-        public string StreetName { get => streetName; set => SetProperty(ref streetName, value); }
-        public string HouseNumber { get => houseNumber; set => SetProperty(ref houseNumber, value); }
+        public int MyProperty { get; set; }
+        public CustomerDetailResponse Customer { get => customer; set { customer = value; OnPropertyChanged(); } }
+        public string CompanyName { get => companyName; set { companyName = value; OnPropertyChanged(); } }
+        public string StreetName { get => streetName; set { streetName = value; OnPropertyChanged(); } }
+        public string HouseNumber { get => houseNumber; set { houseNumber = value; OnPropertyChanged(); } }
 
         public ObservableCollection<CreateInvoiceLineInput> InvoiceLines
         {
@@ -123,7 +129,7 @@ namespace ModuleInvoice
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            string customer = navigationContext.Parameters["CustomerId"] as string;
+            CustomerDetailResponse customer = navigationContext.Parameters["CustomerId"] as CustomerDetailResponse;
             if (customer != null)
                 return false;
             else
@@ -132,18 +138,19 @@ namespace ModuleInvoice
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            string customerId = navigationContext.Parameters["CustomerId"] as string;
-
-            if (customerId != null)
+            CustomerDetailResponse customer;
+            try
             {
-                CustomerDetailResponse customer = await _invoiceModel.GetCustomerAsync(customerId);
-
-                Customer = customer;
+                Customer = JsonSerializer.Deserialize<CustomerDetailResponse>(navigationContext.Parameters["Customer"].ToString()) ?? throw new Exception();
                 InvoiceHeader.ProxyId = Customer.Company.Id;
                 CompanyName = Customer.Company.PublicName;
                 StreetName = Customer.Addresses.FirstOrDefault().StreetName;
                 HouseNumber = Customer.Addresses.FirstOrDefault().Number.ToString();
                 Errors = Customer.Errors;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong deserialize customer.");
             }
         }
 
@@ -151,7 +158,6 @@ namespace ModuleInvoice
         {
             Customer = null;
         }
-
         #endregion Navigation
     }
 }

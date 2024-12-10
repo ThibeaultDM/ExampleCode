@@ -1,6 +1,6 @@
-﻿namespace ModuleInvoice.Models.Response
+﻿namespace ModuleCustomer.Models.Response
 {
-    public class CustomerAddressResponse
+    public class AddressResponse
     {
         public Guid Id { get; set; }
         public string City { get; set; }
@@ -11,7 +11,7 @@
 
         public override string ToString()
         {
-            return $"{City}, {Postcode}, {StreetName}, {Number}";
+            return $"{Id} {City} {Postcode} {StreetName} {Number} {IsDefault}";
         }
     }
 }
