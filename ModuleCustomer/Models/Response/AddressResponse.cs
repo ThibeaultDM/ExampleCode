@@ -9,5 +9,9 @@
         public int Number { get; set; }
         public bool IsDefault { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Id} {City} {Postcode} {StreetName} {Number} {IsDefault}";
+        }
     }
 }

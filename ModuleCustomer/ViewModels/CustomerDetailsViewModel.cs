@@ -1,5 +1,6 @@
 ﻿using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models.Response;
+using System.Text.Json;
 
 namespace ModuleCustomer
 {
@@ -51,7 +52,7 @@ namespace ModuleCustomer
                 CustomerDetailResponse customer = await customerModel.GetDetailResponseAsync(Customer.Id);
 
                 NavigationParameters parameters = new();
-                parameters.Add("Customer", customer);
+                parameters.Add("Customer", JsonSerializer.Serialize(customer));
                 regionManager.RequestNavigate("CustomerRegion", "InvoiceView", parameters);
             }
         }

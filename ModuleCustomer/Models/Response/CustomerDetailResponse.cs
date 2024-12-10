@@ -10,7 +10,10 @@
         public List<AddressResponse> Addresses { get; set; }
         public CreditResponse CreditInfo { get; set; }
 
-
+        public override string ToString()
+        {
+            return $"{FirstName} {FamilyName} {Gender} {Company} {IsActive} {Addresses} {CreditInfo}";
+        }
     }
 
 }

@@ -2,11 +2,13 @@
 using ModuleInvoice.Interfaces;
 using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Windows;
 
 namespace ModuleInvoice
@@ -136,37 +138,26 @@ namespace ModuleInvoice
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-
-            var data = navigationContext.Parameters["Customer"].ToInvariantString();
-            CustomerDetailResponse customer= new();
-
-            foreach (PropertyInfo property in data.GetType().GetProperties())
+            CustomerDetailResponse customer;
+            try
             {
-                var destinationProperty = customer.GetType().GetProperty(property.Name);
-
-                // Check if the property exists and can be written to
-                if (destinationProperty != null && destinationProperty.CanWrite)
-                {
-                    // Set the value of the destination object's property to the value of the source object's property
-                    destinationProperty.SetValue(customer, property.GetValue(data));
-                }
-            }
-
-            if (customer != null)
-            {
-                Customer = customer;
+                Customer = JsonSerializer.Deserialize<CustomerDetailResponse>(navigationContext.Parameters["Customer"].ToString()) ?? throw new Exception();
                 InvoiceHeader.ProxyId = Customer.Company.Id;
                 CompanyName = Customer.Company.PublicName;
                 StreetName = Customer.Addresses.FirstOrDefault().StreetName;
                 HouseNumber = Customer.Addresses.FirstOrDefault().Number.ToString();
                 Errors = Customer.Errors;
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Something went wrong deserialize customer.");
+            }
         }
+
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             Customer = null;
         }
-
         #endregion Navigation
     }
 }
