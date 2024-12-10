@@ -37,11 +37,11 @@ namespace ModuleInvoice
         }
 
         #region Properties
-
-        public CustomerDetailResponse Customer { get => customer; set => SetProperty(ref customer, value); }
-        public string CompanyName { get => companyName; set => SetProperty(ref companyName, value); }
-        public string StreetName { get => streetName; set => SetProperty(ref streetName, value); }
-        public string HouseNumber { get => houseNumber; set => SetProperty(ref houseNumber, value); }
+        public int MyProperty { get; set; }
+        public CustomerDetailResponse Customer { get => customer; set { customer = value; OnPropertyChanged(); } }
+        public string CompanyName { get => companyName; set { companyName = value; OnPropertyChanged(); } }
+        public string StreetName { get => streetName; set { streetName = value; OnPropertyChanged(); } }
+        public string HouseNumber { get => houseNumber; set { houseNumber = value; OnPropertyChanged(); } }
 
         public ObservableCollection<CreateInvoiceLineInput> InvoiceLines
         {
