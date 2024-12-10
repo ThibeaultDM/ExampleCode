@@ -21,7 +21,6 @@ namespace ModuleCustomer
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IDataModel, DataModel>();
-            containerRegistry.Register<CustomerConverter>();
             containerRegistry.RegisterForNavigation<CustomerDetailsView>();
 
             containerRegistry.Register<ICustomerRepository, CustomerRepository>();
