@@ -1,6 +1,5 @@
 ﻿using Flurl;
 using Flurl.Http;
-using System.Diagnostics.Metrics;
 using WinformsApplication.Interfaces;
 using WinformsApplication.Models.Input;
 using WinformsApplication.Models.Response;

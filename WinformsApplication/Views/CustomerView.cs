@@ -1,4 +1,5 @@
-﻿using WinformsApplication.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using WinformsApplication.Interfaces;
 using WinformsApplication.Models.Response;
 
 namespace WinformsApplication.Views
@@ -6,12 +7,15 @@ namespace WinformsApplication.Views
     public partial class CustomerView : Form
     {
         private readonly ICustomerViewModel _customerViewModel;
+        private readonly IServiceProvider _serviceProvider;
+
         public CustomerResponse SelectedCustomer { get; set; }
 
-        public CustomerView(ICustomerViewModel customerViewModel)
+        public CustomerView(ICustomerViewModel customerViewModel, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             this._customerViewModel = customerViewModel;
+            this._serviceProvider = serviceProvider;
         }
 
         private async void CustomerView_Load(object sender, EventArgs e)
@@ -50,7 +54,9 @@ namespace WinformsApplication.Views
 
         private void buttonAddInvoice_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            AddInvoiceView addInvoice = _serviceProvider.GetRequiredService<AddInvoiceView>();
+            addInvoice.CustomerId = SelectedCustomer.Id;
+            addInvoice.Show();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BlazorUI.ViewModels
         public CustomerViewModel(IDataModel customerModel)
         {
             Console.WriteLine("CustomerViewModel constructor working");
-            this.customerModel = customerModel;            
+            this.customerModel = customerModel;
         }
 
         public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }

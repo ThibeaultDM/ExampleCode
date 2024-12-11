@@ -40,6 +40,7 @@ namespace WinformsApplication
             services.AddTransient<ICustomerViewModel, CustomerViewModel>();
             services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
             services.AddTransient<CustomerView>();
+            services.AddTransient<AddInvoiceView>();
         }
     }
 }

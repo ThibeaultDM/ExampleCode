@@ -41,15 +41,16 @@
             // labelFirstName
             // 
             labelFirstName.AutoSize = true;
-            labelFirstName.Location = new Point(12, 70);
+            labelFirstName.Location = new Point(12, 117);
             labelFirstName.Name = "labelFirstName";
-            labelFirstName.Size = new Size(76, 20);
+            labelFirstName.Size = new Size(80, 20);
             labelFirstName.TabIndex = 1;
-            labelFirstName.Text = "Firstname:";
+            labelFirstName.Text = "First name:";
             // 
             // textBoxFirstName
             // 
-            textBoxFirstName.Location = new Point(122, 67);
+            textBoxFirstName.Enabled = false;
+            textBoxFirstName.Location = new Point(122, 114);
             textBoxFirstName.Name = "textBoxFirstName";
             textBoxFirstName.ReadOnly = true;
             textBoxFirstName.Size = new Size(264, 27);
@@ -57,7 +58,8 @@
             // 
             // textBoxLastName
             // 
-            textBoxLastName.Location = new Point(122, 110);
+            textBoxLastName.Enabled = false;
+            textBoxLastName.Location = new Point(122, 68);
             textBoxLastName.Name = "textBoxLastName";
             textBoxLastName.ReadOnly = true;
             textBoxLastName.Size = new Size(264, 27);
@@ -66,14 +68,15 @@
             // labelLastName
             // 
             labelLastName.AutoSize = true;
-            labelLastName.Location = new Point(12, 113);
+            labelLastName.Location = new Point(12, 71);
             labelLastName.Name = "labelLastName";
-            labelLastName.Size = new Size(75, 20);
+            labelLastName.Size = new Size(95, 20);
             labelLastName.TabIndex = 3;
-            labelLastName.Text = "Lastname:";
+            labelLastName.Text = "Family name:";
             // 
             // textBoxGender
             // 
+            textBoxGender.Enabled = false;
             textBoxGender.Location = new Point(122, 157);
             textBoxGender.Name = "textBoxGender";
             textBoxGender.ReadOnly = true;
