@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModuleCustomer", "ModuleCus
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Winforms", "Winforms", "{CB007DE2-4234-4615-9ABD-6ADB13DE601D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinformsApplication", "WinformsApplication\WinformsApplication.csproj", "{E1B28D6F-84BE-4D53-A549-D3578463BD3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApplication", "WinformsApplication\WinFormsApplication.csproj", "{E1B28D6F-84BE-4D53-A549-D3578463BD3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

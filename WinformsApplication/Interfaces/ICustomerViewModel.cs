@@ -1,6 +1,6 @@
-﻿using WinformsApplication.Models.Response;
+﻿using WinFormsApplication.Models.Response;
 
-namespace WinformsApplication.Interfaces
+namespace WinFormsApplication.Interfaces
 {
     public interface ICustomerViewModel
     {

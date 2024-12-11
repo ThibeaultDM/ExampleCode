@@ -1,7 +1,7 @@
-﻿using WinformsApplication.Models.Input;
-using WinformsApplication.Models.Response;
+﻿using WinFormsApplication.Models.Input;
+using WinFormsApplication.Models.Response;
 
-namespace WinformsApplication.Interfaces
+namespace WinFormsApplication.Interfaces
 {
     public interface IAddInvoiceViewModel
     {

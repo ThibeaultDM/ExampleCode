@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using WinformsApplication.Interfaces;
-using WinformsApplication.Models.Response;
+using WinFormsApplication.Interfaces;
+using WinFormsApplication.Models.Response;
 
-namespace WinformsApplication.Views
+namespace WinFormsApplication.Views
 {
     public partial class CustomerView : Form
     {

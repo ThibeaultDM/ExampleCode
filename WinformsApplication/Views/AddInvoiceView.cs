@@ -1,15 +1,13 @@
-﻿using System.Security.AccessControl;
-using WinformsApplication.Interfaces;
-using WinformsApplication.Models.Response;
-using System.Linq;
-using WinformsApplication.Models.Input;
-using System.Net;
+﻿using WinFormsApplication.Interfaces;
+using WinFormsApplication.Models.Input;
+using WinFormsApplication.Models.Response;
 
-namespace WinformsApplication.Views
+namespace WinFormsApplication.Views
 {
     public partial class AddInvoiceView : Form
     {
         private readonly IAddInvoiceViewModel _invoiceViewModel;
+
         public AddInvoiceView(IAddInvoiceViewModel invoiceViewModel)
         {
             InitializeComponent();
@@ -47,7 +45,15 @@ namespace WinformsApplication.Views
                 comboBoxException.Items.Add(error.ToString());
             }
             if (Customer.Errors.Count > 0)
+            {
                 comboBoxException.DroppedDown = true;
+                comboBoxException.Items.Insert(0, "Click to view errors");
+            }
+            else
+            {
+                comboBoxException.Items.Insert(0, "There are no errors");
+            }
+            comboBoxException.SelectedIndex = 0;
         }
 
         private void AssignDefaultAddress()
@@ -80,7 +86,6 @@ namespace WinformsApplication.Views
         {
             Customer = await _invoiceViewModel.CreateInvoiceAsync(CreateInvoice);
             SetErrorTextBox();
-
         }
 
         private void dataGridViewInvoiceLines_DataError(object sender, DataGridViewDataErrorEventArgs e)

@@ -1,10 +1,10 @@
 ﻿using Flurl;
 using Flurl.Http;
-using WinformsApplication.Interfaces;
-using WinformsApplication.Models.Input;
-using WinformsApplication.Models.Response;
+using WinFormsApplication.Interfaces;
+using WinFormsApplication.Models.Input;
+using WinFormsApplication.Models.Response;
 
-namespace WinformsApplication.Models
+namespace WinFormsApplication.Models
 {
     public class DataModel : IDataModel
     {

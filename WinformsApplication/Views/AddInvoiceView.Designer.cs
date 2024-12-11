@@ -1,4 +1,4 @@
-﻿namespace WinformsApplication.Views
+﻿namespace WinFormsApplication.Views
 {
     partial class AddInvoiceView
     {

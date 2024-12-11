@@ -1,4 +1,4 @@
-﻿namespace WinformsApplication.Models.Response
+﻿namespace WinFormsApplication.Models.Response
 {
     public class CustomerAddressResponse
     {

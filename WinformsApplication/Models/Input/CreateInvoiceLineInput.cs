@@ -1,4 +1,4 @@
-﻿namespace WinformsApplication.Models.Input
+﻿namespace WinFormsApplication.Models.Input
 {
     public class CreateInvoiceLine
     {

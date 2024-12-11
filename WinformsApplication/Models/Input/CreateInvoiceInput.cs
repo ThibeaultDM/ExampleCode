@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace WinformsApplication.Models.Input
+namespace WinFormsApplication.Models.Input
 {
     public class CreateInvoiceInput
     {

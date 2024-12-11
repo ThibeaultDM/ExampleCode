@@ -1,11 +1,11 @@
 using BlazorUI.ViewModels;
 using Flurl.Http;
 using Microsoft.Extensions.DependencyInjection;
-using WinformsApplication.Interfaces;
-using WinformsApplication.Models;
-using WinformsApplication.Views;
+using WinFormsApplication.Interfaces;
+using WinFormsApplication.Models;
+using WinFormsApplication.Views;
 
-namespace WinformsApplication
+namespace WinFormsApplication
 {
     internal static class Program
     {

@@ -1,6 +1,6 @@
-﻿using WinformsApplication.Interfaces;
-using WinformsApplication.Models.Input;
-using WinformsApplication.Models.Response;
+﻿using WinFormsApplication.Interfaces;
+using WinFormsApplication.Models.Input;
+using WinFormsApplication.Models.Response;
 
 namespace BlazorUI.ViewModels
 {
