@@ -39,19 +39,21 @@
             labelException = new Label();
             comboBoxException = new ComboBox();
             dataGridViewInvoiceLines = new DataGridView();
+            vATRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            pricePerUnitDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            quantityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             createInvoiceLineBindingSource = new BindingSource(components);
             buttonSafeInvoice = new Button();
             textBoxVATNumber = new TextBox();
             addInvoiceViewModelBindingSource = new BindingSource(components);
             customerViewModelBindingSource = new BindingSource(components);
-            descriptionDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            quantityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            pricePerUnitDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            vATRateDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            customerViewModelBindingSource1 = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)dataGridViewInvoiceLines).BeginInit();
             ((System.ComponentModel.ISupportInitialize)createInvoiceLineBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)addInvoiceViewModelBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)customerViewModelBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)customerViewModelBindingSource1).BeginInit();
             SuspendLayout();
             // 
             // textBoxCompany
@@ -139,6 +141,7 @@
             // dataGridViewInvoiceLines
             // 
             dataGridViewInvoiceLines.AutoGenerateColumns = false;
+            dataGridViewInvoiceLines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewInvoiceLines.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewInvoiceLines.Columns.AddRange(new DataGridViewColumn[] { vATRateDataGridViewTextBoxColumn, pricePerUnitDataGridViewTextBoxColumn, quantityDataGridViewTextBoxColumn, descriptionDataGridViewTextBoxColumn });
             dataGridViewInvoiceLines.DataSource = createInvoiceLineBindingSource;
@@ -147,7 +150,40 @@
             dataGridViewInvoiceLines.RowHeadersWidth = 51;
             dataGridViewInvoiceLines.Size = new Size(646, 194);
             dataGridViewInvoiceLines.TabIndex = 13;
-            dataGridViewInvoiceLines.RowEnter += dataGridViewInvoiceLines_RowEnter;
+            // 
+            // vATRateDataGridViewTextBoxColumn
+            // 
+            vATRateDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            vATRateDataGridViewTextBoxColumn.DataPropertyName = "VATRate";
+            vATRateDataGridViewTextBoxColumn.HeaderText = "VATRate";
+            vATRateDataGridViewTextBoxColumn.MinimumWidth = 6;
+            vATRateDataGridViewTextBoxColumn.Name = "vATRateDataGridViewTextBoxColumn";
+            vATRateDataGridViewTextBoxColumn.Width = 93;
+            // 
+            // pricePerUnitDataGridViewTextBoxColumn
+            // 
+            pricePerUnitDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            pricePerUnitDataGridViewTextBoxColumn.DataPropertyName = "PricePerUnit";
+            pricePerUnitDataGridViewTextBoxColumn.HeaderText = "PricePerUnit";
+            pricePerUnitDataGridViewTextBoxColumn.MinimumWidth = 6;
+            pricePerUnitDataGridViewTextBoxColumn.Name = "pricePerUnitDataGridViewTextBoxColumn";
+            pricePerUnitDataGridViewTextBoxColumn.Width = 117;
+            // 
+            // quantityDataGridViewTextBoxColumn
+            // 
+            quantityDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
+            quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
+            quantityDataGridViewTextBoxColumn.MinimumWidth = 6;
+            quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
+            quantityDataGridViewTextBoxColumn.Width = 94;
+            // 
+            // descriptionDataGridViewTextBoxColumn
+            // 
+            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+            descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+            descriptionDataGridViewTextBoxColumn.MinimumWidth = 6;
+            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
             // 
             // createInvoiceLineBindingSource
             // 
@@ -180,37 +216,9 @@
             // 
             customerViewModelBindingSource.DataSource = typeof(BlazorUI.ViewModels.CustomerViewModel);
             // 
-            // descriptionDataGridViewTextBoxColumn
+            // customerViewModelBindingSource1
             // 
-            descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-            descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-            descriptionDataGridViewTextBoxColumn.MinimumWidth = 6;
-            descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-            descriptionDataGridViewTextBoxColumn.Width = 148;
-            // 
-            // quantityDataGridViewTextBoxColumn
-            // 
-            quantityDataGridViewTextBoxColumn.DataPropertyName = "Quantity";
-            quantityDataGridViewTextBoxColumn.HeaderText = "Quantity";
-            quantityDataGridViewTextBoxColumn.MinimumWidth = 6;
-            quantityDataGridViewTextBoxColumn.Name = "quantityDataGridViewTextBoxColumn";
-            quantityDataGridViewTextBoxColumn.Width = 148;
-            // 
-            // pricePerUnitDataGridViewTextBoxColumn
-            // 
-            pricePerUnitDataGridViewTextBoxColumn.DataPropertyName = "PricePerUnit";
-            pricePerUnitDataGridViewTextBoxColumn.HeaderText = "PricePerUnit";
-            pricePerUnitDataGridViewTextBoxColumn.MinimumWidth = 6;
-            pricePerUnitDataGridViewTextBoxColumn.Name = "pricePerUnitDataGridViewTextBoxColumn";
-            pricePerUnitDataGridViewTextBoxColumn.Width = 149;
-            // 
-            // vATRateDataGridViewTextBoxColumn
-            // 
-            vATRateDataGridViewTextBoxColumn.DataPropertyName = "VATRate";
-            vATRateDataGridViewTextBoxColumn.HeaderText = "VATRate";
-            vATRateDataGridViewTextBoxColumn.MinimumWidth = 6;
-            vATRateDataGridViewTextBoxColumn.Name = "vATRateDataGridViewTextBoxColumn";
-            vATRateDataGridViewTextBoxColumn.Width = 148;
+            customerViewModelBindingSource1.DataSource = typeof(BlazorUI.ViewModels.CustomerViewModel);
             // 
             // AddInvoiceView
             // 
@@ -236,6 +244,7 @@
             ((System.ComponentModel.ISupportInitialize)createInvoiceLineBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)addInvoiceViewModelBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)customerViewModelBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)customerViewModelBindingSource1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -255,11 +264,12 @@
         private Button buttonSafeInvoice;
         private BindingSource createInvoiceLineBindingSource;
         private TextBox textBoxVATNumber;
+        private BindingSource addInvoiceViewModelBindingSource;
+        private BindingSource customerViewModelBindingSource;
+        private BindingSource customerViewModelBindingSource1;
         private DataGridViewTextBoxColumn vATRateDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn pricePerUnitDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn quantityDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private BindingSource addInvoiceViewModelBindingSource;
-        private BindingSource customerViewModelBindingSource;
     }
 }

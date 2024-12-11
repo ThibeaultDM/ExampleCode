@@ -30,7 +30,6 @@ namespace WinformsApplication.Views
                 textBoxCompany.Text = Customer.Company.PublicName;
                 AssignDefaultAddress();
                 SetErrorTextBox();
-                AddNewRow();
                 dataGridViewInvoiceLines.DataSource = CreateInvoice.InvoiceLines;
                 textBoxVATNumber.DataBindings.Add("Text", CreateInvoice, nameof(CreateInvoice.VatNumber));
             }
@@ -79,20 +78,9 @@ namespace WinformsApplication.Views
 
         private async void buttonSafeInvoice_Click(object sender, EventArgs e)
         {
-            CreateInvoice.InvoiceLines.RemoveAt(CreateInvoice.InvoiceLines.Count - 1);
             Customer = await _invoiceViewModel.CreateInvoiceAsync(CreateInvoice);
             SetErrorTextBox();
-        }
 
-        private void dataGridViewInvoiceLines_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            AddNewRow();
-        }
-
-        //TODO find out how that dataGridView1.AllowUserToAddRows = true; works
-        private void AddNewRow()
-        {
-            CreateInvoice.InvoiceLines.Add(new());
         }
     }
 }
