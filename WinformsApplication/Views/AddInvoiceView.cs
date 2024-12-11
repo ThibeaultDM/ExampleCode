@@ -82,5 +82,10 @@ namespace WinformsApplication.Views
             SetErrorTextBox();
 
         }
+
+        private void dataGridViewInvoiceLines_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show("Please enter a number");
+        }
     }
 }

@@ -150,6 +150,7 @@
             dataGridViewInvoiceLines.RowHeadersWidth = 51;
             dataGridViewInvoiceLines.Size = new Size(646, 194);
             dataGridViewInvoiceLines.TabIndex = 13;
+            dataGridViewInvoiceLines.DataError += dataGridViewInvoiceLines_DataError;
             // 
             // vATRateDataGridViewTextBoxColumn
             // 
