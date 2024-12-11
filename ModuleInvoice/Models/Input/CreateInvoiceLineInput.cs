@@ -20,6 +20,7 @@ namespace ModuleInvoice.Models.Input
 
         public int Quantity
         { get => quantity; set { quantity = value; OnPropertyChanged("Quantity"); } }
+
         public string Description
         { get => description; set { description = value; OnPropertyChanged("Description"); } }
 

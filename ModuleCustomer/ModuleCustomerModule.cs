@@ -15,7 +15,6 @@ namespace ModuleCustomer
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("CustomerRegion", typeof(CustomerView));
- 
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

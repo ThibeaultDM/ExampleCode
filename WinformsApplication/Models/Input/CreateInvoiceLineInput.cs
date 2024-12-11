@@ -1,4 +1,4 @@
-﻿namespace BlazorUI.Models.Input
+﻿namespace WinformsApplication.Models.Input
 {
     public class CreateInvoiceLine
     {

@@ -1,10 +1,11 @@
-﻿using BlazorUI.Interfaces;
-using BlazorUI.Models.Input;
-using BlazorUI.Models.Response;
-using Flurl;
+﻿using Flurl;
 using Flurl.Http;
+using System.Diagnostics.Metrics;
+using WinformsApplication.Interfaces;
+using WinformsApplication.Models.Input;
+using WinformsApplication.Models.Response;
 
-namespace BlazorUI.Models
+namespace WinformsApplication.Models
 {
     public class DataModel : IDataModel
     {
@@ -28,7 +29,40 @@ namespace BlazorUI.Models
         {
             Console.WriteLine("GetAllCustomersAsync");
 
-            Customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
+            bool tryAgain = true;
+            int counter = 0;
+
+            while (tryAgain)
+            {
+                try
+                {
+                    Customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
+
+                    if (Customers.Count < 1)
+                    {
+                        MessageBox.Show("There are no customers");
+                    }
+
+                    tryAgain = false;
+                }
+                catch (Exception ex)
+                {
+                    counter++;
+
+                    if (counter > 3)
+                    {
+                        MessageBox.Show("Restart application");
+                        tryAgain = false;
+                    }
+                    else
+                    {
+                        if (ex.InnerException.Message != "No connection could be made because the target machine actively refused it. (localhost:7089)")
+                        {
+                            MessageBox.Show("An error occurred");
+                        }
+                    }
+                }
+            }
         }
 
         public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)

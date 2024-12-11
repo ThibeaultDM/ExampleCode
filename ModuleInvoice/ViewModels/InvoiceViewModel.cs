@@ -1,12 +1,8 @@
-﻿using Flurl.Util;
-using ModuleInvoice.Interfaces;
+﻿using ModuleInvoice.Interfaces;
 using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
-using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Windows;
@@ -37,11 +33,16 @@ namespace ModuleInvoice
         }
 
         #region Properties
+
         public int MyProperty { get; set; }
-        public CustomerDetailResponse Customer { get => customer; set { customer = value; OnPropertyChanged(); } }
-        public string CompanyName { get => companyName; set { companyName = value; OnPropertyChanged(); } }
-        public string StreetName { get => streetName; set { streetName = value; OnPropertyChanged(); } }
-        public string HouseNumber { get => houseNumber; set { houseNumber = value; OnPropertyChanged(); } }
+        public CustomerDetailResponse Customer
+        { get => customer; set { customer = value; OnPropertyChanged(); } }
+        public string CompanyName
+        { get => companyName; set { companyName = value; OnPropertyChanged(); } }
+        public string StreetName
+        { get => streetName; set { streetName = value; OnPropertyChanged(); } }
+        public string HouseNumber
+        { get => houseNumber; set { houseNumber = value; OnPropertyChanged(); } }
 
         public ObservableCollection<CreateInvoiceLineInput> InvoiceLines
         {
@@ -158,6 +159,7 @@ namespace ModuleInvoice
         {
             Customer = null;
         }
+
         #endregion Navigation
     }
 }

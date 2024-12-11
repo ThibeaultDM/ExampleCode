@@ -15,5 +15,4 @@
             return $"{FirstName} {FamilyName} {Gender} {Company} {IsActive} {Addresses} {CreditInfo}";
         }
     }
-
 }

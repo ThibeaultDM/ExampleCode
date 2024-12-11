@@ -7,6 +7,7 @@ namespace ModuleCustomer.Interfaces
         List<CustomerResponse> Customers { get; }
 
         Task GetAllCustomersAsync();
+
         Task<CustomerDetailResponse> GetDetailResponseAsync(Guid id);
     }
 }

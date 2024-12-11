@@ -1,6 +1,6 @@
-﻿namespace ModuleInvoice.Models.Response
+﻿namespace WinformsApplication.Models.Response
 {
-    public class AddressResponse
+    public class CustomerAddressResponse
     {
         public Guid Id { get; set; }
         public string City { get; set; }
@@ -8,5 +8,10 @@
         public string StreetName { get; set; }
         public int Number { get; set; }
         public bool IsDefault { get; set; }
+
+        public override string ToString()
+        {
+            return $"{City}, {Postcode}, {StreetName}, {Number}";
+        }
     }
 }

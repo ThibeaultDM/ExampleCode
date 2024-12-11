@@ -49,7 +49,6 @@ namespace CustomerCommunicationLayer.Controllers
                         });
                     }
                 }
-
             }
             catch (Exception ex) when (ex.InnerException.Message == "Requested value 'string' was not found.")
             {
@@ -109,7 +108,6 @@ namespace CustomerCommunicationLayer.Controllers
             else
             {
                 string[] errorMessage = ex.Message.Split(",");
-
 
                 response.Errors.Add(new ErrorResponse()
                 {

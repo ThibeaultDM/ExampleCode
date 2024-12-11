@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using CustomerBusinessLayer.BusinessModels;
-using CustomerDataLayer.DataModels.Enums;
 using CustomerDataLayer.DataModels;
-using QueasoFramework.Exceptions;
+using CustomerDataLayer.DataModels.Enums;
 using ModuleCustomer.Models.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using QueasoFramework.Exceptions;
 
 namespace ModuleCustomer.Models
 {
