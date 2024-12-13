@@ -1,81 +1,80 @@
 ﻿using NewInvoiceServiceLayer.Rules;
 using QueasoFramework.BusinessModels;
 
-namespace NewInvoiceServiceLayer.Objects
+namespace NewInvoiceServiceLayer.Objects;
+
+public class BO_InvoiceHeader : BusinessObjectBase
 {
-    public class BO_InvoiceHeader : BusinessObjectBase
+    private decimal _amount, _vatAmount, _totalAmount = 0;
+
+    public BO_InvoiceHeader()
+    { }
+
+    public BO_InvoiceHeader(string vatNumber, string proxyCompanyId)
     {
-        private decimal _amount, _vatAmount, _totalAmount = 0;
+        VatNumber = vatNumber;
+        CompanyProxyId = new(proxyCompanyId);
+        IsPaid = false;
+    }
 
-        public BO_InvoiceHeader()
-        { }
+    public Guid Id { get; set; }
 
-        public BO_InvoiceHeader(string vatNumber, string proxyCompanyId)
+    public Guid CompanyProxyId { get; set; }
+
+    /// <summary>
+    /// Amount to be paid before taxes
+    /// </summary>
+    public decimal Amount { get => _amount; private set => _amount = value; }
+
+    /// <summary>
+    /// Amount to be paid with taxes
+    /// </summary>
+    public decimal TotalAmount { get => _totalAmount; private set => _totalAmount = value; }
+
+    /// <summary>
+    /// Amount of taxes to be paid
+    /// </summary>
+    public decimal VatAmount { get => _vatAmount; private set => _vatAmount = value; }
+
+    public int InvoiceNumber { get; set; }
+    public string VatNumber { get; private set; }
+    public bool IsPaid { get; set; }
+    public List<BO_InvoiceLine> InvoiceLines { get; private set; }
+
+    /// <summary>
+    /// Adds invoiceLine to header, recalculates header properties and checks goes through the business rules.
+    /// </summary>
+    /// <param name="invoiceLine"></param>
+    public void AddInvoiceLineToHeader(BO_InvoiceLine invoiceLine)
+    {
+        if (InvoiceLines == null)
         {
-            VatNumber = vatNumber;
-            CompanyProxyId = new(proxyCompanyId);
-            IsPaid = false;
+            InvoiceLines = [];
         }
 
-        public Guid Id { get; set; }
+        InvoiceLines.Add(invoiceLine);
+        BrokenRules.Clear();
+        AddBusinessRules();
+    }
 
-        public Guid CompanyProxyId { get; set; }
+    public override bool AddBusinessRules()
+    {
+        Console.WriteLine($"{Id} is getting checked");
+        BusinessRules.Clear();
 
-        /// <summary>
-        /// Amount to be paid before taxes
-        /// </summary>
-        public decimal Amount { get => _amount; private set => _amount = value; }
+        BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(VatNumber), VatNumber));
+        BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(CompanyProxyId), CompanyProxyId));
 
-        /// <summary>
-        /// Amount to be paid with taxes
-        /// </summary>
-        public decimal TotalAmount { get => _totalAmount; private set => _totalAmount = value; }
+        BusinessRules.Add(new InvoiceBusinessRules().RangeLength(nameof(VatNumber), VatNumber, 12, 12));
 
-        /// <summary>
-        /// Amount of taxes to be paid
-        /// </summary>
-        public decimal VatAmount { get => _vatAmount; private set => _vatAmount = value; }
-
-        public int InvoiceNumber { get; set; }
-        public string VatNumber { get; private set; }
-        public bool IsPaid { get; set; }
-        public List<BO_InvoiceLine> InvoiceLines { get; private set; }
-
-        /// <summary>
-        /// Adds invoiceLine to header, recalculates header properties and checks goes through the business rules.
-        /// </summary>
-        /// <param name="invoiceLine"></param>
-        public void AddInvoiceLineToHeader(BO_InvoiceLine invoiceLine)
+        BusinessRules.Add(new InvoiceBusinessRules().CheckValidityVatNumber(nameof(this.VatNumber), this.VatNumber));
+        if (InvoiceLines != null)
         {
-            if (InvoiceLines == null)
-            {
-                InvoiceLines = [];
-            }
-
-            InvoiceLines.Add(invoiceLine);
-            BrokenRules.Clear();
-            AddBusinessRules();
+            BusinessRules.Add(new InvoiceBusinessRules().CalculateTotal_Invoice(nameof(this.Amount), this.InvoiceLines, out _amount));
+            BusinessRules.Add(new InvoiceBusinessRules().CalculateVatAmount_Invoice(nameof(this.VatAmount), this.InvoiceLines, out _vatAmount));
         }
+        BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(this.TotalAmount), [this.Amount, this.VatAmount], out this._totalAmount));
 
-        public override bool AddBusinessRules()
-        {
-            Console.WriteLine($"{Id} is getting checked");
-            BusinessRules.Clear();
-
-            BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(VatNumber), VatNumber));
-            BusinessRules.Add(new InvoiceBusinessRules().IsRequired(nameof(CompanyProxyId), CompanyProxyId));
-
-            BusinessRules.Add(new InvoiceBusinessRules().RangeLength(nameof(VatNumber), VatNumber, 12, 12));
-
-            BusinessRules.Add(new InvoiceBusinessRules().CheckValidityVatNumber(nameof(this.VatNumber), this.VatNumber));
-            if (InvoiceLines != null)
-            {
-                BusinessRules.Add(new InvoiceBusinessRules().CalculateTotal_Invoice(nameof(this.Amount), this.InvoiceLines, out _amount));
-                BusinessRules.Add(new InvoiceBusinessRules().CalculateVatAmount_Invoice(nameof(this.VatAmount), this.InvoiceLines, out _vatAmount));
-            }
-            BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(this.TotalAmount), [this.Amount, this.VatAmount], out this._totalAmount));
-
-            return base.AddBusinessRules();
-        }
+        return base.AddBusinessRules();
     }
 }

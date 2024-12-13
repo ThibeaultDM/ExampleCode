@@ -1,15 +1,14 @@
-﻿namespace Orchestration.Models.Input
+﻿namespace Orchestration.Models.Input;
+
+public class CreateInvoiceHeaderInput
 {
-    public class CreateInvoiceHeaderInput
+    public CreateInvoiceHeaderInput(string vatNumber, Guid proxyCompanyId)
     {
-        public CreateInvoiceHeaderInput(string vatNumber, Guid proxyCompanyId)
-        {
-            VATNumber = vatNumber;
-            ProxyCompanyId = proxyCompanyId;
-        }
-
-        public string VATNumber { get; set; }
-
-        public Guid ProxyCompanyId { get; set; }
+        VATNumber = vatNumber;
+        ProxyCompanyId = proxyCompanyId;
     }
+
+    public string VATNumber { get; set; }
+
+    public Guid ProxyCompanyId { get; set; }
 }

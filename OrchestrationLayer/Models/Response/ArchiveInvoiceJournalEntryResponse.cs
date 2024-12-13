@@ -1,8 +1,7 @@
-﻿namespace Orchestration.Models.Response
+﻿namespace Orchestration.Models.Response;
+
+public class ArchiveInvoiceJournalEntryResponse : BaseResponse
 {
-    public class ArchiveInvoiceJournalEntryResponse : BaseResponse
-    {
-        public Guid JournalHeaderId { get; set; }
-        public Guid InvoiceHeaderId { get; set; }
-    }
+    public Guid JournalHeaderId { get; set; }
+    public Guid InvoiceHeaderId { get; set; }
 }

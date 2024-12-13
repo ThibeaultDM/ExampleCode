@@ -5,53 +5,52 @@ using WinFormsApplication.Interfaces;
 using WinFormsApplication.Models;
 using WinFormsApplication.Views;
 
-namespace WinFormsApplication
+namespace WinFormsApplication;
+
+internal static class Program
 {
-    internal static class Program
+    [STAThread]
+    private static void Main()
     {
-        [STAThread]
-        private static void Main()
+        try
         {
-            try
-            {
-                ServiceCollection services = new();
-                ConfigureServices(services);
+            ServiceCollection services = new();
+            ConfigureServices(services);
 
-                ServiceProvider serviceProvider = services.BuildServiceProvider();
+            ServiceProvider serviceProvider = services.BuildServiceProvider();
 
-                ApplicationConfiguration.Initialize();
+            ApplicationConfiguration.Initialize();
 
-                using var customerView = serviceProvider.GetRequiredService<ICustomerView>() as Form;
-                Application.Run(customerView);
+            using var customerView = serviceProvider.GetRequiredService<ICustomerView>() as Form;
+            Application.Run(customerView);
 
-            }
-            catch (Exception ex)
-            {
-                string error = "";
-                error = HandleException(error, ex);
-                MessageBox.Show($"{error}");
-            }
         }
-
-        private static void ConfigureServices(ServiceCollection services)
+        catch (Exception ex)
         {
-            services.AddScoped(sp => new FlurlClient { BaseUrl = "http://localhost:7089/Orchestration/" });
-
-            services.AddTransient<IDataModel, DataModel>();
-
-            services.AddTransient<ICustomerController, CustomerController>();
-            services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
-
-            services.AddTransient<ICustomerView, CustomerView>();
-            services.AddTransient<IAddInvoiceView, AddInvoiceView>();
+            string error = "";
+            error = HandleException(error, ex);
+            MessageBox.Show($"{error}");
         }
-        private static string HandleException(string result, Exception ex)
-        {
-            if (ex.InnerException != null)
-                return HandleException(result, ex.InnerException);
-
-            return result;
-        }
-
     }
+
+    private static void ConfigureServices(ServiceCollection services)
+    {
+        services.AddScoped(sp => new FlurlClient { BaseUrl = "http://localhost:7089/Orchestration/" });
+
+        services.AddTransient<IDataModel, DataModel>();
+
+        services.AddTransient<ICustomerController, CustomerController>();
+        services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
+
+        services.AddTransient<ICustomerView, CustomerView>();
+        services.AddTransient<IAddInvoiceView, AddInvoiceView>();
+    }
+    private static string HandleException(string result, Exception ex)
+    {
+        if (ex.InnerException != null)
+            return HandleException(result, ex.InnerException);
+
+        return result;
+    }
+
 }

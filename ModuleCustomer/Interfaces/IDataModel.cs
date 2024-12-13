@@ -1,13 +1,12 @@
 ﻿using ModuleCustomer.Models.Response;
 
-namespace ModuleCustomer.Interfaces
+namespace ModuleCustomer.Interfaces;
+
+public interface IDataModel
 {
-    public interface IDataModel
-    {
-        List<CustomerResponse> Customers { get; }
+    List<CustomerResponse> Customers { get; }
 
-        Task GetAllCustomersAsync();
+    Task GetAllCustomersAsync();
 
-        Task<CustomerDetailResponse> GetDetailResponseAsync(Guid id);
-    }
+    Task<CustomerDetailResponse> GetDetailResponseAsync(Guid id);
 }

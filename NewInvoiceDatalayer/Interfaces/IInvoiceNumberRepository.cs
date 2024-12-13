@@ -1,7 +1,6 @@
-﻿namespace NewInvoiceDataLayer.Interfaces
+﻿namespace NewInvoiceDataLayer.Interfaces;
+
+public interface IInvoiceNumberRepository
 {
-    public interface IInvoiceNumberRepository
-    {
-        Task<int> GetNextNumber();
-    }
+    Task<int> GetNextNumber();
 }

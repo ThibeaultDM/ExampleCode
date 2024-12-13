@@ -7,51 +7,50 @@ using Microsoft.EntityFrameworkCore;
 using ModuleCustomer.Interfaces;
 using ModuleCustomer.Models;
 
-namespace ModuleCustomer
+namespace ModuleCustomer;
+
+public class ModuleCustomerModule : IModule
 {
-    public class ModuleCustomerModule : IModule
+    public void OnInitialized(IContainerProvider containerProvider)
     {
-        public void OnInitialized(IContainerProvider containerProvider)
+        var regionManager = containerProvider.Resolve<IRegionManager>();
+        regionManager.RegisterViewWithRegion("CustomerRegion", typeof(CustomerView));
+    }
+
+    public void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        containerRegistry.Register<IDataModel, DataModel>();
+        containerRegistry.RegisterForNavigation<CustomerDetailsView>();
+
+        containerRegistry.Register<ICustomerRepository, CustomerRepository>();
+        containerRegistry.Register<ICustomerExceptionRepository, CustomerExceptionRepository>();
+        containerRegistry.Register<ICustomerUseCases, CustomerUseCases>();
+        containerRegistry.RegisterInstance<IMapper>(CreateMapper());
+
+        string connectionString;
+        string localeDb = System.Configuration.ConfigurationManager.AppSettings["localeDb"];
+
+        if (localeDb == "true")
         {
-            var regionManager = containerProvider.Resolve<IRegionManager>();
-            regionManager.RegisterViewWithRegion("CustomerRegion", typeof(CustomerView));
+            connectionString = System.Configuration.ConfigurationManager.AppSettings["Development"];
+        }
+        else
+        {
+            connectionString = System.Configuration.ConfigurationManager.AppSettings["Live"];
         }
 
-        public void RegisterTypes(IContainerRegistry containerRegistry)
+        containerRegistry.Register<CustomerDbContext>(provider =>
         {
-            containerRegistry.Register<IDataModel, DataModel>();
-            containerRegistry.RegisterForNavigation<CustomerDetailsView>();
+            DbContextOptionsBuilder<CustomerDbContext> optionsBuilder = new();
+            optionsBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("CustomerCommunicationLayer")).EnableSensitiveDataLogging();
+            return new CustomerDbContext(optionsBuilder.Options);
+        });
+    }
 
-            containerRegistry.Register<ICustomerRepository, CustomerRepository>();
-            containerRegistry.Register<ICustomerExceptionRepository, CustomerExceptionRepository>();
-            containerRegistry.Register<ICustomerUseCases, CustomerUseCases>();
-            containerRegistry.RegisterInstance<IMapper>(CreateMapper());
+    private IMapper CreateMapper()
+    {
+        MapperConfiguration config = new(cfg => { cfg.AddProfile<AutomapperConfig>(); });
 
-            string connectionString;
-            string localeDb = System.Configuration.ConfigurationManager.AppSettings["localeDb"];
-
-            if (localeDb == "true")
-            {
-                connectionString = System.Configuration.ConfigurationManager.AppSettings["Development"];
-            }
-            else
-            {
-                connectionString = System.Configuration.ConfigurationManager.AppSettings["Live"];
-            }
-
-            containerRegistry.Register<CustomerDbContext>(provider =>
-            {
-                DbContextOptionsBuilder<CustomerDbContext> optionsBuilder = new();
-                optionsBuilder.UseSqlServer(connectionString, b => b.MigrationsAssembly("CustomerCommunicationLayer")).EnableSensitiveDataLogging();
-                return new CustomerDbContext(optionsBuilder.Options);
-            });
-        }
-
-        private IMapper CreateMapper()
-        {
-            MapperConfiguration config = new(cfg => { cfg.AddProfile<AutomapperConfig>(); });
-
-            return config.CreateMapper();
-        }
+        return config.CreateMapper();
     }
 }

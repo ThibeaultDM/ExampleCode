@@ -7,159 +7,158 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Windows;
 
-namespace ModuleInvoice
+namespace ModuleInvoice;
+
+public class InvoiceViewModel : BindableBase, INavigationAware, INotifyPropertyChanged
 {
-    public class InvoiceViewModel : BindableBase, INavigationAware, INotifyPropertyChanged
+    private IDataModel _invoiceModel;
+    private readonly IRegionManager regionManager;
+    private CustomerDetailResponse customer;
+    private string companyName;
+    private string streetName;
+    private string houseNumber;
+    private List<ErrorResponse> errors;
+    private CreateInvoiceInput invoiceHeader;
+    private ObservableCollection<CreateInvoiceLineInput> invoiceLines;
+
+    public InvoiceViewModel(IDataModel InvoiceModel, IRegionManager regionManager)
     {
-        private IDataModel _invoiceModel;
-        private readonly IRegionManager regionManager;
-        private CustomerDetailResponse customer;
-        private string companyName;
-        private string streetName;
-        private string houseNumber;
-        private List<ErrorResponse> errors;
-        private CreateInvoiceInput invoiceHeader;
-        private ObservableCollection<CreateInvoiceLineInput> invoiceLines;
+        Console.WriteLine("InvoiceViewModel constructor working");
+        _invoiceModel = InvoiceModel;
+        this.regionManager = regionManager;
+        SaveInvoiceCommand = new DelegateCommand(SaveInvoice);
 
-        public InvoiceViewModel(IDataModel InvoiceModel, IRegionManager regionManager)
+        InvoiceHeader = new();
+        InvoiceLines = [];
+    }
+
+    #region Properties
+
+    public int MyProperty { get; set; }
+    public CustomerDetailResponse Customer
+    { get => customer; set { customer = value; OnPropertyChanged(); } }
+    public string CompanyName
+    { get => companyName; set { companyName = value; OnPropertyChanged(); } }
+    public string StreetName
+    { get => streetName; set { streetName = value; OnPropertyChanged(); } }
+    public string HouseNumber
+    { get => houseNumber; set { houseNumber = value; OnPropertyChanged(); } }
+
+    public ObservableCollection<CreateInvoiceLineInput> InvoiceLines
+    {
+        get => invoiceLines;
+        set
         {
-            Console.WriteLine("InvoiceViewModel constructor working");
-            _invoiceModel = InvoiceModel;
-            this.regionManager = regionManager;
-            SaveInvoiceCommand = new DelegateCommand(SaveInvoice);
-
-            InvoiceHeader = new();
-            InvoiceLines = [];
+            invoiceLines = value;
+            OnPropertyChanged();
         }
+    }
 
-        #region Properties
+    public List<ErrorResponse> Errors
+    { get => errors; set { errors = value; OnPropertyChanged(); } }
 
-        public int MyProperty { get; set; }
-        public CustomerDetailResponse Customer
-        { get => customer; set { customer = value; OnPropertyChanged(); } }
-        public string CompanyName
-        { get => companyName; set { companyName = value; OnPropertyChanged(); } }
-        public string StreetName
-        { get => streetName; set { streetName = value; OnPropertyChanged(); } }
-        public string HouseNumber
-        { get => houseNumber; set { houseNumber = value; OnPropertyChanged(); } }
+    public CreateInvoiceInput InvoiceHeader
+    { get => invoiceHeader; private set { SetProperty(ref invoiceHeader, value); } }
 
-        public ObservableCollection<CreateInvoiceLineInput> InvoiceLines
+    public DelegateCommand SaveInvoiceCommand { get; private set; }
+    public DelegateCommand AddInvoiceLineCommand { get; private set; }
+
+    #endregion Properties
+
+    private async void SaveInvoice()
+    {
+        Errors = [];
+
+        try
         {
-            get => invoiceLines;
-            set
+            if (InvoiceLines.Count > 0 && InvoiceHeader.VatNumber != null)
             {
-                invoiceLines = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<ErrorResponse> Errors
-        { get => errors; set { errors = value; OnPropertyChanged(); } }
-
-        public CreateInvoiceInput InvoiceHeader
-        { get => invoiceHeader; private set { SetProperty(ref invoiceHeader, value); } }
-
-        public DelegateCommand SaveInvoiceCommand { get; private set; }
-        public DelegateCommand AddInvoiceLineCommand { get; private set; }
-
-        #endregion Properties
-
-        private async void SaveInvoice()
-        {
-            Errors = [];
-
-            try
-            {
-                if (InvoiceLines.Count > 0 && InvoiceHeader.VatNumber != null)
+                foreach (CreateInvoiceLineInput invoiceLine in InvoiceLines)
                 {
-                    foreach (CreateInvoiceLineInput invoiceLine in InvoiceLines)
-                    {
-                        InvoiceHeader.InvoiceLines.Add(invoiceLine);
-                    }
+                    InvoiceHeader.InvoiceLines.Add(invoiceLine);
+                }
 
-                    CustomerDetailResponse response = await _invoiceModel.CreateInvoiceAsync(InvoiceHeader);
+                CustomerDetailResponse response = await _invoiceModel.CreateInvoiceAsync(InvoiceHeader);
 
-                    if (response.Errors.Count > 0)
-                    {
-                        Errors = response.Errors;
-                    }
-                    else
-                    {
-                        // TODO also doesn't work
-                        Errors.Add(new() { ErrorMessage = "Success" });
-                    }
+                if (response.Errors.Count > 0)
+                {
+                    Errors = response.Errors;
                 }
                 else
                 {
-                    Errors.Add(new() { ErrorMessage = "Please provide a VAT number and at minimum 1 invoice line" });
+                    // TODO also doesn't work
+                    Errors.Add(new() { ErrorMessage = "Success" });
                 }
             }
-            catch (Exception ex)
-            {
-                HandleException(ex);
-            }
-        }
-
-        #region Helper methodes
-
-        private void HandleException(Exception ex)
-        {
-            if (ex.InnerException != null)
-                HandleException(ex.InnerException);
             else
             {
-                Errors.Add(new() { ErrorMessage = ex.Message });
+                Errors.Add(new() { ErrorMessage = "Please provide a VAT number and at minimum 1 invoice line" });
             }
         }
-
-        #endregion Helper methodes
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        catch (Exception ex)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            HandleException(ex);
         }
-
-        #endregion INotifyPropertyChanged
-
-        #region Navigation
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            CustomerDetailResponse customer = navigationContext.Parameters["CustomerId"] as CustomerDetailResponse;
-            if (customer != null)
-                return false;
-            else
-                return true;
-        }
-
-        public async void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            CustomerDetailResponse customer;
-            try
-            {
-                Customer = JsonSerializer.Deserialize<CustomerDetailResponse>(navigationContext.Parameters["Customer"].ToString()) ?? throw new Exception();
-                InvoiceHeader.ProxyId = Customer.Company.Id;
-                CompanyName = Customer.Company.PublicName;
-                StreetName = Customer.Addresses.FirstOrDefault().StreetName;
-                HouseNumber = Customer.Addresses.FirstOrDefault().Number.ToString();
-                Errors = Customer.Errors;
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Something went wrong deserialize customer.");
-            }
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            Customer = null;
-        }
-
-        #endregion Navigation
     }
+
+    #region Helper methodes
+
+    private void HandleException(Exception ex)
+    {
+        if (ex.InnerException != null)
+            HandleException(ex.InnerException);
+        else
+        {
+            Errors.Add(new() { ErrorMessage = ex.Message });
+        }
+    }
+
+    #endregion Helper methodes
+
+    #region INotifyPropertyChanged
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    #endregion INotifyPropertyChanged
+
+    #region Navigation
+
+    public bool IsNavigationTarget(NavigationContext navigationContext)
+    {
+        CustomerDetailResponse customer = navigationContext.Parameters["CustomerId"] as CustomerDetailResponse;
+        if (customer != null)
+            return false;
+        else
+            return true;
+    }
+
+    public async void OnNavigatedTo(NavigationContext navigationContext)
+    {
+        CustomerDetailResponse customer;
+        try
+        {
+            Customer = JsonSerializer.Deserialize<CustomerDetailResponse>(navigationContext.Parameters["Customer"].ToString()) ?? throw new Exception();
+            InvoiceHeader.ProxyId = Customer.Company.Id;
+            CompanyName = Customer.Company.PublicName;
+            StreetName = Customer.Addresses.FirstOrDefault().StreetName;
+            HouseNumber = Customer.Addresses.FirstOrDefault().Number.ToString();
+            Errors = Customer.Errors;
+        }
+        catch (Exception)
+        {
+            MessageBox.Show("Something went wrong deserialize customer.");
+        }
+    }
+
+    public void OnNavigatedFrom(NavigationContext navigationContext)
+    {
+        Customer = null;
+    }
+
+    #endregion Navigation
 }

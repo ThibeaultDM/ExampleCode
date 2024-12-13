@@ -1,32 +1,31 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace QueasoFramework.DataModels
+namespace QueasoFramework.DataModels;
+
+public abstract class DataObjectBase
 {
-    public abstract class DataObjectBase
-    {
-        #region Creation
+    #region Creation
 
-        [Required]
-        public string CreatedBy { get; set; } = Environment.UserName;
+    [Required]
+    public string CreatedBy { get; set; } = Environment.UserName;
 
-        public DateTime CreatedOn { get; set; } = DateTime.Now;
+    public DateTime CreatedOn { get; set; } = DateTime.Now;
 
-        #endregion Creation
+    #endregion Creation
 
-        #region Updated
+    #region Updated
 
-        public string UpdatedBy { get; set; } = null;
-        public DateTime? UpdatedOn { get; set; } = null;
+    public string UpdatedBy { get; set; } = null;
+    public DateTime? UpdatedOn { get; set; } = null;
 
-        #endregion Updated
+    #endregion Updated
 
-        #region Deleted
+    #region Deleted
 
-        public bool IsDeleted { get; set; } = false;
-        public string DeletedBy { get; set; } = null;
-        public DateTime? DeletedOn { get; set; } = null;
+    public bool IsDeleted { get; set; } = false;
+    public string DeletedBy { get; set; } = null;
+    public DateTime? DeletedOn { get; set; } = null;
 
-        #endregion Deleted
-    }
+    #endregion Deleted
 }

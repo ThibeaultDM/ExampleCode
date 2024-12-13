@@ -1,16 +1,15 @@
 ﻿using WinFormsApplication.Models.Input;
 using WinFormsApplication.Models.Response;
 
-namespace WinFormsApplication.Interfaces
+namespace WinFormsApplication.Interfaces;
+
+public interface IDataModel
 {
-    public interface IDataModel
-    {
-        List<CustomerResponse> Customers { get; }
+    List<CustomerResponse> Customers { get; }
 
-        Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
+    Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
 
-        Task GetAllCustomersAsync();
+    Task GetAllCustomersAsync();
 
-        Task<CustomerDetailResponse> GetCustomerAsync(string customerId);
-    }
+    Task<CustomerDetailResponse> GetCustomerAsync(string customerId);
 }

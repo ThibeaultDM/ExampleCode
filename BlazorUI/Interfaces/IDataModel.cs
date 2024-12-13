@@ -1,16 +1,15 @@
 ﻿using BlazorUI.Models.Input;
 using BlazorUI.Models.Response;
 
-namespace BlazorUI.Interfaces
+namespace BlazorUI.Interfaces;
+
+public interface IDataModel
 {
-    public interface IDataModel
-    {
-        List<CustomerResponse> Customers { get; }
+    List<CustomerResponse> Customers { get; }
 
-        Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
+    Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
 
-        Task GetAllCustomersAsync();
+    Task GetAllCustomersAsync();
 
-        Task<CustomerDetailResponse> GetCustomerAsync(string customerId);
-    }
+    Task<CustomerDetailResponse> GetCustomerAsync(string customerId);
 }

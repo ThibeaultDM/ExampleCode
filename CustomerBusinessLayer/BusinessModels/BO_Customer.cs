@@ -2,52 +2,51 @@
 using QueasoFramework.BusinessModels;
 using QueasoFramework.BusinessModels.Rules;
 
-namespace CustomerBusinessLayer.BusinessModels
+namespace CustomerBusinessLayer.BusinessModels;
+
+public class BO_Customer : BusinessObjectBase
 {
-    public class BO_Customer : BusinessObjectBase
+    public BO_Customer()
     {
-        public BO_Customer()
-        {
-            Addresses = [];
-        }
+        Addresses = [];
+    }
 
-        #region Properties
+    #region Properties
 
-        public Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-        /// <summary>
-        /// MaxLength(100)
-        /// </summary>
-        public string FamilyName { get; set; }
+    /// <summary>
+    /// MaxLength(100)
+    /// </summary>
+    public string FamilyName { get; set; }
 
-        /// <summary>
-        /// MaxLength(50)
-        /// </summary>
-        public string FirstName { get; set; }
+    /// <summary>
+    /// MaxLength(50)
+    /// </summary>
+    public string FirstName { get; set; }
 
-        public Gender Gender { get; set; }
+    public Gender Gender { get; set; }
 
-        public List<BO_Address> Addresses { get; set; }
+    public List<BO_Address> Addresses { get; set; }
 
-        public bool IsActive { get; set; }
+    public bool IsActive { get; set; }
 
-        public BO_Company Company { get; set; }
+    public BO_Company Company { get; set; }
 
-        public BO_CreditInfo CreditInfo { get; set; } = new();
+    public BO_CreditInfo CreditInfo { get; set; } = new();
 
-        #endregion Properties
+    #endregion Properties
 
-        public override bool AddBusinessRules()
-        {
-            BusinessRules.Add(new BusinessRule().IsRequired(nameof(FamilyName), FamilyName));
-            BusinessRules.Add(new BusinessRule().MaxLength(nameof(FamilyName), FamilyName, 100));
-            BusinessRules.Add(new BusinessRule().IsRequired(nameof(FirstName), FirstName));
-            BusinessRules.Add(new BusinessRule().MaxLength(nameof(FirstName), FirstName, 50));
-            BusinessRules.Add(new BusinessRule().IsRequired(nameof(Gender), Gender));
-            BusinessRules.Add(new BusinessRule().IsRequired(nameof(Addresses), Addresses));
-            BusinessRules.Add(new BusinessRule().IsRequired(nameof(CreditInfo), CreditInfo));
+    public override bool AddBusinessRules()
+    {
+        BusinessRules.Add(new BusinessRule().IsRequired(nameof(FamilyName), FamilyName));
+        BusinessRules.Add(new BusinessRule().MaxLength(nameof(FamilyName), FamilyName, 100));
+        BusinessRules.Add(new BusinessRule().IsRequired(nameof(FirstName), FirstName));
+        BusinessRules.Add(new BusinessRule().MaxLength(nameof(FirstName), FirstName, 50));
+        BusinessRules.Add(new BusinessRule().IsRequired(nameof(Gender), Gender));
+        BusinessRules.Add(new BusinessRule().IsRequired(nameof(Addresses), Addresses));
+        BusinessRules.Add(new BusinessRule().IsRequired(nameof(CreditInfo), CreditInfo));
 
-            return base.AddBusinessRules();
-        }
+        return base.AddBusinessRules();
     }
 }

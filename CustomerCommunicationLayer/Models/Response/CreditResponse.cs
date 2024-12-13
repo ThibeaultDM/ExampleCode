@@ -1,8 +1,7 @@
-﻿namespace CustomerCommunicationLayer.Models.Response
+﻿namespace CustomerCommunicationLayer.Models.Response;
+
+public class CreditResponse
 {
-    public class CreditResponse
-    {
-        public Guid Id { get; set; }
-        public decimal ToSpend { get; set; }
-    }
+    public Guid Id { get; set; }
+    public decimal ToSpend { get; set; }
 }

@@ -2,82 +2,81 @@
 using QueasoFramework.BusinessModels.Rules.Interfaces;
 using System.Collections.Generic;
 
-namespace QueasoFramework.BusinessModels
+namespace QueasoFramework.BusinessModels;
+
+public abstract class BusinessObjectBase
 {
-    public abstract class BusinessObjectBase
+    #region Properties
+
+    public bool Valid
+    { get { return IsValid(); } }
+
+    public List<BusinessRule> BusinessRules { get; set; }
+    public List<BrokenRule> BrokenRules { get; set; }
+
+    #endregion Properties
+
+    #region Constructors
+
+    /// <summary>
+    /// Default empty constructor
+    /// </summary>
+    public BusinessObjectBase()
     {
-        #region Properties
+        this.BusinessRules = [];
+        this.BrokenRules = [];
+    }
 
-        public bool Valid
-        { get { return IsValid(); } }
+    #endregion Constructors
 
-        public List<BusinessRule> BusinessRules { get; set; }
-        public List<BrokenRule> BrokenRules { get; set; }
+    #region Methods
 
-        #endregion Properties
+    /// <summary>
+    /// Checks if the rules are valid
+    /// </summary>
+    /// <returns>returns true or false</returns>
+    private bool IsValid()
+    {
+        this.BrokenRules = []; //always reset the list to prevent duplicates
 
-        #region Constructors
+        bool rulesPassed = AddBusinessRules();
 
-        /// <summary>
-        /// Default empty constructor
-        /// </summary>
-        public BusinessObjectBase()
+        return rulesPassed;
+    }
+
+    #endregion Methods
+
+    #region Virtual Methods
+
+    public virtual bool AddBusinessRules()
+    {
+        return CheckRules<BusinessRule>(BusinessRules);
+    }
+
+    /// <summary>
+    /// Checks for each item in the businessrules list if they are valid
+    /// </summary>
+    /// <returns>true or false</returns>
+    protected virtual bool CheckRules<T>(List<T> rules) where T : IRuleBase
+    {
+        if (rules != null && rules.Count > 0)
         {
-            this.BusinessRules = [];
-            this.BrokenRules = [];
-        }
-
-        #endregion Constructors
-
-        #region Methods
-
-        /// <summary>
-        /// Checks if the rules are valid
-        /// </summary>
-        /// <returns>returns true or false</returns>
-        private bool IsValid()
-        {
-            this.BrokenRules = []; //always reset the list to prevent duplicates
-
-            bool rulesPassed = AddBusinessRules();
-
-            return rulesPassed;
-        }
-
-        #endregion Methods
-
-        #region Virtual Methods
-
-        public virtual bool AddBusinessRules()
-        {
-            return CheckRules<BusinessRule>(BusinessRules);
-        }
-
-        /// <summary>
-        /// Checks for each item in the businessrules list if they are valid
-        /// </summary>
-        /// <returns>true or false</returns>
-        protected virtual bool CheckRules<T>(List<T> rules) where T : IRuleBase
-        {
-            if (rules != null && rules.Count > 0)
+            foreach (var item in rules)
             {
-                foreach (var item in rules)
+                if (!item.Passed)
                 {
-                    if (!item.Passed)
-                    {
-                        this.BrokenRules.Add(new BrokenRule(item.FailedMessage, item.PropertyName));
-                    }
+                    this.BrokenRules.Add(new BrokenRule(item.FailedMessage, item.PropertyName));
                 }
             }
-
-            if (this.BrokenRules == null || this.BrokenRules.Count == 0)
-            {
-                return true;
-            }
-
-            return false;
         }
 
-        #endregion Virtual Methods
+        if (this.BrokenRules == null || this.BrokenRules.Count == 0)
+        {
+            return true;
+        }
+
+        return false;
     }
+
+    #endregion Virtual Methods
 }

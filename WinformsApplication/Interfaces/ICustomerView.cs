@@ -1,6 +1,5 @@
-﻿namespace WinFormsApplication.Interfaces
+﻿namespace WinFormsApplication.Interfaces;
+
+public interface ICustomerView : IDisposable
 {
-    public interface ICustomerView : IDisposable
-    {
-    }
 }

@@ -4,55 +4,54 @@ using BlazorUI.Models.Response;
 using Flurl;
 using Flurl.Http;
 
-namespace BlazorUI.Models
+namespace BlazorUI.Models;
+
+public class DataModel : IDataModel
 {
-    public class DataModel : IDataModel
+    private FlurlClient _client;
+
+    public DataModel(FlurlClient client)
     {
-        private FlurlClient _client;
+        Console.WriteLine("DataModel constructor working");
+        _client = client;
+    }
 
-        public DataModel(FlurlClient client)
-        {
-            Console.WriteLine("DataModel constructor working");
-            _client = client;
-        }
+    private List<CustomerResponse> customers;
 
-        private List<CustomerResponse> customers;
+    public List<CustomerResponse> Customers
+    {
+        get { return customers; }
+        private set { customers = value; }
+    }
 
-        public List<CustomerResponse> Customers
-        {
-            get { return customers; }
-            private set { customers = value; }
-        }
+    public async Task GetAllCustomersAsync()
+    {
+        Console.WriteLine("GetAllCustomersAsync");
 
-        public async Task GetAllCustomersAsync()
-        {
-            Console.WriteLine("GetAllCustomersAsync");
+        Customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
+    }
 
-            Customers = await _client.BaseUrl.AppendPathSegments("UC_300_002_GetAllCustomers").GetJsonAsync<List<CustomerResponse>>();
-        }
+    public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
+    {
+        Console.WriteLine("GetCustomerAsync");
 
-        public async Task<CustomerDetailResponse> GetCustomerAsync(string customerId)
-        {
-            Console.WriteLine("GetCustomerAsync");
+        CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments("UC_300_003_GetCustomerByName")
+                                                               .SetQueryParam("customerId", customerId)
+                                                               .PostJsonAsync(customerId)
+                                                               .ReceiveJson<CustomerDetailResponse>();
 
-            CustomerDetailResponse customer = await _client.BaseUrl.AppendPathSegments("UC_300_003_GetCustomerByName")
-                                                                   .SetQueryParam("customerId", customerId)
-                                                                   .PostJsonAsync(customerId)
-                                                                   .ReceiveJson<CustomerDetailResponse>();
+        return customer;
+    }
 
-            return customer;
-        }
+    public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice)
+    {
+        Console.WriteLine("GetAllCustomersAsync");
 
-        public async Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice)
-        {
-            Console.WriteLine("GetAllCustomersAsync");
+        CustomerDetailResponse customerDetailResponse = new();
+        customerDetailResponse = await _client.BaseUrl.AppendPathSegments("UC_200_002_SaveInvoiceForCustomer")
+                                       .PostJsonAsync(createInvoice)
+                                       .ReceiveJson<CustomerDetailResponse>();
 
-            CustomerDetailResponse customerDetailResponse = new();
-            customerDetailResponse = await _client.BaseUrl.AppendPathSegments("UC_200_002_SaveInvoiceForCustomer")
-                                           .PostJsonAsync(createInvoice)
-                                           .ReceiveJson<CustomerDetailResponse>();
-
-            return customerDetailResponse;
-        }
+        return customerDetailResponse;
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace WinFormsApplication.Interfaces
-{
-    public interface IAddInvoiceView : IDisposable
-    {
-        Guid CustomerId { get; set; }
+﻿namespace WinFormsApplication.Interfaces;
 
-        void Show();
-    }
+public interface IAddInvoiceView : IDisposable
+{
+    Guid CustomerId { get; set; }
+
+    void Show();
 }

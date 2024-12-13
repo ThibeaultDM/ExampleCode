@@ -1,7 +1,6 @@
-﻿namespace NewInvoiceCommunicationLayer.Models.Input
+﻿namespace NewInvoiceCommunicationLayer.Models.Input;
+
+public class GetInvoiceByNameInput
 {
-    public class GetInvoiceByNameInput
-    {
-        public Guid InvoiceHeaderId { get; set; }
-    }
+    public Guid InvoiceHeaderId { get; set; }
 }

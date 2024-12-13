@@ -1,13 +1,12 @@
-﻿namespace QueasoFramework.BusinessModels.Rules.Interfaces
+﻿namespace QueasoFramework.BusinessModels.Rules.Interfaces;
+
+public interface IRuleBase
 {
-    public interface IRuleBase
-    {
-        #region Properties
+    #region Properties
 
-        string PropertyName { get; set; }
-        bool Passed { get; set; }
-        string FailedMessage { get; set; }
+    string PropertyName { get; set; }
+    bool Passed { get; set; }
+    string FailedMessage { get; set; }
 
-        #endregion Properties
-    }
+    #endregion Properties
 }

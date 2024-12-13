@@ -1,29 +1,28 @@
-﻿namespace Orchestration.Models.Response
+﻿namespace Orchestration.Models.Response;
+
+public class InvoiceDetailResponse : BaseResponse
 {
-    public class InvoiceDetailResponse : BaseResponse
-    {
-        public Guid Id { get; set; }
-        public Guid? CompanyProxyId { get; set; }
+    public Guid Id { get; set; }
+    public Guid? CompanyProxyId { get; set; }
 
-        /// <summary>
-        /// Amount to be paid before taxes
-        /// </summary>
-        public decimal Amount { get; set; }
+    /// <summary>
+    /// Amount to be paid before taxes
+    /// </summary>
+    public decimal Amount { get; set; }
 
-        /// <summary>
-        /// Amount to be paid with taxes
-        /// </summary>
-        public decimal TotalAmount { get; set; }
+    /// <summary>
+    /// Amount to be paid with taxes
+    /// </summary>
+    public decimal TotalAmount { get; set; }
 
-        /// <summary>
-        /// Amount of taxes to be paid
-        /// </summary>
-        public decimal VatAmount { get; set; }
+    /// <summary>
+    /// Amount of taxes to be paid
+    /// </summary>
+    public decimal VatAmount { get; set; }
 
-        public int InvoiceNumber { get; set; }
-        public string VatNumber { get; set; }
-        public bool IsPaid { get; set; }
+    public int InvoiceNumber { get; set; }
+    public string VatNumber { get; set; }
+    public bool IsPaid { get; set; }
 
-        public List<InvoiceLineDetailResponse> InvoiceLines { get; set; }
-    }
+    public List<InvoiceLineDetailResponse> InvoiceLines { get; set; }
 }

@@ -1,48 +1,47 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ModuleCustomer.Models.Response
+namespace ModuleCustomer.Models.Response;
+
+public class BaseResponse : INotifyPropertyChanged
 {
-    public class BaseResponse : INotifyPropertyChanged
+    private bool success;
+    private List<ErrorResponse> errors = [];
+
+    #region INotifyPropertyChanged
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyname = null)
     {
-        private bool success;
-        private List<ErrorResponse> errors = [];
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
+    }
 
-        #region INotifyPropertyChanged
+    #endregion INotifyPropertyChanged
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    public BaseResponse()
+    {
+        success = true;
+        Errors = [];
+    }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyname = null)
+    public bool Success
+    {
+        get => success;
+        set
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));
+            success = value;
+            OnPropertyChanged();
         }
+    }
 
-        #endregion INotifyPropertyChanged
-
-        public BaseResponse()
+    public List<ErrorResponse> Errors
+    {
+        get => errors;
+        set
         {
-            success = true;
-            Errors = [];
-        }
-
-        public bool Success
-        {
-            get => success;
-            set
-            {
-                success = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public List<ErrorResponse> Errors
-        {
-            get => errors;
-            set
-            {
-                errors = value;
-                OnPropertyChanged();
-            }
+            errors = value;
+            OnPropertyChanged();
         }
     }
 }

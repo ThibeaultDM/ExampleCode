@@ -1,10 +1,9 @@
-﻿namespace CustomerCommunicationLayer.Models.Input
+﻿namespace CustomerCommunicationLayer.Models.Input;
+
+public class CreateAddressInput
 {
-    public class CreateAddressInput
-    {
-        public string City { get; set; }
-        public int Postcode { get; set; }
-        public string StreetName { get; set; }
-        public int Number { get; set; }
-    }
+    public string City { get; set; }
+    public int Postcode { get; set; }
+    public string StreetName { get; set; }
+    public int Number { get; set; }
 }

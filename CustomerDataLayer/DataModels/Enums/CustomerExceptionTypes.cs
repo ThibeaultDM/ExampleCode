@@ -1,12 +1,11 @@
-﻿namespace CustomerDataLayer.DataModels.Enums
+﻿namespace CustomerDataLayer.DataModels.Enums;
+
+public enum CustomerExceptionTypes
 {
-    public enum CustomerExceptionTypes
-    {
-        EmptyMandatoryAddress,
-        EmptyMandatoryCompany,
-        EmptyMandatoryCustomer,
-        NoCustomersFound,
-        NoCustomersWithThisName,
-        None
-    }
+    EmptyMandatoryAddress,
+    EmptyMandatoryCompany,
+    EmptyMandatoryCustomer,
+    NoCustomersFound,
+    NoCustomersWithThisName,
+    None
 }

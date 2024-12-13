@@ -1,7 +1,6 @@
-﻿namespace CustomerCommunicationLayer.Models.Input
+﻿namespace CustomerCommunicationLayer.Models.Input;
+
+public class GetCustomerByIdInput
 {
-    public class GetCustomerByIdInput
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

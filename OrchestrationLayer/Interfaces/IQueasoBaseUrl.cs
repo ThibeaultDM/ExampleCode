@@ -1,9 +1,8 @@
 ﻿using Orchestration.ObjectLayer;
 
-namespace Orchestration.Interfaces
+namespace Orchestration.Interfaces;
+
+public interface IQueasoBaseUrl
 {
-    public interface IQueasoBaseUrl
-    {
-        string BaseUrlBuilder(BaseUrlComponent _baseUr1Component);
-    }
+    string BaseUrlBuilder(BaseUrlComponent _baseUr1Component);
 }

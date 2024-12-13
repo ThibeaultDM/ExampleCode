@@ -1,8 +1,7 @@
-﻿namespace Orchestration.Models.Input
+﻿namespace Orchestration.Models.Input;
+
+public class ArchiveInvoiceJournalEntry
 {
-    public class ArchiveInvoiceJournalEntry
-    {
-        public Guid JournalHeaderId { get; set; }
-        public Guid InvoiceHeaderId { get; set; }
-    }
+    public Guid JournalHeaderId { get; set; }
+    public Guid InvoiceHeaderId { get; set; }
 }

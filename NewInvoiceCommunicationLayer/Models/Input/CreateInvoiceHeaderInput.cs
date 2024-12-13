@@ -1,9 +1,8 @@
-﻿namespace NewInvoiceCommunicationLayer.Models.Input
-{
-    public class CreateInvoiceHeaderInput
-    {
-        public string VATNumber { get; set; }
+﻿namespace NewInvoiceCommunicationLayer.Models.Input;
 
-        public string ProxyCompanyId { get; set; }
-    }
+public class CreateInvoiceHeaderInput
+{
+    public string VATNumber { get; set; }
+
+    public string ProxyCompanyId { get; set; }
 }

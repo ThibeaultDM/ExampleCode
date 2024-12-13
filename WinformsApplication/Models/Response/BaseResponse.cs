@@ -1,13 +1,12 @@
-﻿namespace WinFormsApplication.Models.Response
-{
-    public class BaseResponse
-    {
-        public BaseResponse()
-        {
-            Errors = [];
-        }
+﻿namespace WinFormsApplication.Models.Response;
 
-        public bool Success { get; set; } = true;
-        public List<ErrorResponse> Errors { get; set; } = [];
+public class BaseResponse
+{
+    public BaseResponse()
+    {
+        Errors = [];
     }
+
+    public bool Success { get; set; } = true;
+    public List<ErrorResponse> Errors { get; set; } = [];
 }

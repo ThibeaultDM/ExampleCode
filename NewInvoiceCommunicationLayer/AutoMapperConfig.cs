@@ -6,36 +6,35 @@ using NewInvoiceDataLayer.Objects;
 using NewInvoiceServiceLayer.Objects;
 using QueasoFramework.Exceptions;
 
-namespace NewInvoiceCommunicationLayer
+namespace NewInvoiceCommunicationLayer;
+
+public class AutoMapperConfig : Profile
 {
-    public class AutoMapperConfig : Profile
+    public AutoMapperConfig()
     {
-        public AutoMapperConfig()
-        {
-            #region Service objects
+        #region Service objects
 
-            CreateMap<BO_InvoiceHeader, DO_InvoiceHeader>().ReverseMap();
-            CreateMap<BO_InvoiceLine, DO_InvoiceLine>().ReverseMap();
-            CreateMap<BO_JournalEntry, DO_JournalEntry>().ReverseMap();
-            CreateMap<BO_JournalEntry, ArchiveInvoiceJournalEntry>().ReverseMap();
-            CreateMap<BO_InvoiceException, DO_InvoiceException>().ReverseMap();
+        CreateMap<BO_InvoiceHeader, DO_InvoiceHeader>().ReverseMap();
+        CreateMap<BO_InvoiceLine, DO_InvoiceLine>().ReverseMap();
+        CreateMap<BO_JournalEntry, DO_JournalEntry>().ReverseMap();
+        CreateMap<BO_JournalEntry, ArchiveInvoiceJournalEntry>().ReverseMap();
+        CreateMap<BO_InvoiceException, DO_InvoiceException>().ReverseMap();
 
-            #endregion Service objects
+        #endregion Service objects
 
-            #region Input models
+        #region Input models
 
-            CreateMap<FrameworkException, DO_InvoiceException>();
-            CreateMap<AddInvoiceLineToInvoiceHeaderInput, BO_InvoiceLine>();
+        CreateMap<FrameworkException, DO_InvoiceException>();
+        CreateMap<AddInvoiceLineToInvoiceHeaderInput, BO_InvoiceLine>();
 
-            #endregion Input models
+        #endregion Input models
 
-            #region Response models
+        #region Response models
 
-            CreateMap<BO_InvoiceHeader, CreateInvoiceHeaderResponse>();
-            CreateMap<BO_InvoiceHeader, AddInvoiceLineToInvoiceHeaderResponse>();
-            CreateMap<BO_InvoiceLine, InvoiceLineResponse>();
+        CreateMap<BO_InvoiceHeader, CreateInvoiceHeaderResponse>();
+        CreateMap<BO_InvoiceHeader, AddInvoiceLineToInvoiceHeaderResponse>();
+        CreateMap<BO_InvoiceLine, InvoiceLineResponse>();
 
-            #endregion Response models
-        }
+        #endregion Response models
     }
 }

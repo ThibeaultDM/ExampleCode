@@ -1,18 +1,17 @@
 ﻿using Orchestration.Models.Input;
 using Orchestration.Models.Response;
 
-namespace Orchestration.Interfaces
+namespace Orchestration.Interfaces;
+
+public interface IInvoiceService
 {
-    public interface IInvoiceService
-    {
-        Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input);
+    Task<InvoiceDetailResponse> UC_301_001_CreateInvoiceHeaderAsync(CreateInvoiceHeaderInput input);
 
-        Task<InvoiceResponse> UC_301_002_AddInvoiceLineToHeaderAsync(CreateInvoiceLine invoiceLineInput);
+    Task<InvoiceResponse> UC_301_002_AddInvoiceLineToHeaderAsync(CreateInvoiceLine invoiceLineInput);
 
-        Task<InvoiceDetailResponse> UC_301_003_GetInvoiceByNameAsync(Guid getInvoiceByIdInput);
+    Task<InvoiceDetailResponse> UC_301_003_GetInvoiceByNameAsync(Guid getInvoiceByIdInput);
 
-        Task<ArchiveInvoiceJournalEntryResponse> UC_301_004_ArchiveJournalEntryForInvoiceAsync(ArchiveInvoiceJournalEntry archiveInvoiceJournal);
+    Task<ArchiveInvoiceJournalEntryResponse> UC_301_004_ArchiveJournalEntryForInvoiceAsync(ArchiveInvoiceJournalEntry archiveInvoiceJournal);
 
-        Task<List<InvoiceResponse>> UC_301_005_GetAllInvoicesAsync();
-    }
+    Task<List<InvoiceResponse>> UC_301_005_GetAllInvoicesAsync();
 }

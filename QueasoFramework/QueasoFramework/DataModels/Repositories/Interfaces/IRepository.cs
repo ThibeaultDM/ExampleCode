@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Linq;
 
-namespace QueasoFramework.DataModels.Repositories.Interfaces
+namespace QueasoFramework.DataModels.Repositories.Interfaces;
+
+public interface IRepository<T> : IDisposable where T : DataObjectBase
 {
-    public interface IRepository<T> : IDisposable where T : DataObjectBase
-    {
-        #region CRUD
+    #region CRUD
 
-        void Insert(T record);
+    void Insert(T record);
 
-        void Update(T record);
+    void Update(T record);
 
-        void Delete(T record);
+    void Delete(T record);
 
-        void DeleteById(Guid id);
+    void DeleteById(Guid id);
 
-        IQueryable<T> GetAll();
+    IQueryable<T> GetAll();
 
-        T GetById(Guid id);
+    T GetById(Guid id);
 
-        #endregion CRUD
+    #endregion CRUD
 
-        #region Save
+    #region Save
 
-        void Save();
+    void Save();
 
-        #endregion Save
-    }
+    #endregion Save
 }

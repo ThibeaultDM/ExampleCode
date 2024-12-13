@@ -2,55 +2,54 @@
 using CustomerDataLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace CustomerDataLayer
+namespace CustomerDataLayer;
+
+public class CustomerExceptionRepository : ICustomerExceptionRepository, IDisposable
 {
-    public class CustomerExceptionRepository : ICustomerExceptionRepository, IDisposable
+    private CustomerDbContext _data;
+
+    public CustomerExceptionRepository(CustomerDbContext dbContext)
     {
-        private CustomerDbContext _data;
+        this._data = dbContext;
+    }
 
-        public CustomerExceptionRepository(CustomerDbContext dbContext)
+    public async Task CreateExceptionAsync(DO_CustomerException exceptionToCreate)
+    {
+        exceptionToCreate.CreatedBy = Environment.UserName;
+        exceptionToCreate.UpdatedBy = Environment.UserName;
+        exceptionToCreate.CreatedOn = DateTime.Now;
+        exceptionToCreate.UpdatedOn = DateTime.Now;
+        await _data.CustomerExceptions.AddAsync(exceptionToCreate);
+        await SaveAsync();
+    }
+
+    public async Task<List<DO_CustomerException>> GetAllExceptionsAsync()
+    {
+        return await _data.CustomerExceptions.ToListAsync();
+    }
+
+    public async Task SaveAsync()
+    {
+        await _data.SaveChangesAsync();
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private bool disposed = false;
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
         {
-            this._data = dbContext;
-        }
-
-        public async Task CreateExceptionAsync(DO_CustomerException exceptionToCreate)
-        {
-            exceptionToCreate.CreatedBy = Environment.UserName;
-            exceptionToCreate.UpdatedBy = Environment.UserName;
-            exceptionToCreate.CreatedOn = DateTime.Now;
-            exceptionToCreate.UpdatedOn = DateTime.Now;
-            await _data.CustomerExceptions.AddAsync(exceptionToCreate);
-            await SaveAsync();
-        }
-
-        public async Task<List<DO_CustomerException>> GetAllExceptionsAsync()
-        {
-            return await _data.CustomerExceptions.ToListAsync();
-        }
-
-        public async Task SaveAsync()
-        {
-            await _data.SaveChangesAsync();
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _data.Dispose();
-                }
+                _data.Dispose();
             }
-            this.disposed = true;
         }
+        this.disposed = true;
     }
 }

@@ -1,10 +1,9 @@
 ﻿using ModuleInvoice.Models.Input;
 using ModuleInvoice.Models.Response;
 
-namespace ModuleInvoice.Interfaces
+namespace ModuleInvoice.Interfaces;
+
+public interface IDataModel
 {
-    public interface IDataModel
-    {
-        Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
-    }
+    Task<CustomerDetailResponse> CreateInvoiceAsync(CreateInvoiceInput createInvoice);
 }

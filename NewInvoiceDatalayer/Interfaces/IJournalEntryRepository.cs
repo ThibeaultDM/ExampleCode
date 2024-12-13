@@ -1,9 +1,8 @@
 ﻿using NewInvoiceDataLayer.Objects;
 
-namespace NewInvoiceDataLayer.Interfaces
+namespace NewInvoiceDataLayer.Interfaces;
+
+public interface IJournalEntryRepository
 {
-    public interface IJournalEntryRepository
-    {
-        Task<DO_JournalEntry> SaveJournalEntryAsync(DO_JournalEntry toCreate);
-    }
+    Task<DO_JournalEntry> SaveJournalEntryAsync(DO_JournalEntry toCreate);
 }

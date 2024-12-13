@@ -1,15 +1,14 @@
 ﻿using System.Windows.Controls;
 
-namespace ModuleCustomer
+namespace ModuleCustomer;
+
+/// <summary>
+/// Interaction logic for CustomerDetailsView.xaml
+/// </summary>
+public partial class CustomerDetailsView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for CustomerDetailsView.xaml
-    /// </summary>
-    public partial class CustomerDetailsView : UserControl
+    public CustomerDetailsView()
     {
-        public CustomerDetailsView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

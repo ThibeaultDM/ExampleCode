@@ -2,44 +2,43 @@
 using WinFormsApplication.Interfaces;
 using WinFormsApplication.Models.Response;
 
-namespace BlazorUI.ViewModels
+namespace BlazorUI.ViewModels;
+
+public class CustomerController : ICustomerController
 {
-    public class CustomerController : ICustomerController
+    private IDataModel _customerModel;
+    private readonly IServiceProvider _serviceProvider;
+    private List<CustomerResponse> listCustomers;
+
+    public CustomerController(IDataModel customerModel, IServiceProvider serviceProvider)
     {
-        private IDataModel _customerModel;
-        private readonly IServiceProvider _serviceProvider;
-        private List<CustomerResponse> listCustomers;
+        Console.WriteLine("CustomerViewModel constructor working");
+        this._customerModel = customerModel;
+        this._serviceProvider = serviceProvider;
 
-        public CustomerController(IDataModel customerModel, IServiceProvider serviceProvider)
-        {
-            Console.WriteLine("CustomerViewModel constructor working");
-            this._customerModel = customerModel;
-            this._serviceProvider = serviceProvider;
+        AddInvoiceAction = ExecuteAddInvoice;
+    }
 
-            AddInvoiceAction = ExecuteAddInvoice;
-        }
+    public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
+    public CustomerResponse SelectedCustomer { get; set; }
+    public AddInvoiceDelegate AddInvoiceAction { get; set; }
 
-        public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
-        public CustomerResponse SelectedCustomer { get; set; }
-        public AddInvoiceDelegate AddInvoiceAction { get; set; }
+    public async Task GetCustomersAsync()
+    {
+        await _customerModel.GetAllCustomersAsync();
 
-        public async Task GetCustomersAsync()
-        {
-            await _customerModel.GetAllCustomersAsync();
+        ListCustomers = _customerModel.Customers;
 
-            ListCustomers = _customerModel.Customers;
+        Console.WriteLine("FetchDataViewModel Customer ");
+    }
 
-            Console.WriteLine("FetchDataViewModel Customer ");
-        }
+    public delegate void AddInvoiceDelegate();
 
-        public delegate void AddInvoiceDelegate();
-
-        public void ExecuteAddInvoice()
-        {
-            // todo look for memory leak, the container will not explicitly dispose of manually instantiated types, even if they implement IDisposable
-            var addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
-            addInvoice.CustomerId = SelectedCustomer.Id;
-            addInvoice.Show();
-        }
+    public void ExecuteAddInvoice()
+    {
+        // todo look for memory leak, the container will not explicitly dispose of manually instantiated types, even if they implement IDisposable
+        var addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
+        addInvoice.CustomerId = SelectedCustomer.Id;
+        addInvoice.Show();
     }
 }

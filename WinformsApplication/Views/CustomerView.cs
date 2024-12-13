@@ -1,55 +1,54 @@
 ﻿using WinFormsApplication.Interfaces;
 using WinFormsApplication.Models.Response;
 
-namespace WinFormsApplication.Views
+namespace WinFormsApplication.Views;
+
+public partial class CustomerView : Form, ICustomerView
 {
-    public partial class CustomerView : Form, ICustomerView
+    private readonly ICustomerController _customerViewModel;
+
+    public CustomerView(ICustomerController customerViewModel)
     {
-        private readonly ICustomerController _customerViewModel;
+        InitializeComponent();
+        this._customerViewModel = customerViewModel;
+    }
 
-        public CustomerView(ICustomerController customerViewModel)
+    private async void CustomerView_Load(object sender, EventArgs e)
+    {
+        try
         {
-            InitializeComponent();
-            this._customerViewModel = customerViewModel;
-        }
+            await _customerViewModel.GetCustomersAsync();
 
-        private async void CustomerView_Load(object sender, EventArgs e)
+            comboBoxCustomers.Items.Insert(0, "Select a customer");
+            comboBoxCustomers.SelectedIndex = 0;
+        }
+        catch (Exception ex)
         {
-            try
-            {
-                await _customerViewModel.GetCustomersAsync();
-
-                comboBoxCustomers.Items.Insert(0, "Select a customer");
-                comboBoxCustomers.SelectedIndex = 0;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            throw ex;
         }
+    }
 
-        private void comboBoxCustomers_SelectedValueChanged(object sender, EventArgs e)
+    private void comboBoxCustomers_SelectedValueChanged(object sender, EventArgs e)
+    {
+        if (comboBoxCustomers.SelectedValue != null)
+            _customerViewModel.SelectedCustomer = comboBoxCustomers.SelectedValue as CustomerResponse;
+
+        if (_customerViewModel.SelectedCustomer != null)
         {
-            if (comboBoxCustomers.SelectedValue != null)
-                _customerViewModel.SelectedCustomer = comboBoxCustomers.SelectedValue as CustomerResponse;
-
-            if (_customerViewModel.SelectedCustomer != null)
-            {
-                textBoxFirstName.Text = _customerViewModel.SelectedCustomer.FirstName;
-                textBoxLastName.Text = _customerViewModel.SelectedCustomer.FamilyName;
-                textBoxGender.Text = _customerViewModel.SelectedCustomer.Gender;
-            }
+            textBoxFirstName.Text = _customerViewModel.SelectedCustomer.FirstName;
+            textBoxLastName.Text = _customerViewModel.SelectedCustomer.FamilyName;
+            textBoxGender.Text = _customerViewModel.SelectedCustomer.Gender;
         }
+    }
 
-        private void comboBoxCustomers_DropDown(object sender, EventArgs e)
-        {
-            comboBoxCustomers.DataSource = _customerViewModel.ListCustomers;
-            buttonAddInvoice.Enabled = true;
-        }
+    private void comboBoxCustomers_DropDown(object sender, EventArgs e)
+    {
+        comboBoxCustomers.DataSource = _customerViewModel.ListCustomers;
+        buttonAddInvoice.Enabled = true;
+    }
 
-        private void buttonAddInvoice_Click(object sender, EventArgs e)
-        {
-            _customerViewModel.AddInvoiceAction.Invoke();
-        }
+    private void buttonAddInvoice_Click(object sender, EventArgs e)
+    {
+        _customerViewModel.AddInvoiceAction.Invoke();
     }
 }

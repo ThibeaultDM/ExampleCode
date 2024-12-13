@@ -1,11 +1,10 @@
 ﻿using QueasoFramework.DataModels;
 
-namespace NewInvoiceDataLayer.Objects
+namespace NewInvoiceDataLayer.Objects;
+
+public class DO_JournalEntry : DataObjectBase
 {
-    public class DO_JournalEntry : DataObjectBase
-    {
-        public Guid Id { get; set; }
-        public Guid JournalHeaderId { get; set; }
-        public Guid InvoiceHeaderId { get; set; }
-    }
+    public Guid Id { get; set; }
+    public Guid JournalHeaderId { get; set; }
+    public Guid InvoiceHeaderId { get; set; }
 }

@@ -1,9 +1,8 @@
-﻿namespace CustomerDataLayer.DataModels.Enums
+﻿namespace CustomerDataLayer.DataModels.Enums;
+
+public enum Gender
 {
-    public enum Gender
-    {
-        Female,
-        Male,
-        Unknown
-    }
+    Female,
+    Male,
+    Unknown
 }

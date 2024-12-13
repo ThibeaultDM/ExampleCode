@@ -1,28 +1,27 @@
 ﻿using BlazorUI.Interfaces;
 using BlazorUI.Models.Response;
 
-namespace BlazorUI.ViewModels
+namespace BlazorUI.ViewModels;
+
+public class CustomerViewModel : ICustomerViewModel
 {
-    public class CustomerViewModel : ICustomerViewModel
+    private IDataModel customerModel;
+    private List<CustomerResponse> listCustomers;
+
+    public CustomerViewModel(IDataModel customerModel)
     {
-        private IDataModel customerModel;
-        private List<CustomerResponse> listCustomers;
+        Console.WriteLine("CustomerViewModel constructor working");
+        this.customerModel = customerModel;
+    }
 
-        public CustomerViewModel(IDataModel customerModel)
-        {
-            Console.WriteLine("CustomerViewModel constructor working");
-            this.customerModel = customerModel;
-        }
+    public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
 
-        public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
+    public async Task GetCustomersAsync()
+    {
+        await customerModel.GetAllCustomersAsync();
 
-        public async Task GetCustomersAsync()
-        {
-            await customerModel.GetAllCustomersAsync();
+        ListCustomers = customerModel.Customers;
 
-            ListCustomers = customerModel.Customers;
-
-            Console.WriteLine("FetchDataViewModel Customer ");
-        }
+        Console.WriteLine("FetchDataViewModel Customer ");
     }
 }
