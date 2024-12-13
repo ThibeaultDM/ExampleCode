@@ -37,7 +37,7 @@ public class CustomerUseCases : ICustomerUseCases
             {
                 foreach (BrokenRule brokenRule in customerToCreate.BrokenRules)
                 {
-                    FrameworkException exception = new FrameworkException(customerToCreate, "UC_300_001_CreateCustomerAsync", "", FrameworkExceptionType.BusinessRuleViolation);
+                    FrameworkException exception = new(customerToCreate, "UC_300_001_CreateCustomerAsync", "", FrameworkExceptionType.BusinessRuleViolation);
                     SaveCustomerException(exception);
                 }
             }
@@ -45,7 +45,7 @@ public class CustomerUseCases : ICustomerUseCases
         }
         catch (Exception ex)
         {
-            FrameworkException exception = new FrameworkException("UC_300_001_CreateCustomerAsync", ex.Message, ex, FrameworkExceptionType.Error);
+            FrameworkException exception = new("UC_300_001_CreateCustomerAsync", ex.Message, ex, FrameworkExceptionType.Error);
             SaveCustomerException(exception);
 
             throw exception;
@@ -64,7 +64,7 @@ public class CustomerUseCases : ICustomerUseCases
         }
         catch (Exception ex)
         {
-            FrameworkException exception = new FrameworkException("UC_300_002_GetAllCustomerAsync", ex.Message, ex, FrameworkExceptionType.Error);
+            FrameworkException exception = new("UC_300_002_GetAllCustomerAsync", ex.Message, ex, FrameworkExceptionType.Error);
             SaveCustomerException(exception);
 
             throw exception;
@@ -82,7 +82,7 @@ public class CustomerUseCases : ICustomerUseCases
         }
         catch (Exception ex)
         {
-            FrameworkException exception = new FrameworkException("UC_300_003_GetCustomerByIdAsync", ex.Message, ex, FrameworkExceptionType.Error);
+            FrameworkException exception = new("UC_300_003_GetCustomerByIdAsync", ex.Message, ex, FrameworkExceptionType.Error);
             SaveCustomerException(exception);
 
             throw exception;

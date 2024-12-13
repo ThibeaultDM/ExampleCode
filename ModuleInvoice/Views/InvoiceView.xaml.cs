@@ -16,13 +16,13 @@ public partial class InvoiceView : UserControl
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        Regex regex = new Regex("[^0-9]+");
+        Regex regex = new("[^0-9]+");
         e.Handled = regex.IsMatch(e.Text);
     }
 
     private void TextValidationTextBox(object sender, TextCompositionEventArgs e)
     {
-        Regex regex = new Regex("[^a-zA-Z]");
+        Regex regex = new("[^a-zA-Z]");
         e.Handled = regex.IsMatch(e.Text);
     }
 

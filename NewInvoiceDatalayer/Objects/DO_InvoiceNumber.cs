@@ -10,7 +10,7 @@ public class DO_InvoiceNumber : DataObjectBase
     // https://csharpindepth.com/articles/singleton
     private static volatile DO_InvoiceNumber instance;
 
-    private static readonly object synceRoot = new object();
+    private static readonly object synceRoot = new();
 
     [Required]
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

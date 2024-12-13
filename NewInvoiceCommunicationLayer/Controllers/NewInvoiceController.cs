@@ -158,7 +158,7 @@ public class NewInvoiceController : Controller
         }
         catch (Exception ex)
         {
-            BaseResponse errorResponse = new BaseResponse();
+            BaseResponse errorResponse = new();
             response = Ok(HandleException(errorResponse, ex));
         }
 
