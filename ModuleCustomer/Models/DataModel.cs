@@ -16,19 +16,14 @@ public class DataModel : IDataModel
     public DataModel(ICustomerUseCases customerUseCases, IMapper mapper)
     {
         Console.WriteLine("DataModel constructor working");
-        this._customerUseCases = customerUseCases;
-        this._mapper = mapper;
+        _customerUseCases = customerUseCases;
+        _mapper = mapper;
     }
 
-    private List<CustomerResponse> customers;
     private readonly ICustomerUseCases _customerUseCases;
     private readonly IMapper _mapper;
 
-    public List<CustomerResponse> Customers
-    {
-        get { return customers; }
-        private set { customers = value; }
-    }
+    public List<CustomerResponse> Customers { get; private set; }
 
     public List<BO_Customer> CustomerBO { get; set; }
 
@@ -85,7 +80,7 @@ public class DataModel : IDataModel
 
             response = _mapper.Map<CustomerDetailResponse>(customer);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             MessageBox.Show("an error occurred getting the specific customer");
         }

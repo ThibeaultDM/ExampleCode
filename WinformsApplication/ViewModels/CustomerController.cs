@@ -8,18 +8,17 @@ public class CustomerController : ICustomerController
 {
     private IDataModel _customerModel;
     private readonly IServiceProvider _serviceProvider;
-    private List<CustomerResponse> listCustomers;
 
     public CustomerController(IDataModel customerModel, IServiceProvider serviceProvider)
     {
         Console.WriteLine("CustomerViewModel constructor working");
-        this._customerModel = customerModel;
-        this._serviceProvider = serviceProvider;
+        _customerModel = customerModel;
+        _serviceProvider = serviceProvider;
 
         AddInvoiceAction = ExecuteAddInvoice;
     }
 
-    public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
+    public List<CustomerResponse> ListCustomers { get; set; }
     public CustomerResponse SelectedCustomer { get; set; }
     public AddInvoiceDelegate AddInvoiceAction { get; set; }
 
@@ -37,7 +36,7 @@ public class CustomerController : ICustomerController
     public void ExecuteAddInvoice()
     {
         // todo look for memory leak, the container will not explicitly dispose of manually instantiated types, even if they implement IDisposable
-        var addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
+        IAddInvoiceView addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
         addInvoice.CustomerId = SelectedCustomer.Id;
         addInvoice.Show();
     }

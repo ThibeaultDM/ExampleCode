@@ -21,7 +21,7 @@ internal static class Program
 
             ApplicationConfiguration.Initialize();
 
-            using var customerView = serviceProvider.GetRequiredService<ICustomerView>() as Form;
+            using Form? customerView = serviceProvider.GetRequiredService<ICustomerView>() as Form;
             Application.Run(customerView);
 
         }
@@ -47,10 +47,7 @@ internal static class Program
     }
     private static string HandleException(string result, Exception ex)
     {
-        if (ex.InnerException != null)
-            return HandleException(result, ex.InnerException);
-
-        return result;
+        return ex.InnerException != null ? HandleException(result, ex.InnerException) : result;
     }
 
 }

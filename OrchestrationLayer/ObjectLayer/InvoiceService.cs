@@ -20,7 +20,7 @@ public class InvoiceService : IInvoiceService
     {
         try
         {
-            var result = await _client.BaseUrl
+            InvoiceDetailResponse result = await _client.BaseUrl
                                       .AppendPathSegments(invoicePathSeg, "UC_301_001_CreateInvoiceHeader")
                                       .PostJsonAsync(input)
                                       .ReceiveJson<InvoiceDetailResponse>();
@@ -33,7 +33,7 @@ public class InvoiceService : IInvoiceService
     {
         try
         {
-            var result = await _client.BaseUrl
+            InvoiceResponse result = await _client.BaseUrl
                                       .AppendPathSegments(invoicePathSeg, "UC_301_002_AddInvoiceLineToHeader")
                                       .PatchJsonAsync(invoiceLineInput)
                                       .ReceiveJson<InvoiceResponse>();
@@ -46,7 +46,7 @@ public class InvoiceService : IInvoiceService
     {
         try
         {
-            var result = await _client.BaseUrl
+            InvoiceDetailResponse result = await _client.BaseUrl
                                       .AppendPathSegments(invoicePathSeg, $"UC_301_003_GetInvoiceByName/{getInvoiceByIdInput}")
                                       .GetJsonAsync<InvoiceDetailResponse>();
             return result;
@@ -58,7 +58,7 @@ public class InvoiceService : IInvoiceService
     {
         try
         {
-            var result = await _client.BaseUrl
+            ArchiveInvoiceJournalEntryResponse result = await _client.BaseUrl
                                       .AppendPathSegments(invoicePathSeg, "UC_301_004_ArchiveJournalEntryForInvoice")
                                       .PostJsonAsync(archiveInvoiceJournal)
                                       .ReceiveJson<ArchiveInvoiceJournalEntryResponse>();
@@ -71,7 +71,7 @@ public class InvoiceService : IInvoiceService
     {
         try
         {
-            var result = await _client.BaseUrl
+            List<InvoiceResponse> result = await _client.BaseUrl
                                       .AppendPathSegments(invoicePathSeg, "UC_301_005_GetAllInvoices")
                                       .GetJsonAsync<List<InvoiceResponse>>();
             return result;

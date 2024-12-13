@@ -25,18 +25,15 @@ public class CustomerDetailsViewModel : BindableBase, INavigationAware
 
     public void OnNavigatedTo(NavigationContext navigationContext)
     {
-        var customer = navigationContext.Parameters["customer"] as CustomerResponse;
+        CustomerResponse? customer = navigationContext.Parameters["customer"] as CustomerResponse;
         if (customer != null)
             Customer = customer;
     }
 
     public bool IsNavigationTarget(NavigationContext navigationContext)
     {
-        var customer = navigationContext.Parameters["customer"] as CustomerResponse;
-        if (customer != null)
-            return false;
-        else
-            return true;
+        CustomerResponse? customer = navigationContext.Parameters["customer"] as CustomerResponse;
+        return customer == null;
     }
 
     public void OnNavigatedFrom(NavigationContext navigationContext)

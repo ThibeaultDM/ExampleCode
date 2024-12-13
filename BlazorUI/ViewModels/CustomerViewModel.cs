@@ -6,7 +6,6 @@ namespace BlazorUI.ViewModels;
 public class CustomerViewModel : ICustomerViewModel
 {
     private IDataModel customerModel;
-    private List<CustomerResponse> listCustomers;
 
     public CustomerViewModel(IDataModel customerModel)
     {
@@ -14,7 +13,7 @@ public class CustomerViewModel : ICustomerViewModel
         this.customerModel = customerModel;
     }
 
-    public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
+    public List<CustomerResponse> ListCustomers { get; set; }
 
     public async Task GetCustomersAsync()
     {

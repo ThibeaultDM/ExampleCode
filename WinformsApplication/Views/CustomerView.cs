@@ -10,7 +10,7 @@ public partial class CustomerView : Form, ICustomerView
     public CustomerView(ICustomerController customerViewModel)
     {
         InitializeComponent();
-        this._customerViewModel = customerViewModel;
+        _customerViewModel = customerViewModel;
     }
 
     private async void CustomerView_Load(object sender, EventArgs e)

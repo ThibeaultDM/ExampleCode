@@ -10,7 +10,7 @@ public class AddInvoiceViewModel : IAddInvoiceViewModel
 
     public AddInvoiceViewModel(IDataModel customerModel)
     {
-        this.invoiceModel = customerModel;
+        invoiceModel = customerModel;
     }
 
     public async Task<CustomerDetailResponse> GetCustomerAsync(string searchId)

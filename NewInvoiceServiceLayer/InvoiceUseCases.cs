@@ -115,14 +115,9 @@ public class InvoiceUseCases : IInvoiceUseCases
         {
             DO_InvoiceHeader invoiceHeaderDo = await _headerRepository.FindInvoiceHeaderAsync(toFind);
 
-            if (invoiceHeaderDo != null)
-            {
-                invoiceHeaderBO = _mapper.Map<BO_InvoiceHeader>(invoiceHeaderDo);
-            }
-            else
-            {
-                invoiceHeaderBO = await ResolveInvoiceHeaderNotFound(toFind.ToString(), invoiceHeaderBO);
-            }
+            invoiceHeaderBO = invoiceHeaderDo != null
+                ? _mapper.Map<BO_InvoiceHeader>(invoiceHeaderDo)
+                : await ResolveInvoiceHeaderNotFound(toFind.ToString(), invoiceHeaderBO);
         }
         catch (Exception ex)
         {

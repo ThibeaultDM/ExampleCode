@@ -12,7 +12,7 @@ public abstract class BaseRepository<T> where T : DataObjectBase
 
     protected BaseRepository(IInvoiceDbContext dbContext)
     {
-        this._dataContext = dbContext;
+        _dataContext = dbContext;
     }
 
     #region CRUD
@@ -172,7 +172,7 @@ public abstract class BaseRepository<T> where T : DataObjectBase
                 _dataContext.Dispose();
             }
         }
-        this._disposed = true;
+        _disposed = true;
     }
 
     protected async Task SaveAsync()

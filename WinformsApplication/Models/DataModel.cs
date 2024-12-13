@@ -16,13 +16,7 @@ public class DataModel : IDataModel
         _client = client;
     }
 
-    private List<CustomerResponse> customers;
-
-    public List<CustomerResponse> Customers
-    {
-        get { return customers; }
-        private set { customers = value; }
-    }
+    public List<CustomerResponse> Customers { get; private set; }
 
     public async Task GetAllCustomersAsync()
     {

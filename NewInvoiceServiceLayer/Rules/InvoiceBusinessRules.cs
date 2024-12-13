@@ -16,7 +16,7 @@ internal class InvoiceBusinessRules : BusinessRule
     /// <returns></returns>
     public InvoiceBusinessRules CalculatedAmount_Line(string propertyName, decimal quantity, decimal amount, out decimal calcultedtotal)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
         calcultedtotal = 0;
         try
         {
@@ -24,7 +24,7 @@ internal class InvoiceBusinessRules : BusinessRule
         }
         catch (Exception ex)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"An Error occurred while calculating total amount to be paid for an invoiceLine.: {ex.Message}");
         }
 
@@ -41,7 +41,7 @@ internal class InvoiceBusinessRules : BusinessRule
     /// <returns></returns>
     public InvoiceBusinessRules CalculateVATAmount_Line(string propertyName, decimal vatRate, decimal amountWhitOutVat, out decimal calculatedVatAmount)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
         calculatedVatAmount = 0;
         try
         {
@@ -50,7 +50,7 @@ internal class InvoiceBusinessRules : BusinessRule
         }
         catch (Exception ex)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"An Error occurred while calculating total amount of tax to be paid for an invoiceLine.: {ex.Message}");
         }
 
@@ -67,7 +67,7 @@ internal class InvoiceBusinessRules : BusinessRule
     public InvoiceBusinessRules CalculateTotal_Invoice(string propertyName, List<BO_InvoiceLine> invoiceLines, out decimal calculatedTotal)
     {
         calculatedTotal = 0;
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         try
         {
@@ -75,7 +75,7 @@ internal class InvoiceBusinessRules : BusinessRule
         }
         catch (Exception ex)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"An Error occurred while calculating total value of the goods for an invoiceLine.: {ex.Message}");
         }
 
@@ -90,15 +90,15 @@ internal class InvoiceBusinessRules : BusinessRule
     /// <returns></returns>
     public InvoiceBusinessRules CheckValidityVatNumber(string propertyName, string vatNumber)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
         if (!vatNumber.ToUpper().StartsWith("BE0"))
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"{EnumDescription.GetDescription(InvoiceExceptionTypes.InvalidVATNumberBE0)}");
         }
         else if (!CheckValidityVatNumberModulo97(vatNumber))
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"{EnumDescription.GetDescription(InvoiceExceptionTypes.InvalidVATNumber97)}");
         }
 
@@ -116,17 +116,10 @@ internal class InvoiceBusinessRules : BusinessRule
 
         try
         {
-            int lastTwoNumbers = Convert.ToInt32(vatNumber.Substring((vatNumber.Length - 2)));
-            int otherNumbers = Convert.ToInt32(vatNumber.Substring(2, vatNumber.Length - 4)); // Start after "BE0"
+            int lastTwoNumbers = Convert.ToInt32(vatNumber[^2..]);
+            int otherNumbers = Convert.ToInt32(vatNumber[2..^2]); // Start after "BE0"
 
-            if (97 - (otherNumbers % 97) == lastTwoNumbers)
-            {
-                isValid = true;
-            }
-            else
-            {
-                isValid = false;
-            }
+            isValid = 97 - (otherNumbers % 97) == lastTwoNumbers;
         }
         catch
         {
@@ -146,7 +139,7 @@ internal class InvoiceBusinessRules : BusinessRule
     public BusinessRule CalculateVatAmount_Invoice(string propertyName, List<BO_InvoiceLine> invoiceLines, out decimal calculatedTotalVAT)
     {
         calculatedTotalVAT = 0;
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         try
         {
@@ -154,7 +147,7 @@ internal class InvoiceBusinessRules : BusinessRule
         }
         catch (Exception ex)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"An Error occurred while calculating the VATAmount.: {ex.Message}");
         }
 

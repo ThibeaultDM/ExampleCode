@@ -20,26 +20,26 @@ public class FrameworkException : Exception
 
     public FrameworkException(object classobject, string useCaseName, string message, FrameworkExceptionType type) : base(message)
     {
-        var myType = classobject.GetType();
-        var n = myType.Namespace;
-        var properties = myType.GetProperties();
+        Type myType = classobject.GetType();
+        string n = myType.Namespace;
+        System.Reflection.PropertyInfo[] properties = myType.GetProperties();
         string parameters = "";
-        foreach (var prop in properties)
+        foreach (System.Reflection.PropertyInfo prop in properties)
         {
-            var value = prop.GetValue(classobject, null);
+            object value = prop.GetValue(classobject, null);
             parameters += $"{prop.Name}:{value}";
         }
-        this.Type = type;
-        this.Namespace = n;
-        this.InputParameters = parameters;
-        this.UseCase = useCaseName;
+        Type = type;
+        Namespace = n;
+        InputParameters = parameters;
+        UseCase = useCaseName;
     }
 
     public FrameworkException(string useCaseName, string message, Exception innerException, FrameworkExceptionType type) : base(message, innerException)
     {
-        this.UseCase = useCaseName;
-        this.Type = type;
-        this.Namespace = innerException.Source;
+        UseCase = useCaseName;
+        Type = type;
+        Namespace = innerException.Source;
     }
 
     #endregion Constructors

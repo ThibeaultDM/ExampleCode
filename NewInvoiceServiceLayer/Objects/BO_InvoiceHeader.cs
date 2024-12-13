@@ -47,10 +47,7 @@ public class BO_InvoiceHeader : BusinessObjectBase
     /// <param name="invoiceLine"></param>
     public void AddInvoiceLineToHeader(BO_InvoiceLine invoiceLine)
     {
-        if (InvoiceLines == null)
-        {
-            InvoiceLines = [];
-        }
+        InvoiceLines ??= [];
 
         InvoiceLines.Add(invoiceLine);
         BrokenRules.Clear();
@@ -67,13 +64,13 @@ public class BO_InvoiceHeader : BusinessObjectBase
 
         BusinessRules.Add(new InvoiceBusinessRules().RangeLength(nameof(VatNumber), VatNumber, 12, 12));
 
-        BusinessRules.Add(new InvoiceBusinessRules().CheckValidityVatNumber(nameof(this.VatNumber), this.VatNumber));
+        BusinessRules.Add(new InvoiceBusinessRules().CheckValidityVatNumber(nameof(VatNumber), VatNumber));
         if (InvoiceLines != null)
         {
-            BusinessRules.Add(new InvoiceBusinessRules().CalculateTotal_Invoice(nameof(this.Amount), this.InvoiceLines, out _amount));
-            BusinessRules.Add(new InvoiceBusinessRules().CalculateVatAmount_Invoice(nameof(this.VatAmount), this.InvoiceLines, out _vatAmount));
+            BusinessRules.Add(new InvoiceBusinessRules().CalculateTotal_Invoice(nameof(Amount), InvoiceLines, out _amount));
+            BusinessRules.Add(new InvoiceBusinessRules().CalculateVatAmount_Invoice(nameof(VatAmount), InvoiceLines, out _vatAmount));
         }
-        BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(this.TotalAmount), [this.Amount, this.VatAmount], out this._totalAmount));
+        BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(TotalAmount), [Amount, VatAmount], out _totalAmount));
 
         return base.AddBusinessRules();
     }

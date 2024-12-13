@@ -56,9 +56,9 @@ public class BO_InvoiceLine : BusinessObjectBase
         BusinessRules.Add(new InvoiceBusinessRules().RangeValue(nameof(PricePerUnit), PricePerUnit, 0, decimal.MaxValue));
         BusinessRules.Add(new InvoiceBusinessRules().RangeValue(nameof(Quantity), Quantity, 0, int.MaxValue));
 
-        BusinessRules.Add(new InvoiceBusinessRules().CalculatedAmount_Line(nameof(Amount), this.Quantity, this.PricePerUnit, out this._amount));
-        BusinessRules.Add(new InvoiceBusinessRules().CalculateVATAmount_Line(nameof(VATAmount), this.VATRate, this.Amount, out this._vatAmount));
-        BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(LineAmount), [this.Amount, this.VATAmount], out this._lineAmount));
+        BusinessRules.Add(new InvoiceBusinessRules().CalculatedAmount_Line(nameof(Amount), Quantity, PricePerUnit, out _amount));
+        BusinessRules.Add(new InvoiceBusinessRules().CalculateVATAmount_Line(nameof(VATAmount), VATRate, Amount, out _vatAmount));
+        BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(LineAmount), [Amount, VATAmount], out _lineAmount));
 
         return base.AddBusinessRules();
     }

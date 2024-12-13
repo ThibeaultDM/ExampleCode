@@ -23,8 +23,8 @@ public abstract class BusinessObjectBase
     /// </summary>
     public BusinessObjectBase()
     {
-        this.BusinessRules = [];
-        this.BrokenRules = [];
+        BusinessRules = [];
+        BrokenRules = [];
     }
 
     #endregion Constructors
@@ -37,7 +37,7 @@ public abstract class BusinessObjectBase
     /// <returns>returns true or false</returns>
     private bool IsValid()
     {
-        this.BrokenRules = []; //always reset the list to prevent duplicates
+        BrokenRules = []; //always reset the list to prevent duplicates
 
         bool rulesPassed = AddBusinessRules();
 
@@ -61,21 +61,16 @@ public abstract class BusinessObjectBase
     {
         if (rules != null && rules.Count > 0)
         {
-            foreach (var item in rules)
+            foreach (T item in rules)
             {
                 if (!item.Passed)
                 {
-                    this.BrokenRules.Add(new BrokenRule(item.FailedMessage, item.PropertyName));
+                    BrokenRules.Add(new BrokenRule(item.FailedMessage, item.PropertyName));
                 }
             }
         }
 
-        if (this.BrokenRules == null || this.BrokenRules.Count == 0)
-        {
-            return true;
-        }
-
-        return false;
+        return BrokenRules == null || BrokenRules.Count == 0;
     }
 
     #endregion Virtual Methods

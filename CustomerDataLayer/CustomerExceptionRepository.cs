@@ -10,7 +10,7 @@ public class CustomerExceptionRepository : ICustomerExceptionRepository, IDispos
 
     public CustomerExceptionRepository(CustomerDbContext dbContext)
     {
-        this._data = dbContext;
+        _data = dbContext;
     }
 
     public async Task CreateExceptionAsync(DO_CustomerException exceptionToCreate)
@@ -50,6 +50,6 @@ public class CustomerExceptionRepository : ICustomerExceptionRepository, IDispos
                 _data.Dispose();
             }
         }
-        this.disposed = true;
+        disposed = true;
     }
 }

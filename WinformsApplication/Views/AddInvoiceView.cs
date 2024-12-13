@@ -11,7 +11,7 @@ public partial class AddInvoiceView : Form, IAddInvoiceView
     public AddInvoiceView(IAddInvoiceViewModel invoiceViewModel)
     {
         InitializeComponent();
-        this._invoiceViewModel = invoiceViewModel;
+        _invoiceViewModel = invoiceViewModel;
     }
 
     public Guid CustomerId { get; set; }
@@ -88,7 +88,7 @@ public partial class AddInvoiceView : Form, IAddInvoiceView
         Customer = await _invoiceViewModel.CreateInvoiceAsync(CreateInvoice);
         SetErrorTextBox();
         if (Customer.Errors.Count < 1)
-            this.Close();
+            Close();
     }
 
     private void dataGridViewInvoiceLines_DataError(object sender, DataGridViewDataErrorEventArgs e)

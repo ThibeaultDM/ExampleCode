@@ -17,7 +17,7 @@ public class OrchestrationController : ControllerBase
     public OrchestrationController(IOrchestrationService service, IMapper mapper)
     {
         this.service = service;
-        this._mapper = mapper;
+        _mapper = mapper;
     }
 
     #region Invoice
@@ -85,7 +85,7 @@ public class OrchestrationController : ControllerBase
 
         try
         {
-            var result = await service.UC_301_004_ArchiveJournalEntryForInvoice(archiveInvoiceJournal);
+            ArchiveInvoiceJournalEntryResponse result = await service.UC_301_004_ArchiveJournalEntryForInvoice(archiveInvoiceJournal);
             response = Ok(result);
         }
         catch (Exception ex)

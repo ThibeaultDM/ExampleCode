@@ -11,19 +11,14 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         string connectionString;
         bool localeDb = builder.Configuration.GetValue<bool>("LocaleDb");
 
-        if (localeDb)
-        {
-            connectionString = builder.Configuration.GetConnectionString("Development") ?? throw new Exception("Connection string not found");
-        }
-        else
-        {
-            connectionString = builder.Configuration.GetConnectionString("Live") ?? throw new Exception("Connection string not found");
-        }
+        connectionString = localeDb
+            ? builder.Configuration.GetConnectionString("Development") ?? throw new Exception("Connection string not found")
+            : builder.Configuration.GetConnectionString("Live") ?? throw new Exception("Connection string not found");
 
         builder.Services.AddDbContext<InvoiceDbContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("NewInvoiceCommunicationLayer")).EnableSensitiveDataLogging());
 
@@ -47,7 +42,7 @@ internal class Program
 
         builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
-        var app = builder.Build();
+        WebApplication app = builder.Build();
 
         bool enableSwagger = builder.Configuration.GetValue<bool>("EnableSwagger");
         // Configure the HTTP request pipeline.

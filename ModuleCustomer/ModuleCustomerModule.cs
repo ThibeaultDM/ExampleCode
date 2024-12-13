@@ -13,7 +13,7 @@ public class ModuleCustomerModule : IModule
 {
     public void OnInitialized(IContainerProvider containerProvider)
     {
-        var regionManager = containerProvider.Resolve<IRegionManager>();
+        IRegionManager regionManager = containerProvider.Resolve<IRegionManager>();
         regionManager.RegisterViewWithRegion("CustomerRegion", typeof(CustomerView));
     }
 
@@ -30,14 +30,9 @@ public class ModuleCustomerModule : IModule
         string connectionString;
         string localeDb = System.Configuration.ConfigurationManager.AppSettings["localeDb"];
 
-        if (localeDb == "true")
-        {
-            connectionString = System.Configuration.ConfigurationManager.AppSettings["Development"];
-        }
-        else
-        {
-            connectionString = System.Configuration.ConfigurationManager.AppSettings["Live"];
-        }
+        connectionString = localeDb == "true"
+            ? System.Configuration.ConfigurationManager.AppSettings["Development"]
+            : System.Configuration.ConfigurationManager.AppSettings["Live"];
 
         containerRegistry.Register<CustomerDbContext>(provider =>
         {

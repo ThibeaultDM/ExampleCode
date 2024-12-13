@@ -7,7 +7,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         string _OrchestrationCorsPolicy = "_OrchestrationCorsPolicy";
 
@@ -40,7 +40,7 @@ internal class Program
             })
           );
 
-        var app = builder.Build();
+        WebApplication app = builder.Build();
 
         bool enableSwagger = builder.Configuration.GetValue<bool>("EnableSwagger");
         // Configure the HTTP request pipeline.

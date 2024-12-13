@@ -20,9 +20,9 @@ public class NewInvoiceController : Controller
 
     public NewInvoiceController(IConfiguration config, IInvoiceUseCases invoiceUseCases, IMapper mapper)
     {
-        this._config = config;
-        this._invoiceUseCases = invoiceUseCases;
-        this._mapper = mapper;
+        _config = config;
+        _invoiceUseCases = invoiceUseCases;
+        _mapper = mapper;
     }
 
     [HttpPost("UC_301_001_CreateInvoiceHeader")]
@@ -117,7 +117,7 @@ public class NewInvoiceController : Controller
             if (invoiceHeaderBOs.Count > 0)
             {
                 // Maps each invoice header to response and returns list.
-                result = invoiceHeaderBOs.Select(ih => MappingDetailedInvoiceHeaderResponse(ih)).ToList();
+                result = invoiceHeaderBOs.Select(MappingDetailedInvoiceHeaderResponse).ToList();
             }
             else
             {
@@ -203,7 +203,9 @@ public class NewInvoiceController : Controller
     private T HandleException<T>(T result, Exception ex) where T : BaseResponse
     {
         if (ex.InnerException != null)
+        {
             return HandleException(result, ex.InnerException);
+        }
         else
         {
             string message;

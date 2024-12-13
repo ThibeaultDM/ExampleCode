@@ -21,7 +21,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var result = await _client.BaseUrl
+            CustomerDetailResponse result = await _client.BaseUrl
                                       .AppendPathSegments(customerPathSeg, "UC_300_001_CreateCustomer")
                                       .PostJsonAsync(customerToCreate)
                                       .ReceiveJson<CustomerDetailResponse>();
@@ -34,7 +34,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var result = await _client.BaseUrl
+            List<CustomerResponse> result = await _client.BaseUrl
                                       .AppendPathSegments(customerPathSeg, "UC_300_002_GetAllCustomers")
                                       .GetJsonAsync<List<CustomerResponse>>();
             return result;
@@ -46,7 +46,7 @@ public class CustomerService : ICustomerService
     {
         try
         {
-            var result = await _client.BaseUrl
+            CustomerDetailResponse result = await _client.BaseUrl
                                       .AppendPathSegments(customerPathSeg, "UC_300_003_GetCustomerById")
                                       .PostJsonAsync(new { Id = id })
                                       .ReceiveJson<CustomerDetailResponse>();

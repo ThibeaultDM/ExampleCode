@@ -106,7 +106,9 @@ public class InvoiceViewModel : BindableBase, INavigationAware, INotifyPropertyC
     private void HandleException(Exception ex)
     {
         if (ex.InnerException != null)
+        {
             HandleException(ex.InnerException);
+        }
         else
         {
             Errors.Add(new() { ErrorMessage = ex.Message });
@@ -131,15 +133,11 @@ public class InvoiceViewModel : BindableBase, INavigationAware, INotifyPropertyC
     public bool IsNavigationTarget(NavigationContext navigationContext)
     {
         CustomerDetailResponse customer = navigationContext.Parameters["CustomerId"] as CustomerDetailResponse;
-        if (customer != null)
-            return false;
-        else
-            return true;
+        return customer == null;
     }
 
     public async void OnNavigatedTo(NavigationContext navigationContext)
     {
-        CustomerDetailResponse customer;
         try
         {
             Customer = JsonSerializer.Deserialize<CustomerDetailResponse>(navigationContext.Parameters["Customer"].ToString()) ?? throw new Exception();

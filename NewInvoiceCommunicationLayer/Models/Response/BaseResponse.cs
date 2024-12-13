@@ -9,10 +9,7 @@ public class BaseResponse
     {
         Success = false;
 
-        if (Errors == null)
-        {
-            Errors = [];
-        }
+        Errors ??= [];
 
         Errors.Add(error);
     }

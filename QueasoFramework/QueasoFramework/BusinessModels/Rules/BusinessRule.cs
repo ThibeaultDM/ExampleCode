@@ -24,9 +24,9 @@ public class BusinessRule : IRuleBase
     /// </summary>
     public BusinessRule()
     {
-        this.PropertyName = string.Empty;
-        this.Passed = true;
-        this.FailedMessage = string.Empty;
+        PropertyName = string.Empty;
+        Passed = true;
+        FailedMessage = string.Empty;
     }
 
     #endregion Constructors
@@ -41,11 +41,11 @@ public class BusinessRule : IRuleBase
     /// <returns>Business rule</returns>
     public BusinessRule IsRequired(string propertyName, object valueToCheck)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         if (valueToCheck == null)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"Property '{propertyName}' is required");
         }
 
@@ -60,11 +60,11 @@ public class BusinessRule : IRuleBase
     /// <returns>Business rule</returns>
     public BusinessRule IsRequired(string propertyName, string valueToCheck)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         if (string.IsNullOrWhiteSpace(valueToCheck) || valueToCheck == string.Empty)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"Property '{propertyName}' is required and can not be empty or whitespace"); //$"Is required: {valueToCheck} for property {property}";
         }
 
@@ -80,11 +80,11 @@ public class BusinessRule : IRuleBase
     /// <returns>Business rule</returns>
     public BusinessRule MinLength(string propertyName, string valueToCheck, int minLength)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         if (valueToCheck != null && valueToCheck.Length < minLength) //note: extra check for null string + < ipv <=
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"Minimum length is {minLength} for property '{propertyName}'");
         }
 
@@ -100,11 +100,11 @@ public class BusinessRule : IRuleBase
     /// <returns>business rule</returns>
     public BusinessRule MaxLength(string propertyName, string valueToCheck, int maxLength)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         if (valueToCheck != null && valueToCheck.Length > maxLength) //note: extra check for null string + > ipv >=
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"Maximum length is {maxLength} for property '{propertyName}'");
         }
 
@@ -121,11 +121,11 @@ public class BusinessRule : IRuleBase
     /// <returns></returns>
     public BusinessRule RangeLength(string propertyName, string valueToCheck, int minLength, int maxLength)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         if (valueToCheck != null && (valueToCheck.Length < minLength || valueToCheck.Length > maxLength)) //note: extra check for null string + < ipv <=
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"Length range is [{minLength}-{maxLength}] for property '{propertyName}'");
         }
 
@@ -141,12 +141,12 @@ public class BusinessRule : IRuleBase
     /// <returns>Business rule</returns>
     public BusinessRule MinValue(string propertyName, decimal? valueToCheck, decimal minValue)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
         if (valueToCheck != null)
         {
             if (valueToCheck < minValue)
             {
-                this.Passed = false;
+                Passed = false;
                 SetFailedMessage($"Minimum value is {minValue} for property '{propertyName}'");
             }
         }
@@ -162,11 +162,11 @@ public class BusinessRule : IRuleBase
     /// <returns></returns>
     public BusinessRule MaxValue(string propertyName, decimal valueToCheck, decimal maxValue)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         if (valueToCheck > maxValue)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"Maximum value is {maxValue} for property '{propertyName}'");
         }
         return this;
@@ -182,11 +182,11 @@ public class BusinessRule : IRuleBase
     /// <returns></returns>
     public BusinessRule RangeValue(string propertyName, decimal valueToCheck, decimal minValue, decimal maxValue)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         if (valueToCheck < minValue || valueToCheck > maxValue)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"Value range is [{minValue}-{maxValue}] for property '{propertyName}'");
         }
 
@@ -206,7 +206,7 @@ public class BusinessRule : IRuleBase
     /// <returns></returns>
     public BusinessRule GetSum(string propertyName, List<decimal> valueList, out decimal calculatedSum)
     {
-        this.PropertyName = propertyName;
+        PropertyName = propertyName;
 
         calculatedSum = 0;
         try
@@ -215,7 +215,7 @@ public class BusinessRule : IRuleBase
         }
         catch (Exception ex)
         {
-            this.Passed = false;
+            Passed = false;
             SetFailedMessage($"An error occurred while setting property '{propertyName}': {ex.Message}");
         }
 
@@ -228,7 +228,7 @@ public class BusinessRule : IRuleBase
 
     protected void SetFailedMessage(string message)
     {
-        this.FailedMessage = "BusinessRule broken: " + message;
+        FailedMessage = "BusinessRule broken: " + message;
     }
 
     #endregion "Helper methods"

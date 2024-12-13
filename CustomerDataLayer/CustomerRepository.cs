@@ -10,7 +10,7 @@ public class CustomerRepository : ICustomerRepository, IDisposable
 
     public CustomerRepository(CustomerDbContext dbContext)
     {
-        this._data = dbContext;
+        _data = dbContext;
     }
 
     public async Task<DO_Customer> CreateCustomerAsync(DO_Customer customerToCreate)
@@ -97,6 +97,6 @@ public class CustomerRepository : ICustomerRepository, IDisposable
                 _data.Dispose();
             }
         }
-        this.disposed = true;
+        disposed = true;
     }
 }

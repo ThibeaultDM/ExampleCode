@@ -13,20 +13,20 @@ public class BrokenRule
 
     public BrokenRule()
     {
-        this.PropertyName = string.Empty;
-        this.FailedMessage = string.Empty;
+        PropertyName = string.Empty;
+        FailedMessage = string.Empty;
     }
 
     public BrokenRule(string failedMessage)
     {
-        this.PropertyName = string.Empty;
-        this.FailedMessage = failedMessage;
+        PropertyName = string.Empty;
+        FailedMessage = failedMessage;
     }
 
     public BrokenRule(string failedMessage, string propertyName)
     {
-        this.PropertyName = propertyName;
-        this.FailedMessage = failedMessage;
+        PropertyName = propertyName;
+        FailedMessage = failedMessage;
     }
 
     #endregion Constructors
