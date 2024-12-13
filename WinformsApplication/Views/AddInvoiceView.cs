@@ -4,7 +4,7 @@ using WinFormsApplication.Models.Response;
 
 namespace WinFormsApplication.Views
 {
-    public partial class AddInvoiceView : Form
+    public partial class AddInvoiceView : Form, IAddInvoiceView
     {
         private readonly IAddInvoiceViewModel _invoiceViewModel;
 

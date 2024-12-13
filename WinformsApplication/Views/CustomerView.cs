@@ -4,7 +4,7 @@ using WinFormsApplication.Models.Response;
 
 namespace WinFormsApplication.Views
 {
-    public partial class CustomerView : Form
+    public partial class CustomerView : Form, ICustomerView
     {
         private readonly ICustomerViewModel _customerViewModel;
         private readonly IServiceProvider _serviceProvider;
@@ -37,8 +37,7 @@ namespace WinFormsApplication.Views
         {
             SelectedCustomer = comboBoxCustomers.SelectedValue as CustomerResponse;
 
-            if (SelectedCustomer == null) { }
-            else
+            if (SelectedCustomer != null)
             {
                 textBoxFirstName.Text = SelectedCustomer.FirstName;
                 textBoxLastName.Text = SelectedCustomer.FamilyName;
@@ -54,9 +53,10 @@ namespace WinFormsApplication.Views
 
         private void buttonAddInvoice_Click(object sender, EventArgs e)
         {
-            AddInvoiceView addInvoice = _serviceProvider.GetRequiredService<AddInvoiceView>();
+            var addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
             addInvoice.CustomerId = SelectedCustomer.Id;
             addInvoice.Show();
         }
+
     }
 }

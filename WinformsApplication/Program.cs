@@ -21,7 +21,7 @@ namespace WinFormsApplication
 
                 ApplicationConfiguration.Initialize();
 
-                using var customerView = serviceProvider.GetRequiredService<CustomerView>();
+                using var customerView = serviceProvider.GetRequiredService<ICustomerView>() as Form;
                 Application.Run(customerView);
 
             }
@@ -39,8 +39,8 @@ namespace WinFormsApplication
             services.AddTransient<IDataModel, DataModel>();
             services.AddTransient<ICustomerViewModel, CustomerViewModel>();
             services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
-            services.AddTransient<CustomerView>();
-            services.AddTransient<AddInvoiceView>();
+            services.AddTransient<ICustomerView, CustomerView>();
+            services.AddTransient<IAddInvoiceView, AddInvoiceView>();
         }
     }
 }
