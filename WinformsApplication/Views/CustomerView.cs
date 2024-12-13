@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using WinFormsApplication.Interfaces;
+﻿using WinFormsApplication.Interfaces;
 using WinFormsApplication.Models.Response;
 
 namespace WinFormsApplication.Views
@@ -50,6 +49,7 @@ namespace WinFormsApplication.Views
 
         private void buttonAddInvoice_Click(object sender, EventArgs e)
         {
+            _customerViewModel.AddInvoiceAction.Invoke();
         }
 
     }

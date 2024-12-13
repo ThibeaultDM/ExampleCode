@@ -1,4 +1,5 @@
 ﻿using WinFormsApplication.Models.Response;
+using static BlazorUI.ViewModels.CustomerViewModel;
 
 namespace WinFormsApplication.Interfaces
 {
@@ -6,7 +7,7 @@ namespace WinFormsApplication.Interfaces
     {
         CustomerResponse SelectedCustomer { get; set; }
         List<CustomerResponse> ListCustomers { get; set; }
-
+        AddInvoiceDelegate AddInvoiceAction { get; set; }
         Task GetCustomersAsync();
     }
 }

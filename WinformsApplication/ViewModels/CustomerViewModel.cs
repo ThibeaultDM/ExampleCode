@@ -16,10 +16,12 @@ namespace BlazorUI.ViewModels
             this._customerModel = customerModel;
             this._serviceProvider = serviceProvider;
 
+            AddInvoiceAction = ExecuteAddInvoice;
         }
 
         public List<CustomerResponse> ListCustomers { get => listCustomers; set => listCustomers = value; }
         public CustomerResponse SelectedCustomer { get; set; }
+        public AddInvoiceDelegate AddInvoiceAction { get; set; }
 
         public async Task GetCustomersAsync()
         {
@@ -30,14 +32,13 @@ namespace BlazorUI.ViewModels
             Console.WriteLine("FetchDataViewModel Customer ");
         }
 
-        public delegate void AddInvoice();
+        public delegate void AddInvoiceDelegate();
 
-        public void AddInvoice()
+        public void ExecuteAddInvoice()
         {
             var addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
             addInvoice.CustomerId = SelectedCustomer.Id;
             addInvoice.Show();
-
         }
     }
 }
