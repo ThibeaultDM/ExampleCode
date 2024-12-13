@@ -38,8 +38,10 @@ namespace WinFormsApplication
             services.AddScoped(sp => new FlurlClient { BaseUrl = "http://localhost:7089/Orchestration/" });
 
             services.AddTransient<IDataModel, DataModel>();
+
             services.AddTransient<ICustomerController, CustomerController>();
             services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
+
             services.AddTransient<ICustomerView, CustomerView>();
             services.AddTransient<IAddInvoiceView, AddInvoiceView>();
         }

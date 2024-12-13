@@ -51,6 +51,5 @@ namespace WinFormsApplication.Views
         {
             _customerViewModel.AddInvoiceAction.Invoke();
         }
-
     }
 }

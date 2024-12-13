@@ -36,6 +36,7 @@ namespace BlazorUI.ViewModels
 
         public void ExecuteAddInvoice()
         {
+            // todo look for memory leak, the container will not explicitly dispose of manually instantiated types, even if they implement IDisposable
             var addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
             addInvoice.CustomerId = SelectedCustomer.Id;
             addInvoice.Show();
