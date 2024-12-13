@@ -44,6 +44,7 @@ namespace WinFormsApplication.Views
             {
                 comboBoxException.Items.Add(error.ToString());
             }
+            // Could do message box, but find this less jarring. 
             if (Customer.Errors.Count > 0)
             {
                 comboBoxException.DroppedDown = true;
@@ -86,6 +87,8 @@ namespace WinFormsApplication.Views
         {
             Customer = await _invoiceViewModel.CreateInvoiceAsync(CreateInvoice);
             SetErrorTextBox();
+            if (Customer.Errors.Count < 1)
+                this.Close();
         }
 
         private void dataGridViewInvoiceLines_DataError(object sender, DataGridViewDataErrorEventArgs e)
