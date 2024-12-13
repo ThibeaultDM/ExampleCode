@@ -1,9 +1,9 @@
 ﻿using WinFormsApplication.Models.Response;
-using static BlazorUI.ViewModels.CustomerViewModel;
+using static BlazorUI.ViewModels.CustomerController;
 
 namespace WinFormsApplication.Interfaces
 {
-    public interface ICustomerViewModel
+    public interface ICustomerController
     {
         CustomerResponse SelectedCustomer { get; set; }
         List<CustomerResponse> ListCustomers { get; set; }

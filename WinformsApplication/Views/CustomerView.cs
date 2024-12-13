@@ -5,9 +5,9 @@ namespace WinFormsApplication.Views
 {
     public partial class CustomerView : Form, ICustomerView
     {
-        private readonly ICustomerViewModel _customerViewModel;
+        private readonly ICustomerController _customerViewModel;
 
-        public CustomerView(ICustomerViewModel customerViewModel)
+        public CustomerView(ICustomerController customerViewModel)
         {
             InitializeComponent();
             this._customerViewModel = customerViewModel;

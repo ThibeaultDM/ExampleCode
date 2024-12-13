@@ -4,13 +4,13 @@ using WinFormsApplication.Models.Response;
 
 namespace BlazorUI.ViewModels
 {
-    public class CustomerViewModel : ICustomerViewModel
+    public class CustomerController : ICustomerController
     {
         private IDataModel _customerModel;
         private readonly IServiceProvider _serviceProvider;
         private List<CustomerResponse> listCustomers;
 
-        public CustomerViewModel(IDataModel customerModel, IServiceProvider serviceProvider)
+        public CustomerController(IDataModel customerModel, IServiceProvider serviceProvider)
         {
             Console.WriteLine("CustomerViewModel constructor working");
             this._customerModel = customerModel;

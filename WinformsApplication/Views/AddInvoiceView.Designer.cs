@@ -215,11 +215,11 @@
             // 
             // customerViewModelBindingSource
             // 
-            customerViewModelBindingSource.DataSource = typeof(BlazorUI.ViewModels.CustomerViewModel);
+            customerViewModelBindingSource.DataSource = typeof(BlazorUI.ViewModels.CustomerController);
             // 
             // customerViewModelBindingSource1
             // 
-            customerViewModelBindingSource1.DataSource = typeof(BlazorUI.ViewModels.CustomerViewModel);
+            customerViewModelBindingSource1.DataSource = typeof(BlazorUI.ViewModels.CustomerController);
             // 
             // AddInvoiceView
             // 
