@@ -21,8 +21,10 @@ namespace NewInvoiceDataLayer.Repositories
                 if (invoiceNumber == null)
                 {
                     // TODO Load one in the database on initialization
-                    invoiceNumber = new DO_InvoiceNumber();
-                    invoiceNumber.LastUsedNumber = 1;
+                    invoiceNumber = new DO_InvoiceNumber
+                    {
+                        LastUsedNumber = 1
+                    };
                     invoiceNumber = await AddAsync(invoiceNumber);
                 }
                 else

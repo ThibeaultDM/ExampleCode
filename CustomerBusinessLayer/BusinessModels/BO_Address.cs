@@ -8,8 +8,8 @@ namespace CustomerBusinessLayer.BusinessModels
         public BO_Address()
         {
             Id = new Guid();
-            Company = new List<BO_Company>();
-            Person = new List<DO_Person>();
+            Company = [];
+            Person = [];
         }
 
         public Guid Id { get; set; }

@@ -4,10 +4,10 @@
     {
         public BaseResponse()
         {
-            Errors = new List<ErrorResponse>();
+            Errors = [];
         }
 
         public bool Success { get; set; }
-        public List<ErrorResponse> Errors { get; set; } = new();
+        public List<ErrorResponse> Errors { get; set; } = [];
     }
 }

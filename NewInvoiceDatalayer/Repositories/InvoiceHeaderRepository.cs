@@ -29,7 +29,7 @@ namespace NewInvoiceDataLayer.Repositories
 
         public async Task<List<DO_InvoiceHeader>> GetInvoiceHeadersAsync()
         {
-            List<DO_InvoiceHeader> invoiceHeaders = new();
+            List<DO_InvoiceHeader> invoiceHeaders = [];
 
             try
             {

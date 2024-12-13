@@ -172,7 +172,7 @@ namespace NewInvoiceServiceLayer.Service
         // Retrieves all invoice headers; returns a list of headers or handles any errors encountered.
         public async Task<List<BO_InvoiceHeader>> UC_301_005_GetAllInvoicesHeadersAsync()
         {
-            List<BO_InvoiceHeader> listInvoiceHeaderBO = new();
+            List<BO_InvoiceHeader> listInvoiceHeaderBO = [];
             BO_InvoiceHeader invoiceHeaderBO = new();
 
             try

@@ -29,7 +29,7 @@ namespace ModuleInvoice
             SaveInvoiceCommand = new DelegateCommand(SaveInvoice);
 
             InvoiceHeader = new();
-            InvoiceLines = new();
+            InvoiceLines = [];
         }
 
         #region Properties
@@ -67,7 +67,7 @@ namespace ModuleInvoice
 
         private async void SaveInvoice()
         {
-            Errors = new();
+            Errors = [];
 
             try
             {

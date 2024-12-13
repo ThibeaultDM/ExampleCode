@@ -49,7 +49,7 @@ namespace NewInvoiceServiceLayer.Objects
         {
             if (InvoiceLines == null)
             {
-                InvoiceLines = new();
+                InvoiceLines = [];
             }
 
             InvoiceLines.Add(invoiceLine);
@@ -73,7 +73,7 @@ namespace NewInvoiceServiceLayer.Objects
                 BusinessRules.Add(new InvoiceBusinessRules().CalculateTotal_Invoice(nameof(this.Amount), this.InvoiceLines, out _amount));
                 BusinessRules.Add(new InvoiceBusinessRules().CalculateVatAmount_Invoice(nameof(this.VatAmount), this.InvoiceLines, out _vatAmount));
             }
-            BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(this.TotalAmount), new List<decimal> { this.Amount, this.VatAmount }, out this._totalAmount));
+            BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(this.TotalAmount), [this.Amount, this.VatAmount], out this._totalAmount));
 
             return base.AddBusinessRules();
         }

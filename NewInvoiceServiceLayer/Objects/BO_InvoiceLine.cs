@@ -58,7 +58,7 @@ namespace NewInvoiceServiceLayer.Objects
 
             BusinessRules.Add(new InvoiceBusinessRules().CalculatedAmount_Line(nameof(Amount), this.Quantity, this.PricePerUnit, out this._amount));
             BusinessRules.Add(new InvoiceBusinessRules().CalculateVATAmount_Line(nameof(VATAmount), this.VATRate, this.Amount, out this._vatAmount));
-            BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(LineAmount), new List<decimal> { this.Amount, this.VATAmount }, out this._lineAmount));
+            BusinessRules.Add(new InvoiceBusinessRules().GetSum(nameof(LineAmount), [this.Amount, this.VATAmount], out this._lineAmount));
 
             return base.AddBusinessRules();
         }

@@ -6,7 +6,7 @@ namespace ModuleCustomer.Models.Response
     public class BaseResponse : INotifyPropertyChanged
     {
         private bool success;
-        private List<ErrorResponse> errors = new();
+        private List<ErrorResponse> errors = [];
 
         #region INotifyPropertyChanged
 
@@ -22,7 +22,7 @@ namespace ModuleCustomer.Models.Response
         public BaseResponse()
         {
             success = true;
-            Errors = new List<ErrorResponse>();
+            Errors = [];
         }
 
         public bool Success

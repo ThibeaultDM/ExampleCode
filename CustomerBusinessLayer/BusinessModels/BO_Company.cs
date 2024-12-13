@@ -7,7 +7,7 @@ namespace CustomerBusinessLayer.BusinessModels
         public BO_Company()
         {
             Id = new Guid();
-            Addresses = new List<BO_Address>();
+            Addresses = [];
         }
 
         public Guid Id { get; set; }

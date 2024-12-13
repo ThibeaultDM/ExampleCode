@@ -11,7 +11,7 @@
 
             if (Errors == null)
             {
-                Errors = new();
+                Errors = [];
             }
 
             Errors.Add(error);

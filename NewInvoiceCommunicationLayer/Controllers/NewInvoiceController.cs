@@ -112,7 +112,7 @@ namespace NewInvoiceCommunicationLayer.Controllers
             {
                 // Retrieves all invoice headers.
                 List<BO_InvoiceHeader> invoiceHeaderBOs = await _invoiceUseCases.UC_301_005_GetAllInvoicesHeadersAsync();
-                List<AddInvoiceLineToInvoiceHeaderResponse> result = new();
+                List<AddInvoiceLineToInvoiceHeaderResponse> result = [];
 
                 if (invoiceHeaderBOs.Count > 0)
                 {

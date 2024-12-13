@@ -51,8 +51,10 @@ namespace ModuleCustomer
             {
                 CustomerDetailResponse customer = await customerModel.GetDetailResponseAsync(Customer.Id);
 
-                NavigationParameters parameters = new();
-                parameters.Add("Customer", JsonSerializer.Serialize(customer));
+                NavigationParameters parameters = new()
+                {
+                    { "Customer", JsonSerializer.Serialize(customer) }
+                };
                 regionManager.RequestNavigate("CustomerRegion", "InvoiceView", parameters);
             }
         }

@@ -23,8 +23,8 @@ namespace QueasoFramework.BusinessModels
         /// </summary>
         public BusinessObjectBase()
         {
-            this.BusinessRules = new List<BusinessRule>();
-            this.BrokenRules = new List<BrokenRule>();
+            this.BusinessRules = [];
+            this.BrokenRules = [];
         }
 
         #endregion Constructors
@@ -37,7 +37,7 @@ namespace QueasoFramework.BusinessModels
         /// <returns>returns true or false</returns>
         private bool IsValid()
         {
-            this.BrokenRules = new List<BrokenRule>(); //always reset the list to prevent duplicates
+            this.BrokenRules = []; //always reset the list to prevent duplicates
 
             bool rulesPassed = AddBusinessRules();
 

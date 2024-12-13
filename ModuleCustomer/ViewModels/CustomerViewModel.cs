@@ -45,8 +45,10 @@ namespace ModuleCustomer
 
         private void CustomerSelected(CustomerResponse customer)
         {
-            NavigationParameters parameters = new();
-            parameters.Add("customer", customer);
+            NavigationParameters parameters = new()
+            {
+                { "customer", customer }
+            };
 
             if (customer != null)
                 regionManager.RequestNavigate("CustomerDetailsRegion", "CustomerDetailsView", parameters);

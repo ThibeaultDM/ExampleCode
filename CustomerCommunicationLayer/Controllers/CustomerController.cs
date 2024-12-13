@@ -67,7 +67,7 @@ namespace CustomerCommunicationLayer.Controllers
         public async Task<IActionResult> GetAllCustomersAsync()
         {
             List<BO_Customer> result = await _customerUseCases.UC_300_002_GetAllCustomerAsync();
-            List<CustomerResponse> response = new();
+            List<CustomerResponse> response = [];
 
             if (result.Count < 1)
             {

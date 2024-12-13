@@ -8,7 +8,7 @@ namespace CustomerBusinessLayer.BusinessModels
     {
         public BO_Customer()
         {
-            Addresses = new List<BO_Address>();
+            Addresses = [];
         }
 
         #region Properties
