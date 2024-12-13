@@ -27,8 +27,9 @@ namespace WinFormsApplication
             }
             catch (Exception ex)
             {
-
-                MessageBox.Show($"{ex.Message}");
+                string error = "";
+                error = HandleException(error, ex);
+                MessageBox.Show($"{error}");
             }
         }
 
@@ -42,5 +43,13 @@ namespace WinFormsApplication
             services.AddTransient<ICustomerView, CustomerView>();
             services.AddTransient<IAddInvoiceView, AddInvoiceView>();
         }
+        private static string HandleException(string result, Exception ex)
+        {
+            if (ex.InnerException != null)
+                return HandleException(result, ex.InnerException);
+
+            return result;
+        }
+
     }
 }

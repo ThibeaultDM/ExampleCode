@@ -7,15 +7,11 @@ namespace WinFormsApplication.Views
     public partial class CustomerView : Form, ICustomerView
     {
         private readonly ICustomerViewModel _customerViewModel;
-        private readonly IServiceProvider _serviceProvider;
 
-        public CustomerResponse SelectedCustomer { get; set; }
-
-        public CustomerView(ICustomerViewModel customerViewModel, IServiceProvider serviceProvider)
+        public CustomerView(ICustomerViewModel customerViewModel)
         {
             InitializeComponent();
             this._customerViewModel = customerViewModel;
-            this._serviceProvider = serviceProvider;
         }
 
         private async void CustomerView_Load(object sender, EventArgs e)
@@ -35,13 +31,14 @@ namespace WinFormsApplication.Views
 
         private void comboBoxCustomers_SelectedValueChanged(object sender, EventArgs e)
         {
-            SelectedCustomer = comboBoxCustomers.SelectedValue as CustomerResponse;
+            if (comboBoxCustomers.SelectedValue != null)
+                _customerViewModel.SelectedCustomer = comboBoxCustomers.SelectedValue as CustomerResponse;
 
-            if (SelectedCustomer != null)
+            if (_customerViewModel.SelectedCustomer != null)
             {
-                textBoxFirstName.Text = SelectedCustomer.FirstName;
-                textBoxLastName.Text = SelectedCustomer.FamilyName;
-                textBoxGender.Text = SelectedCustomer.Gender;
+                textBoxFirstName.Text = _customerViewModel.SelectedCustomer.FirstName;
+                textBoxLastName.Text = _customerViewModel.SelectedCustomer.FamilyName;
+                textBoxGender.Text = _customerViewModel.SelectedCustomer.Gender;
             }
         }
 
@@ -53,9 +50,6 @@ namespace WinFormsApplication.Views
 
         private void buttonAddInvoice_Click(object sender, EventArgs e)
         {
-            var addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
-            addInvoice.CustomerId = SelectedCustomer.Id;
-            addInvoice.Show();
         }
 
     }
