@@ -2,7 +2,7 @@
 using WinFormsApplication.Models.Input;
 using WinFormsApplication.Models.Response;
 
-namespace BlazorUI.ViewModels;
+namespace WinFormsApplication.Controllers;
 
 public class AddInvoiceViewModel : IAddInvoiceViewModel
 {

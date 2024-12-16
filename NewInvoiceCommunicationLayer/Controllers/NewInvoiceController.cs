@@ -212,17 +212,17 @@ public class NewInvoiceController : Controller
             switch (ex.Message)
             {
                 case "Unrecognized Guid format":
-                    message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.NotGuid)}";
-                    break;
+                message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.NotGuid)}";
+                break;
 
                 case "The UPDATE statement conflicted with the FOREIGN KEY constraint \"FK_InvoiceHeaders_Company\". The conflict occurred in database \"QueasoTraining\", table \"dbo.Companies\", column 'Id'.":
                 case "The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_InvoiceHeaders_Company\". The conflict occurred in database \"QueasoTraining\", table \"dbo.Companies\", column 'Id'.\r\nThe statement has been terminated.":
-                    message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.CompanyNotFound)}";
-                    break;
+                message = $"{EnumDescription.GetDescription(InvoiceExceptionTypes.CompanyNotFound)}";
+                break;
                 // Unknown Errors
                 default:
-                    message = ex.Message;
-                    break;
+                message = ex.Message;
+                break;
             }
 
             result.SetErrors(new("none", message));

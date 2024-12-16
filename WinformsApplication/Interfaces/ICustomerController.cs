@@ -1,12 +1,11 @@
 ﻿using WinFormsApplication.Models.Response;
-using static BlazorUI.ViewModels.CustomerController;
 
-namespace WinFormsApplication.Interfaces;
-
+namespace WinFormsApplication.Controllers;
 public interface ICustomerController
 {
+    CustomerController.AddInvoiceDelegate AddInvoiceAction { get; }
+    List<CustomerResponse> Customers { get; set; }
     CustomerResponse SelectedCustomer { get; set; }
-    List<CustomerResponse> ListCustomers { get; set; }
-    AddInvoiceDelegate AddInvoiceAction { get; set; }
-    Task GetCustomersAsync();
+
+    event CustomerController.DataLoadedDelegate DataLoad;
 }

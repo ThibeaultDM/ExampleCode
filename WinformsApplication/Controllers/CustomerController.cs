@@ -2,7 +2,7 @@
 using WinFormsApplication.Interfaces;
 using WinFormsApplication.Models.Response;
 
-namespace BlazorUI.ViewModels;
+namespace WinFormsApplication.Controllers;
 
 public class CustomerController : ICustomerController
 {
@@ -16,26 +16,27 @@ public class CustomerController : ICustomerController
         _serviceProvider = serviceProvider;
 
         AddInvoiceAction = ExecuteAddInvoice;
+        _ = GetCustomersAsync();
     }
 
-    public List<CustomerResponse> ListCustomers { get; set; }
-    public CustomerResponse SelectedCustomer { get; set; }
-    public AddInvoiceDelegate AddInvoiceAction { get; set; }
-
-    public async Task GetCustomersAsync()
-    {
-        await _customerModel.GetAllCustomersAsync();
-
-        ListCustomers = _customerModel.Customers;
-
-        Console.WriteLine("FetchDataViewModel Customer ");
-    }
-
+    public delegate void DataLoadedDelegate();
     public delegate void AddInvoiceDelegate();
 
-    public void ExecuteAddInvoice()
+    public event DataLoadedDelegate DataLoad;
+    public AddInvoiceDelegate AddInvoiceAction { get; private set; }
+    public CustomerResponse SelectedCustomer { get; set; }
+    public List<CustomerResponse> Customers { get; set; }
+    private async Task GetCustomersAsync()
     {
-        // todo look for memory leak, the container will not explicitly dispose of manually instantiated types, even if they implement IDisposable
+        Console.WriteLine("FetchDataViewModel Customer ");
+
+        await _customerModel.GetAllCustomersAsync();
+        Customers = _customerModel.Customers;
+        DataLoad.Invoke();
+    }
+
+    private void ExecuteAddInvoice()
+    {
         IAddInvoiceView addInvoice = _serviceProvider.GetRequiredService<IAddInvoiceView>();
         addInvoice.CustomerId = SelectedCustomer.Id;
         addInvoice.Show();

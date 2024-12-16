@@ -25,12 +25,12 @@ public class QueasoBaseUrl : IQueasoBaseUrl
         switch (_baseUr1Component)
         {
             case BaseUrlComponent.customer:
-                baseUrl += CustomerPort + CustomerSubDomain;
-                break;
+            baseUrl += CustomerPort + CustomerSubDomain;
+            break;
 
             case BaseUrlComponent.invoice:
-                baseUrl += InvoicePort + InvoiceSubDomain;
-                break;
+            baseUrl += InvoicePort + InvoiceSubDomain;
+            break;
 
             default: throw new ArgumentException("Invalid base URL component");
         }

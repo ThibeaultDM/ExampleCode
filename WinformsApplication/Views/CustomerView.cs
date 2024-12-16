@@ -1,4 +1,5 @@
-﻿using WinFormsApplication.Interfaces;
+﻿using WinFormsApplication.Controllers;
+using WinFormsApplication.Interfaces;
 using WinFormsApplication.Models.Response;
 
 namespace WinFormsApplication.Views;
@@ -11,21 +12,13 @@ public partial class CustomerView : Form, ICustomerView
     {
         InitializeComponent();
         _customerViewModel = customerViewModel;
+        _customerViewModel.DataLoad += Controller_DataLoaded;
     }
 
     private async void CustomerView_Load(object sender, EventArgs e)
     {
-        try
-        {
-            await _customerViewModel.GetCustomersAsync();
-
-            comboBoxCustomers.Items.Insert(0, "Select a customer");
-            comboBoxCustomers.SelectedIndex = 0;
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
+        comboBoxCustomers.Items.Insert(0, "Loading customers");
+        comboBoxCustomers.SelectedIndex = 0;
     }
 
     private void comboBoxCustomers_SelectedValueChanged(object sender, EventArgs e)
@@ -41,14 +34,21 @@ public partial class CustomerView : Form, ICustomerView
         }
     }
 
-    private void comboBoxCustomers_DropDown(object sender, EventArgs e)
-    {
-        comboBoxCustomers.DataSource = _customerViewModel.ListCustomers;
-        buttonAddInvoice.Enabled = true;
-    }
-
     private void buttonAddInvoice_Click(object sender, EventArgs e)
     {
         _customerViewModel.AddInvoiceAction.Invoke();
+    }
+
+    private void Controller_DataLoaded()
+    {
+        comboBoxCustomers.Items.Clear();
+        comboBoxCustomers.Items.Insert(0, "Please select Customer");
+        comboBoxCustomers.SelectedIndex = 0;
+    }
+
+    private void comboBoxCustomers_DropDown(object sender, EventArgs e)
+    {
+        comboBoxCustomers.DataSource = _customerViewModel.Customers;
+        buttonAddInvoice.Enabled = true;
     }
 }
