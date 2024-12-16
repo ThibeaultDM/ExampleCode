@@ -1,35 +1,37 @@
 ﻿using WinFormsApplication.Interfaces;
-using WinFormsApplication.Models.Input;
-using WinFormsApplication.Models.Response;
 
 namespace WinFormsApplication.Views;
-
 public partial class AddInvoiceView : Form, IAddInvoiceView
 {
-    private readonly IAddInvoiceViewModel _invoiceViewModel;
+    private readonly IAddInvoiceController _invoiceController;
+    private Guid _customerId;
 
-    public AddInvoiceView(IAddInvoiceViewModel invoiceViewModel)
+    public AddInvoiceView(IAddInvoiceController invoiceController)
     {
         InitializeComponent();
-        _invoiceViewModel = invoiceViewModel;
+        _invoiceController = invoiceController;
+        _invoiceController.CustomerSearchCompleted += UpdateCustomer;
+        _invoiceController.ThereIsAProblem += UpdateErrors;
     }
 
-    public Guid CustomerId { get; set; }
-    private CustomerDetailResponse Customer { get; set; }
-    private CreateInvoiceInput CreateInvoice { get; set; } = new();
+    public Guid CustomerId
+    {
+        get => _customerId;
+        set
+        {
+            _customerId = value;
+            PassOnCustomerId();
+        }
+    }
 
-    private async void AddInvoiceView_Load(object sender, EventArgs e)
+    private void PassOnCustomerId() => _invoiceController.IdCustomer = CustomerId.ToString();
+
+    private void AddInvoiceView_Load(object sender, EventArgs e)
     {
         try
         {
-            Customer = await _invoiceViewModel.GetCustomerAsync(CustomerId.ToString());
-
-            CreateInvoice.ProxyId = Customer.Company.Id;
-            textBoxCompany.Text = Customer.Company.PublicName;
-            AssignDefaultAddress();
-            SetErrorTextBox();
-            dataGridViewInvoiceLines.DataSource = CreateInvoice.InvoiceLines;
-            textBoxVATNumber.DataBindings.Add("Text", CreateInvoice, nameof(CreateInvoice.VatNumber));
+            ComboBoxState("There are no problems");
+            dataGridViewInvoiceLines.DataSource = _invoiceController.InvoiceToCreate.InvoiceLines;
         }
         catch (Exception ex)
         {
@@ -37,40 +39,42 @@ public partial class AddInvoiceView : Form, IAddInvoiceView
         }
     }
 
-    private void SetErrorTextBox()
-    {
-        comboBoxException.Items.Clear();
-        foreach (ErrorResponse error in Customer.Errors)
-        {
-            comboBoxException.Items.Add(error.ToString());
-        }
-        // Could do message box, but find this less jarring. 
-        if (Customer.Errors.Count > 0)
-        {
-            comboBoxException.DroppedDown = true;
-            comboBoxException.Items.Insert(0, "Click to view errors");
-        }
-        else
-        {
-            comboBoxException.Items.Insert(0, "There are no errors");
-        }
-        comboBoxException.SelectedIndex = 0;
-    }
-
-    private void AssignDefaultAddress()
+    private void UpdateCustomer()
     {
         try
         {
-            foreach (CustomerAddressResponse address in Customer.Addresses.Where(a => a.IsDefault))
-            {
-                textBoxStreetName.Text = address.StreetName;
-                textBoxNumber.Text = address.Number.ToString();
-            }
-            if (string.IsNullOrWhiteSpace(textBoxStreetName.Text))
-            {
-                textBoxStreetName.Text = Customer.Addresses.First().StreetName;
-                textBoxNumber.Text = Customer.Addresses.First().Number.ToString();
-            }
+            textBoxCompany.Text = _invoiceController.Customer.Company.PublicName;
+            textBoxNumber.Text = _invoiceController.Customer.Addresses.FirstOrDefault().Number.ToString();
+            textBoxStreetName.Text = _invoiceController.Customer.Addresses.FirstOrDefault().StreetName;
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    private void UpdateErrors()
+    {
+        try
+        {
+            comboBoxException.Items.Clear();
+            _invoiceController.Errors.ForEach(e => comboBoxException.Items.Add(e));
+            ComboBoxState("There are exceptions");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    private async void buttonSafeInvoice_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            _invoiceController.InvoiceToCreate.VatNumber = textBoxVATNumber.Text;
+
+            await _invoiceController.CreateInvoiceAsync();
         }
         catch (Exception ex)
         {
@@ -83,12 +87,11 @@ public partial class AddInvoiceView : Form, IAddInvoiceView
         buttonSafeInvoice.Enabled = true;
     }
 
-    private async void buttonSafeInvoice_Click(object sender, EventArgs e)
+    private void ComboBoxState(string message)
     {
-        Customer = await _invoiceViewModel.CreateInvoiceAsync(CreateInvoice);
-        SetErrorTextBox();
-        if (Customer.Errors.Count < 1)
-            Close();
+        comboBoxException.Items.Insert(0, message);
+        comboBoxException.SelectedIndex = 0;
+        comboBoxException.DroppedDown = true;
     }
 
     private void dataGridViewInvoiceLines_DataError(object sender, DataGridViewDataErrorEventArgs e)

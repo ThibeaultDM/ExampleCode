@@ -40,7 +40,7 @@ internal static class Program
         services.AddTransient<IDataModel, DataModel>();
 
         services.AddTransient<ICustomerController, CustomerController>();
-        services.AddTransient<IAddInvoiceViewModel, AddInvoiceViewModel>();
+        services.AddTransient<IAddInvoiceController, AddInvoiceController>();
 
         services.AddTransient<ICustomerView, CustomerView>();
         services.AddTransient<IAddInvoiceView, AddInvoiceView>();

@@ -8,4 +8,5 @@ public interface ICustomerController
     CustomerResponse SelectedCustomer { get; set; }
 
     event CustomerController.DataLoadedDelegate DataLoad;
+    Task GetCustomersAsync();
 }

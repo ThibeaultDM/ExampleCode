@@ -16,7 +16,6 @@ public class CustomerController : ICustomerController
         _serviceProvider = serviceProvider;
 
         AddInvoiceAction = ExecuteAddInvoice;
-        _ = GetCustomersAsync();
     }
 
     public delegate void DataLoadedDelegate();
@@ -26,7 +25,7 @@ public class CustomerController : ICustomerController
     public AddInvoiceDelegate AddInvoiceAction { get; private set; }
     public CustomerResponse SelectedCustomer { get; set; }
     public List<CustomerResponse> Customers { get; set; }
-    private async Task GetCustomersAsync()
+    public async Task GetCustomersAsync()
     {
         Console.WriteLine("FetchDataViewModel Customer ");
 

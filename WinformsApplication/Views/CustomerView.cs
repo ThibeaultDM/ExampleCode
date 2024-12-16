@@ -19,6 +19,8 @@ public partial class CustomerView : Form, ICustomerView
     {
         comboBoxCustomers.Items.Insert(0, "Loading customers");
         comboBoxCustomers.SelectedIndex = 0;
+
+        await _customerViewModel.GetCustomersAsync();
     }
 
     private void comboBoxCustomers_SelectedValueChanged(object sender, EventArgs e)
@@ -42,13 +44,12 @@ public partial class CustomerView : Form, ICustomerView
     private void Controller_DataLoaded()
     {
         comboBoxCustomers.Items.Clear();
-        comboBoxCustomers.Items.Insert(0, "Please select Customer");
-        comboBoxCustomers.SelectedIndex = 0;
+        comboBoxCustomers.DataSource = _customerViewModel.Customers;
+        comboBoxCustomers.DroppedDown = true;
     }
 
     private void comboBoxCustomers_DropDown(object sender, EventArgs e)
     {
-        comboBoxCustomers.DataSource = _customerViewModel.Customers;
         buttonAddInvoice.Enabled = true;
     }
 }
